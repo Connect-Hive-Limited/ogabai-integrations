@@ -78,6 +78,7 @@ export interface Store {
   address: Address;
   shopType: string;
   ownerId: string;
+  storeLocation: string;
   createdAt: string;
 }
 

@@ -1,6 +1,6 @@
 {
     "name": "@connect-plus-online/ogabai-integrations",
-    "version": "0.1.2",
+    "version": "0.1.4",
     "description": "Ogabai integrations for Connect Plus Online",
     "keywords": [
         "graphql",
@@ -16,6 +16,7 @@
     "license": "MIT",
     "main": "dist/index.cjs.js",
     "module": "dist/index.esm.js",
+    "react-native": "dist/index.js",
     "types": "dist/index.d.ts",
     "files": [
         "dist"

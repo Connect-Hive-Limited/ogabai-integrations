@@ -1,4 +1,4 @@
-import { Price, Product, ProductAttribute, ProductCategory, ProductName, ProductPackage, Stock, Store } from "../../types";
+import { Address, Price, Product, ProductAttribute, ProductCategory, ProductName, ProductPackage, Stock, Store } from "../../types";
 
 
 export type AttributeFields = (keyof ProductAttribute)[]
@@ -38,7 +38,12 @@ export const storeQuery: StoreFields = [
     "address",
     "shopType",
     "ownerId",
-    "createdAt"
+    "createdAt",
+    "storeLocation"
+]
+export type AddressFields = (keyof Address)[]
+export const addressQuery:AddressFields = [
+    "city", "country", "state", "zipcode"
 ]
 export type CategoryFields = (keyof ProductCategory)[]
 export const categoryQuery: CategoryFields = [
