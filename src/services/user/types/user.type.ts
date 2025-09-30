@@ -1,8 +1,13 @@
 import { 
+    Account,
+    Store,
     User,
+    UserSetting,
     UserType 
 } from "../../../types";
-import { UserFields, userQuery } from "../user.entity";
+import { AccountFields, accountQuery, UserFields, userQuery, UserSettingFields, userSettingQuery } from "../user.entity";
+import { AddressFields, addressQuery, StoreFields, storeQuery } from "../../inventory/entities";
+import { getAccountResponseNestedFields } from "./account.type"
 
 
 // get user 
@@ -14,11 +19,14 @@ export interface GetUserResponse {
 }
 export interface GetUserResponseNestedFields {
     user: UserFields;
+    address: AddressFields;
 }
 export const getUserResponse: (keyof GetUserResponse)[] = [
     "user"
 ]
-export const _getUserResponseNestedFields: Omit<GetUserResponseNestedFields, "user"> = {}
+export const _getUserResponseNestedFields: Omit<GetUserResponseNestedFields, "user"> = {
+    address: addressQuery,
+}
 export const getUserResponseNestedFields: GetUserResponseNestedFields = {
     user: userQuery,
     ..._getUserResponseNestedFields,
@@ -82,4 +90,30 @@ export const updateUserResponse = {
 export const updateUserResponseNestedFields: UpdateUserResponseNestedFields = {
     ...getUserResponseNestedFields,
     uploadImageResponse: ["fileUrl", "url"]
+}
+
+// me 
+export interface MeResponse {
+    user: User;
+    account?: Account;
+    stores?: Store[];
+    userSetting?: UserSetting;
+}
+export const meResponse: (keyof MeResponse)[] = [
+    "user",
+    "account",
+    "stores",
+    "userSetting"
+]
+export interface MeResponseNestedFields extends GetUserResponseNestedFields {
+    user: UserFields;
+    account: AccountFields;
+    stores: StoreFields;
+    userSetting: UserSettingFields;
+}
+export const meResponseNestedFields: MeResponseNestedFields = {
+    stores: storeQuery,
+    userSetting: userSettingQuery,
+    ...getUserResponseNestedFields,
+    ...getAccountResponseNestedFields,
 }

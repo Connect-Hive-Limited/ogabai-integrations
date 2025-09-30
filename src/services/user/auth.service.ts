@@ -115,3 +115,5 @@ export const createAuthService = (client: GraphQLClient) => ({
     );
   },
 })
+
+export type AuthService = ReturnType<typeof createAuthService>
