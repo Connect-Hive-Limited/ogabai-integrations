@@ -1,4 +1,11 @@
 export const userSchema = {
+  me: (query: string) => `
+    query me {
+      me {
+        ${query}
+      }
+    }
+  `,
   getUser: (query: string) => `
     query getUser($user: UserInput!) {
       user(user: $user) {

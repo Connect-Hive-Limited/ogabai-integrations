@@ -1,15 +1,8 @@
 import { describe, it, expect } from "vitest";
-import { GraphQLClient } from "../src/client";
-import { createAuthService } from "../src/services/user/auth.service";
+import { createUserService } from "../src/services/user/user.service";
+import { authService, createClient } from "./setup";
 
-const client = new GraphQLClient({
-    url: "http://localhost:8080/graphql",
-    headersFactory: async () => ({ 
-      "authorization": "",
-      "ojami-store-id": ""
-    }),
-});
-const authService = createAuthService(client)
+
 
 /**
  * Auth API Tests
@@ -33,14 +26,14 @@ describe("Auth API", () => {
     "X-Otp-Verified-Access-Token": "",
   };
   it("should not login with none user credentials", async () => {
-    const res = await authService.login({
+    const res = await authService?.login({
       pin: "12345678",
       phone: "08034668633",
     });
-    expect(res.data?.login).toBeNull();
+    expect(res?.data?.login).toBeNull();
   });
   it("should sign up with user credentials", async () => {
-    const res = await authService.signUp({
+    const res = await authService?.signUp({
       pin: "12345678",
       phone: "08034668633",
       storeName: "test store",
@@ -48,50 +41,57 @@ describe("Auth API", () => {
       firstName: "Joe",
       storeLocation: "Mushin, lagos state"
     });
-    expect(res.data?.signUp).not.toBeNull();
+    expect(res?.data?.signUp).not.toBeNull();
   })
   it("should login with user credentials", async () => {
-    const res = await authService.login({
+    const res = await authService?.login({
       pin: "12345678",
       phone: "08034668633",
     });
-    if(res.data?.login.accessToken){
-      headers.Authorization = `Bearer ${res.data.login.accessToken}`;
+    if(res?.data?.login.accessToken){
+      headers.Authorization = `Bearer ${res?.data.login.accessToken}`;
     }
-    expect(res.data?.login).not.toBeNull();
+    expect(res?.data?.login).not.toBeNull();
   })
+
+  it("should be fetch user information using access token", async () => {
+    const client = createClient(headers.Authorization || "")
+    const userService = createUserService(client)
+    const res = await userService?.me({}, {headers})
+    expect(res?.data?.me).not.toBeNull();
+  })
+
   it("should not sign up with already user credentials", async () => {
-    const res = await authService.signUp({
+    const res = await authService?.signUp({
       pin: "12345678",
       phone: "08034668633",
       storeName: "test store",
       lastName: "Ceejay",
       firstName: "Joe"
     });
-    expect(res.data?.signUp).toBeNull();
+    expect(res?.data?.signUp).toBeNull();
   })
   it("send otp", async () => {
-    const res = await authService.sendOTP({
+    const res = await authService?.sendOTP({
       phone: "08034668633",
     },{}, {headers});
-    if(res.data?.sendOTP.otp){
-      otp = res.data.sendOTP.otp;
+    if(res?.data?.sendOTP.otp){
+      otp = res?.data.sendOTP.otp;
     }
-    expect(res.data?.sendOTP).not.toBeNull();
+    expect(res?.data?.sendOTP).not.toBeNull();
   })
   it("should verify otp", async () => {
-    const res = await authService.verifyOTP({
+    const res = await authService?.verifyOTP({
       phone: "08034668633",
       otp,
     }, {}, {headers});
-    if(res.data?.verifyOTP.otpVerifiedAccessToken){
-      headers["X-Otp-Verified-Access-Token"] = res.data.verifyOTP.otpVerifiedAccessToken;
+    if(res?.data?.verifyOTP.otpVerifiedAccessToken){
+      headers["X-Otp-Verified-Access-Token"] = res?.data.verifyOTP.otpVerifiedAccessToken;
     }
-    expect(res.data?.verifyOTP).not.toBeNull();
+    expect(res?.data?.verifyOTP).not.toBeNull();
   })
   it("should reset pin", async () => {
-    console.log({headers});
-    const res = await authService.resetPin({
+    const res = await authService?.resetPin({
       pin: "12345678",
       phone: "08034668633",
     }, {
@@ -99,6 +99,6 @@ describe("Auth API", () => {
     }, {
       headers
     });
-    expect(res.data?.resetPin).not.toBeNull();
+    expect(res?.data?.resetPin).not.toBeNull();
   })
 });
