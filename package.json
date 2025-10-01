@@ -29,6 +29,7 @@
         "prepublishOnly": "yarn build",
         "lint": "eslint src --ext .ts",
         "test": "vitest run",
+        "test:run": "vitest run --reporter=verbose",
         "test:watch": "vitest"
     },
     "dependencies": {},
