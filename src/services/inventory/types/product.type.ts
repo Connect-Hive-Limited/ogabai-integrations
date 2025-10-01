@@ -1,8 +1,16 @@
 import { Product } from "../../../types"
 import { 
+    AttributeFields,
+    attributeQuery,
+    CategoryFields,
+    categoryQuery,
     PackageFields, packageQuery, 
+    PriceFields, 
+    priceQuery, 
     ProductFields, productNameQuery, ProductNamesFields, 
-    productQuery } from "../entities"
+    productQuery, 
+    StockFields,
+    stockQuery} from "../entities"
 
 export interface GetProductRequest {
     product: Partial<Product>
@@ -13,14 +21,22 @@ export interface GetProductResponse {
 export interface GetProductResponseNestedFields {
     product: ProductFields;
     productPackages: PackageFields;
-    metricPackage: PackageFields
+    metricPackage: PackageFields;
+    category: CategoryFields;
+    price: PriceFields;
+    stocks: StockFields;
+    productAttributes: AttributeFields;
 }
 export const getProductResponseFields: (keyof GetProductResponse)[] = [
     "product"
 ]
 export const _getProductResponseNestedFields: Omit<GetProductResponseNestedFields, "product"> = {
     productPackages: packageQuery,
-    metricPackage: packageQuery
+    metricPackage: packageQuery,
+    category: categoryQuery,
+    price: priceQuery,
+    stocks: stockQuery,
+    productAttributes: attributeQuery,
 }
 export const getProductResponseNestedFields: GetProductResponseNestedFields = {
     product: productQuery,

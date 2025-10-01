@@ -9,7 +9,7 @@ export const productSchema = {
 
   getProducts: (query: string) => `
     query getProducts($product: ProductInput, $productIds: [String], $search: String, $limit: Int!, $skip: Int!, $template: Boolean, $shouldGetFromAllStores: Boolean) {
-      products(product: $product, productIds: $productIds, search: $search, limit: $limit, skip: $skip, template: $template, shouldGetFromAllStores: $shouldGetFromAllStores) {
+      getProducts(product: $product, productIds: $productIds, search: $search, limit: $limit, skip: $skip, template: $template, shouldGetFromAllStores: $shouldGetFromAllStores) {
         ${query}
       }
     }

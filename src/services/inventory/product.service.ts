@@ -118,3 +118,5 @@ export const createProductService = (client: GraphQLClient) => ({
     return res.data?.getProducts ?? null;
   },
 })
+
+export type ProductService = ReturnType<typeof createProductService>;

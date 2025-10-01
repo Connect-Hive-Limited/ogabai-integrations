@@ -1,6 +1,6 @@
 {
     "name": "@connect-plus-online/ogabai-integrations",
-    "version": "0.1.4",
+    "version": "0.1.5",
     "description": "Ogabai integrations for Connect Plus Online",
     "keywords": [
         "graphql",
@@ -29,6 +29,7 @@
         "prepublishOnly": "yarn build",
         "lint": "eslint src --ext .ts",
         "test": "vitest run",
+        "test:run": "vitest run --reporter=verbose",
         "test:watch": "vitest"
     },
     "dependencies": {},
