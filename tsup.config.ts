@@ -1,0 +1,12 @@
+import { defineConfig } from "tsup";
+
+export default defineConfig({
+  entry: ["src/index.ts"],
+  dts: true,
+  format: ["cjs", "esm"],
+  outDir: "dist",
+  clean: true,
+  outExtension: ({ format }) => ({
+    js: format === "cjs" ? ".cjs.js" : ".esm.js",
+  }),
+});
