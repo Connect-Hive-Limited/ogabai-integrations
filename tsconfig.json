@@ -1,15 +1,18 @@
 {
-    "compilerOptions": {
-    "target": "ES2020",
+  "compilerOptions": {
+    "target": "ES2018",
     "module": "ESNext",
-    "moduleResolution": "Node",
+    "jsx": "react-jsx",
     "declaration": true,
+    "emitDeclarationOnly": false,
     "outDir": "dist",
-    "strict": true,
+    "moduleResolution": "Node",
     "esModuleInterop": true,
     "skipLibCheck": true,
+    "strict": true,
+    "allowJs": false,
     "resolveJsonModule": true,
-    "lib": ["ES2020", "DOM"]
-    },
-    "include": ["src"]
+    "isolatedModules": true
+  },
+  "include": ["src"]
 }

@@ -16,7 +16,7 @@
     "license": "MIT",
     "main": "dist/index.cjs.js",
     "module": "dist/index.esm.js",
-    "react-native": "dist/index.js",
+    "react-native": "dist/index.esm.js",
     "types": "dist/index.d.ts",
     "files": [
         "dist"
@@ -24,8 +24,17 @@
     "publishConfig": {
         "access": "public"
     },
+    "exports": {
+        ".": {
+            "react-native": "./dist/index.esm.js",
+            "import": "./dist/index.esm.js",
+            "require": "./dist/index.cjs.js",
+            "types": "./dist/index.d.ts"
+        },
+        "./package.json": "./package.json"
+    },
     "scripts": {
-        "build": "tsup",
+        "build": "tsup src/index.ts --dts --format cjs,esm --out-dir dist",
         "prepublishOnly": "yarn build",
         "lint": "eslint src --ext .ts",
         "test": "vitest run",
