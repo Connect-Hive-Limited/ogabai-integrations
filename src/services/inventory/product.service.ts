@@ -15,10 +15,60 @@ import {
   updateProductResponseNestedFields,
   AddProductResponseNestedFields,
   GetProductResponseNestedFields,
-  GetProductsResponseNestedFields, 
+  GetProductsResponseNestedFields,
+  SearchProductNamesRequest,
+  SearchProductNamesResponse,
+  SearchProductNamesResponseNestedFields,
+  searchProductNamesResponse,
+  searchProductNamesResponseNestedFields,
+  SearchCategoriesAndTemplateResponse,
+  SearchCategoriesAndTemplateResponseNestedFields,
+  SearchCategoriesAndTemplateRequest,
+  searchCategoriesAndTemplateResponse,
+  searchCategoriesAndTemplateResponseNestedFields, 
 } from "./types/product.type";
 
 export const createProductService = (client: GraphQLClient) => ({
+  async searchCategoriesAndTemplate(
+    input: SearchCategoriesAndTemplateRequest, 
+    fetchFields?: {
+      root?: (keyof SearchCategoriesAndTemplateResponse)[],
+      nestedFields?: SearchCategoriesAndTemplateResponseNestedFields
+    },
+    option?: RequestOption
+  ): Promise<SearchCategoriesAndTemplateResponse | null> {
+    const res = await client.request<{ searchCategoriesAndTemplate: SearchCategoriesAndTemplateResponse }, SearchCategoriesAndTemplateRequest>(
+      productSchema.searchCategoriesAndTemplate(
+        gqlQueryStringBuilder<SearchCategoriesAndTemplateResponse, SearchCategoriesAndTemplateResponseNestedFields>(
+          fetchFields?.root ?? searchCategoriesAndTemplateResponse,
+          fetchFields?.nestedFields ?? searchCategoriesAndTemplateResponseNestedFields,
+        )
+      ), 
+      input, 
+      option
+    );
+    return res.data?.searchCategoriesAndTemplate ?? null;
+  },
+  async searchProductNames(
+    input: SearchProductNamesRequest, 
+    fetchFields?: {
+      root?: (keyof SearchProductNamesResponse)[],
+      nestedFields?: SearchProductNamesResponseNestedFields
+    },
+    option?: RequestOption
+  ): Promise<SearchProductNamesResponse | null> {
+    const res = await client.request<{ searchProductNames: SearchProductNamesResponse }, SearchProductNamesRequest>(
+      productSchema.searchProductNames(
+        gqlQueryStringBuilder<SearchProductNamesResponse, SearchProductNamesResponseNestedFields>(
+          fetchFields?.root ?? searchProductNamesResponse,
+          fetchFields?.nestedFields ?? searchProductNamesResponseNestedFields,
+        )
+      ), 
+      input, 
+      option
+    );
+    return res.data?.searchProductNames ?? null;
+  },
   async updateProduct(
     input: UpdateProductRequest, 
     fetchFields?: {

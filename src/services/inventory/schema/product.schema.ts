@@ -1,7 +1,14 @@
 export const productSchema = {
+  searchCategoriesAndTemplate: (query: string) => `
+    query searchCategoriesAndTemplate($search: String, $shouldGetFromAllStores: Boolean){
+      searchCategoriesAndTemplate(search: $search, shouldGetFromAllStores: $shouldGetFromAllStores) {
+        ${query}
+      }
+    }
+  `,
   getProduct: (query: string) => `
     query getProduct($product: ProductInput!, $template: Boolean) {
-      product(product: $product, template: $template) {
+      getProduct(product: $product, template: $template) {
         ${query}
       }
     }
@@ -16,14 +23,14 @@ export const productSchema = {
   `,
   getProductByBarcode: (query: string) => `
     query getProductByBarcode($barcode: String!, $fetchFromGS1IfNotFound: Boolean, $template: Boolean) {
-      productByBarcode(barcode: $barcode, fetchFromGS1IfNotFound: $fetchFromGS1IfNotFound, template: $template) {
+      getProductByBarcode(barcode: $barcode, fetchFromGS1IfNotFound: $fetchFromGS1IfNotFound, template: $template) {
         ${query}
       }
     }
   `,
-  searchProductName: (query: string) => `
-    query searchProductName($search: String!, $limit: Int, $skip: Int, $template: Boolean) {
-      searchProductName(search: $search, limit: $limit, skip: $skip, template: $template) {
+  searchProductNames: (query: string) => `
+    query searchProductNames($search: String!, $limit: Int, $skip: Int, $template: Boolean) {
+      searchProductNames(search: $search, limit: $limit, skip: $skip, template: $template) {
         ${query}
       }
     }

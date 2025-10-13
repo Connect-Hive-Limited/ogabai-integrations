@@ -90,7 +90,7 @@ export const packageQuery: PackageFields = [
     "unit",
     "unitQuantity",
     "totalStock",
-    "parent",
+    "barcode",
     "priorityPrice",
     "stockLimit",
     "storeId",

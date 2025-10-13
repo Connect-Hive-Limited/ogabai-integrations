@@ -55,10 +55,12 @@ export class GraphQLClient {
     const runner = compose(this.middlewares);
     await runner<T>(ctx, resCtx);
 
+    console.log({ data: JSON.stringify(resCtx.response)})
     if (resCtx.error) throw resCtx.error;
     if (!resCtx.response) throw new Error("No response from GraphQL transport");
     if(resCtx.response.errors){
       console.log({errors: resCtx.response.errors})
+      console.log("Detailed error - log: ", JSON.stringify(resCtx.response.errors))
     }
     // if (resCtx.response.errors && resCtx.response.errors.length) {
     //   // normalize, throw first error (apps can inspect)

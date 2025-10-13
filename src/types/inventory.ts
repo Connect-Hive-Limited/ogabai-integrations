@@ -49,7 +49,7 @@ export interface ProductPackage {
   unit: string;
   unitQuantity: number;
   totalStock: number;
-  parent: string;
+  barcode: string;
   priorityPrice: number;
   stockLimit: number;
   storeId: string;
