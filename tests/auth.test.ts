@@ -66,7 +66,7 @@ describe("Auth API", () => {
       pin: "12345678",
       phone: "08034668633",
       storeName: "test store",
-      lastName: "Ceejay",
+      lastName: "Ceejay2",
       firstName: "Joe"
     });
     expect(res?.data?.signUp).toBeNull();

@@ -42,8 +42,7 @@ beforeAll(async () => {
   privateClient = createClient(accessToken);
   const userService = createUserService(privateClient);
   const me = await userService?.me();
-  userData = me?.data?.me
-  console.log({ userData })
+  userData = me?.data?.me;
   if(!userData) throw new Error("No user data");
   if(!userData?.stores) throw new Error("No stores");
   if(!userData?.stores?.[0]?._id) throw new Error("No store id");

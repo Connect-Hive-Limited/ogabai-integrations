@@ -1,4 +1,4 @@
-import { Product } from "../../../types"
+import { Product, ProductCategory } from "../../../types"
 import { 
     AttributeFields,
     attributeQuery,
@@ -101,12 +101,15 @@ export interface SearchProductNamesRequest {
 export interface SearchProductNamesResponse {
     productNames: Product[]
 }
+export const searchProductNamesResponse: (keyof SearchProductNamesResponse)[] = [
+    "productNames"
+]
 export interface SearchProductNamesResponseNestedFields {
     productNames: ProductNamesFields;
 }
-export const searchProductNamesResponseFields: (keyof SearchProductNamesResponse)[] = [
-    "productNames"
-]
+export const searchProductNamesResponseNestedFields: SearchProductNamesResponseNestedFields = {
+    productNames: productNameQuery
+}
 
 // 
 
@@ -162,3 +165,21 @@ export interface RemoveProductResponse {
 export const removeProductResponseFields: (keyof RemoveProductResponse)[] = [
     "productId"
 ]
+
+// search categories and templates 
+export interface SearchCategoriesAndTemplateRequest {
+    search?: string
+    shouldGetFromAllStores?: boolean
+}
+export interface SearchCategoriesAndTemplateResponse {
+    productCategories: ProductCategory[];
+}
+export const searchCategoriesAndTemplateResponse: (keyof SearchCategoriesAndTemplateResponse)[] = [
+    "productCategories"
+]
+export interface SearchCategoriesAndTemplateResponseNestedFields {
+    productCategories: CategoryFields;
+}
+export const searchCategoriesAndTemplateResponseNestedFields: SearchCategoriesAndTemplateResponseNestedFields = {
+    productCategories: categoryQuery
+}
