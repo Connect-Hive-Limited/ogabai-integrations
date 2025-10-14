@@ -59,7 +59,7 @@ const getProduct = (storeId: string):Partial<Product> => ({
 describe.sequential("Product API", () => {
     let productService: ProductService;
     let productId: string;
-    beforeAll(() => {
+    beforeAll(async() => {
         if (!storeClient) throw new Error("No client");
         productService = createProductService(storeClient);
     });

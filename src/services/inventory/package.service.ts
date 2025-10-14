@@ -140,3 +140,6 @@ export const createPackageService = (client: GraphQLClient) => ({
     return res.data?.getPackages ?? null;
   },
 })
+
+export type ProductPackageService = ReturnType<typeof createPackageService> 
+export type PackageService = ReturnType<typeof createPackageService> 
