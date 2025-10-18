@@ -8,7 +8,7 @@ export const packageSchema = {
   `,
   getPackages: (query: string) => `
     query getPackages($productPackage: ProductPackageInput, $packageIds: [String], $search: String, $template: Boolean, $shouldGetFromAllStores: Boolean, $limit: Int, $skip: Int) {
-      packages(productPackage: $productPackage, packageIds: $packageIds, search: $search, template: $template, shouldGetFromAllStores: $shouldGetFromAllStores, limit: $limit, skip: $skip) {
+      getPackages(productPackage: $productPackage, packageIds: $packageIds, search: $search, template: $template, shouldGetFromAllStores: $shouldGetFromAllStores, limit: $limit, skip: $skip) {
         ${query}
       }
     }

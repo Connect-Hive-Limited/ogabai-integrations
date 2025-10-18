@@ -1,22 +1,11 @@
 import { describe, it, expect } from "vitest";
 import { createUserService } from "../src/services/user/user.service";
-import { authService, createClient } from "./setup";
+import { authService, createClient, getPin, getUser } from "./setup";
 
 
-
-/**
- * Auth API Tests
- * 1. login with invalid credentials
- * 2. Sign up with valid credentials
- * 3. Sign up with already existing credentials
- * 4. login with valid credentials
- * 5. reset pin 
- * 6. update tx pin
- * 7. send otp
- * 8. verify otp
- */
-describe("Auth API", () => {
+describe.sequential("Auth API", () => {
   let otp: string = "";
+  let phone: string = "";
   const headers: { 
     "ojami-store-id": string; 
     "X-Otp-Verified-Access-Token": string;
@@ -32,21 +21,21 @@ describe("Auth API", () => {
     });
     expect(res?.data?.login).toBeNull();
   });
-  it("should sign up with user credentials", async () => {
-    const res = await authService?.signUp({
-      pin: "12345678",
-      phone: "08034668633",
-      storeName: "test store",
-      lastName: "Ceejay",
-      firstName: "Joe",
-      storeLocation: "Mushin, lagos state"
-    });
-    expect(res?.data?.signUp).not.toBeNull();
-  })
+  // it("should sign up with user credentials", async () => {
+  //   const res = await authService?.signUp({
+  //     pin: "12345678",
+  //     phone: "08034668633",
+  //     storeName: "test store",
+  //     lastName: "Ceejay",
+  //     firstName: "Joe",
+  //     storeLocation: "Mushin, lagos state"
+  //   });
+  //   expect(res?.data?.signUp).not.toBeNull();
+  // })
   it("should login with user credentials", async () => {
     const res = await authService?.login({
-      pin: "12345678",
-      phone: "08034668633",
+      pin: getPin() || "",
+      phone: getUser()?.phone || "",
     });
     if(res?.data?.login.accessToken){
       headers.Authorization = `Bearer ${res?.data.login.accessToken}`;
@@ -64,7 +53,7 @@ describe("Auth API", () => {
   it("should not sign up with already user credentials", async () => {
     const res = await authService?.signUp({
       pin: "12345678",
-      phone: "08034668633",
+      phone: getUser()?.phone || "",
       storeName: "test store",
       lastName: "Ceejay2",
       firstName: "Joe"
@@ -73,7 +62,7 @@ describe("Auth API", () => {
   })
   it("send otp", async () => {
     const res = await authService?.sendOTP({
-      phone: "08034668633",
+      phone: getUser()?.phone || "",
     },{}, {headers});
     if(res?.data?.sendOTP.otp){
       otp = res?.data.sendOTP.otp;
@@ -82,7 +71,7 @@ describe("Auth API", () => {
   })
   it("should verify otp", async () => {
     const res = await authService?.verifyOTP({
-      phone: "08034668633",
+      phone: getUser()?.phone || "",
       otp,
     }, {}, {headers});
     if(res?.data?.verifyOTP.otpVerifiedAccessToken){
@@ -92,8 +81,8 @@ describe("Auth API", () => {
   })
   it("should reset pin", async () => {
     const res = await authService?.resetPin({
-      pin: "12345678",
-      phone: "08034668633",
+      pin: getPin() || "",
+      phone: getUser()?.phone || "",
     }, {
       
     }, {

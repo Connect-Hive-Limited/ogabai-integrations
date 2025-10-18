@@ -1,5 +1,6 @@
 import { Product, ProductPackage } from "../../../types/inventory";
 import { PackageFields, packageQuery, PriceFields, priceQuery, ProductFields, productQuery, StockFields, stockQuery } from "../entities";
+import { getProductResponseNestedFields, GetProductResponseNestedFields } from "./product.type";
 
 // get package
 export interface GetPackageRequest {
@@ -102,7 +103,7 @@ export interface GetPackagesResponse {
     productPackages: ProductPackage[];
     uniqueProducts: Product[];
 }
-export interface GetPackagesResponseFields extends Omit<GetPackageResponseFields, "productPackage">{
+export interface GetPackagesResponseFields extends Omit<GetPackageResponseFields, "productPackage">, GetProductResponseNestedFields {
     productPackages: PackageFields;
     uniqueProducts: ProductFields
 }
@@ -110,7 +111,8 @@ export const getPackagesResponseFields: (keyof GetPackagesResponse)[] = [
     "productPackages", "uniqueProducts"
 ]
 export const getPackagesResponseNestedFields: GetPackagesResponseFields = {
-    productPackages: packageQuery,
+    // productPackages: packageQuery, product already contained this 
     uniqueProducts: productQuery,
     ...getPackageResponseNestedFields,
+    ...getProductResponseNestedFields
 }

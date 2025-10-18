@@ -13,6 +13,7 @@ let userData: MeResponse|undefined;
 let createClient: (accessToken?: string, storeId?: string) => GraphQLClient;
 let getUser:() => User | undefined;
 let getStores:() => Store[] | undefined;
+let getPin: () => string | undefined;
 // e.g. spin up test env, seed DB, or just set globals
 beforeAll(async () => {
   console.log("Starting SDK integration tests...");
@@ -27,8 +28,9 @@ beforeAll(async () => {
   
   authService = createAuthService(publicClient)
   let accessToken = "";
+  const pin = "12345678"
   const res = await authService?.signUp({
-    pin: "12345678",
+    pin,
     phone: "08034668644",
     storeName: "test2 store",
     lastName: "Ceejay2",
@@ -36,9 +38,9 @@ beforeAll(async () => {
     storeLocation: "Mushin, lagos state"
   });
   accessToken = res?.data?.signUp?.accessToken ?? "";
-  // it("should sign up with user credentials", async () => {
-  //   expect(res?.data?.signUp).not.toBeNull();
-  // })
+  it("should sign up with user credentials", async () => {
+    expect(res?.data?.signUp).not.toBeNull();
+  })
   privateClient = createClient(accessToken);
   const userService = createUserService(privateClient);
   const me = await userService?.me();
@@ -50,6 +52,7 @@ beforeAll(async () => {
   getUser = () => userData?.user;
   getStores = () => userData?.stores;
   storeClient = createClient(accessToken, storeId);;
+  getPin = () => pin
   // it("should get user data", async () => {
   //   expect(me?.data?.me).not.toBeNull();
   // })
@@ -67,6 +70,7 @@ export {
   privateClient, 
   userData,
   getUser, 
+  getPin,
   getStores,
 };
 

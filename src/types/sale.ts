@@ -58,6 +58,7 @@ export type Order = {
   userId: string;
   orderStatus: OrderStatus;
   transactionId: string;
+  storeId: string;
   createdAt: string;
 };
 
