@@ -94,6 +94,7 @@ export const getProductByBarcodeResponseNestedFields: GetProductByBarcodeRespons
 //search product names 
 export interface SearchProductNamesRequest {
     search: string
+    product?: Partial<Product>;
     limit?: number
     skip?: number
     template?: boolean

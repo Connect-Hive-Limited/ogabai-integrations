@@ -29,8 +29,8 @@ export const productSchema = {
     }
   `,
   searchProductNames: (query: string) => `
-    query searchProductNames($search: String!, $limit: Int, $skip: Int, $template: Boolean) {
-      searchProductNames(search: $search, limit: $limit, skip: $skip, template: $template) {
+    query searchProductNames($search: String!, $product: ProductInput, $limit: Int, $skip: Int, $template: Boolean) {
+      searchProductNames(search: $search, product: $product, limit: $limit, skip: $skip, template: $template) {
         ${query}
       }
     }

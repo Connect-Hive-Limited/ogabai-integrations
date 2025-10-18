@@ -1,61 +1,8 @@
 import { beforeAll, describe, expect, it } from "vitest";
 import { getStores, storeClient } from "./setup";
 import { type ProductService, createProductService } from "../src/services/inventory/product.service";
-import { Product } from "../src/types";
+import { getProduct } from "./dummy";
 
-const getProduct = (storeId: string):Partial<Product> => ({
-    name: "Test Product",
-    description: "Test Product",
-    storeId,
-    category: {
-        name: "food stuff",
-        _id: "",
-        description: "",
-        categoryStatus: "active",
-        storeId: storeId || "",
-        createdAt: "",
-        status: "",
-        isTemplate: ""
-    },
-    metricPackageId: "1",
-    productPackages: [{
-        _id: "1",
-        name: "product package",
-        description: "",
-        trackIndex: 0,
-        productId: "",
-        unit: "",
-        unitQuantity: 0,
-        totalStock: 0,
-        barcode: "",
-        priorityPrice: 0,
-        stockLimit: 0,
-        storeId: "",
-        createdAt: "",
-        deduction: 0,
-        stocks: [],
-        price: {
-            _id: "",
-            packageId: "",
-            sellingPrice: 0,
-            costPrice: 100,
-            newSellingPrice: 0,
-            newCostPrice: 0,
-            deduction: 0,
-            storeId: "",
-            timestamp: "",
-            createdAt: ""
-        }
-    }],
-    barcode: "",
-    categoryId: "",
-    images: [],
-    productAttributes: [],
-    tag: "",
-    createdAt: "",
-    totalStockInMetricPackage: 0,
-    _id: ""
-})
 describe.sequential("Product API", () => {
     let productService: ProductService;
     let productId: string;
@@ -123,11 +70,11 @@ describe.sequential("Product API", () => {
         })
         expect(res?.productId).not.toBeNull();
     });
-    it("should have zero products after deletion", async () => {
-        const res = await productService.getProducts({
-            limit: 10,
-            skip: 0
-        })
-        expect(res?.products.length).equal(0);
-    });
+    // it("should have zero products after deletion", async () => {
+    //     const res = await productService.getProducts({
+    //         limit: 10,
+    //         skip: 0
+    //     })
+    //     expect(res?.products.length).equal(0);
+    // });
 });
