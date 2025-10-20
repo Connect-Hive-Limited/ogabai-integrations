@@ -80,7 +80,6 @@ export const addPackagesResponseNestedFields: AddPackagesResponseFields = {
 // add package
 export interface AddPackageRequest {
     productPackage: Partial<ProductPackage>;
-    packageStocks: Partial<ProductPackage>[];
     template?: boolean;
 }
 export interface AddPackageResponse {

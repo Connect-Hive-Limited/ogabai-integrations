@@ -1,45 +1,54 @@
 import { beforeAll, describe, expect, it } from "vitest";
-import { getStores, storeClient } from "./setup";
 import { type ProductService, createProductService } from "../src/services/inventory/product.service";
 import { getProduct } from "./dummy";
+import { initTestEnv } from "./testEnv";
+import { Product } from "../src/types";
 
 describe.sequential("Product API", () => {
     let productService: ProductService;
     let productId: string;
+    let storeId: string;
+    let env: Awaited<ReturnType<typeof initTestEnv>>;
+    let productName: string;
+    let categoryName: string;
+    let product: Partial<Product>
     beforeAll(async() => {
-        if (!storeClient) throw new Error("No client");
-        productService = createProductService(storeClient);
+        env = await initTestEnv()
+        const _storeId = env?.storeId!
+        productService = createProductService(env?.storeClient!);
+        storeId = _storeId
     });
     it("should create product", async () => {
-        const storeId = getStores()?.[0]._id;
+        product =  getProduct(storeId || "")
+        productName = product.name!
+        categoryName = product.category?.name || ""
         const res = await productService.addProduct({
-            product: getProduct(storeId || ""),
+            product,
             imageTypes: ["image/jpeg", "image/png"],
-            template: false
         })
         expect(res?.product).not.toBeNull();
         productId = res?.product?._id || "";
     });
-    it("should get product", async () => {
+    it("should get product & should have stock in metric package", async () => {
         const res = await productService.getProduct({
             product: {
                 _id: productId
             },            
         })
         expect(res?.product).not.toBeNull();
+        expect(res?.product.totalStockInMetricPackage).is.greaterThan(1)
     });
     it("should search products", async () => {
         const res = await productService.searchProductNames({
-            search: "test",
+            search: productName,
             limit: 10,
             skip: 0,
-            template: false
         })
         expect(res?.productNames.length).greaterThan(0);
     });
     it("should search categories", async () => {
         const res = await productService.searchCategoriesAndTemplate({
-            search: "food",
+            search: categoryName,
         })
         expect(res?.productCategories.length).greaterThan(0)
     })
@@ -49,7 +58,6 @@ describe.sequential("Product API", () => {
             product: {
                 name: "Updated Product"
             },
-            template: false
         })
         expect(res?.product).not.toBeNull();
     });
@@ -58,7 +66,7 @@ describe.sequential("Product API", () => {
             limit: 10,
             skip: 0,
             product: {
-                storeId: getStores()?.[0]._id
+                storeId
             }
         })
         expect(res?.products.length).greaterThan(0);
@@ -66,7 +74,6 @@ describe.sequential("Product API", () => {
     it("should remove product", async () => {
         const res = await productService.removeProduct({
             productId,
-            template: false
         })
         expect(res?.productId).not.toBeNull();
     });

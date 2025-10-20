@@ -14,8 +14,8 @@ export const transactionSchema = {
         }
     `,
     addTransaction: (query: string) => `
-        mutation addTransaction($sales: [SaleInput]!, $transaction: TransactionInput!){
-            addTransaction(sales: $sales, transaction: $transaction){
+        mutation addTransaction($transaction: TransactionInput!){
+            addTransaction(transaction: $transaction){
                 ${query}
             }
         }
