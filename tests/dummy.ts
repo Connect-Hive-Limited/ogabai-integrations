@@ -1,11 +1,13 @@
 import { Product } from "../src/types";
+import Chance from "chance";
+const chance = new Chance();
 
 export const getProduct = (storeId: string):Partial<Product> => ({
-    name: "Test Product for Package",
-    description: "Test Product Description",
+    name: chance.name(),
+    description: chance.name(),
     storeId,
     category: {
-        name: "food stuff",
+        name: chance.name(),
         _id: "",
         description: "",
         categoryStatus: "active",
@@ -17,7 +19,7 @@ export const getProduct = (storeId: string):Partial<Product> => ({
     metricPackageId: "1",
     productPackages: [{
         _id: "1",
-        name: "product package test",
+        name: chance.name(),
         description: "",
         trackIndex: 0,
         productId: "",
@@ -30,19 +32,16 @@ export const getProduct = (storeId: string):Partial<Product> => ({
         storeId: "",
         createdAt: "",
         deduction: 0,
-        stocks: [],
-        price: {
-            _id: "1",
+        stocks: [{
+            _id: "",
             packageId: "",
-            sellingPrice: 0,
-            costPrice: 100,
-            newSellingPrice: 0,
-            newCostPrice: 0,
+            stockQty: 100,
+            costPerPackage: 100,
+            sellPerPackage: 120,
             deduction: 0,
             storeId: "",
-            timestamp: "",
             createdAt: ""
-        }
+        }],
     }],
     barcode: "",
     categoryId: "",

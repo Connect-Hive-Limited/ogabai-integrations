@@ -58,8 +58,7 @@ export const getTransactionsResponseNestedFields: GetTransactionsResponseNestedF
 
 // add transactions 
 export interface AddTransactionRequest {
-    transaction: Partial<Transaction>;
-    sales: Partial<Sale>[];
+    transaction: Partial<Omit<Transaction, "txStatus"|"saleStatus"|"storeId">>;
 }
 export type AddTransactionResponse = GetTransactionResponse;
 export const addTransactionResponse = getTransactionResponse;

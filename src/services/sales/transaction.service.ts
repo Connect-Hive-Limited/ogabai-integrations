@@ -94,3 +94,5 @@ export const createTransactionService = (client: GraphQLClient) => ({
     return res.data?.getTransactions ?? null;
   },
 })
+
+export type TransactionService = ReturnType<typeof createTransactionService>

@@ -14,8 +14,8 @@ export const packageSchema = {
     }
   `,
   addPackage: (query: string) => `
-    mutation addPackage($productPackage: ProductPackageInput!, $packageStocks: [StockInput], $template: Boolean) {
-      addPackage(productPackage: $productPackage, packageStocks: $packageStocks, template: $template) {
+    mutation addPackage($productPackage: ProductPackageInput!, $template: Boolean) {
+      addPackage(productPackage: $productPackage, template: $template) {
         ${query}
       }
     }

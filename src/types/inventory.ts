@@ -54,9 +54,9 @@ export interface ProductPackage {
   stockLimit: number;
   storeId: string;
   createdAt: string;
-  price: Price;             // comes from price list
+  price?: Price;             // comes from price list
   deduction: number;
-  stocks: Stock[];          // list of stock, paginated
+  stocks?: Stock[];          // list of stock, paginated
 }
 
 export interface Price {
@@ -64,11 +64,8 @@ export interface Price {
   packageId: string;
   sellingPrice: number;
   costPrice: number;
-  newSellingPrice: number;
-  newCostPrice: number;
   deduction: number;
   storeId: string;
-  timestamp: string;
   createdAt: string;
 }
 
@@ -97,7 +94,6 @@ export interface Stock {
   costPerPackage: number;
   sellPerPackage: number;
   deduction: number;
-  timestamp: string;
   storeId: string;
   createdAt: string;
 }

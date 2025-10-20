@@ -12,11 +12,8 @@ export const priceQuery:PriceFields = [
     "packageId",
     "sellingPrice",
     "costPrice",
-    "newSellingPrice",
-    "newCostPrice",
     "deduction",
     "storeId",
-    "timestamp",
     "createdAt"
 ]
 export type StockFields = (keyof Stock)[]
@@ -27,7 +24,6 @@ export const stockQuery: StockFields = [
     "costPerPackage",
     "sellPerPackage",
     "deduction",
-    "timestamp",
     "storeId",
     "createdAt"
 ]
