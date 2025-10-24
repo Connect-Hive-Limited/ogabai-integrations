@@ -123,9 +123,9 @@ export interface UserProductCounts {
   totalProductToday: number;
 }
 
-export interface RestockCounts {
-  totalRestock: number;
-  totalRestockThisYear: number;
-  totalRestockThisMonth: number;
-  totalRestockToday: number;
-}
+// export interface RestockCounts {
+//   totalRestock: number;
+//   totalRestockThisYear: number;
+//   totalRestockThisMonth: number;
+//   totalRestockToday: number;
+// }

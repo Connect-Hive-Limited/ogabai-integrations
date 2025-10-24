@@ -56,6 +56,7 @@ describe.sequential("Auth API", () => {
     const userService = createUserService(client)
     const res = await userService?.me({}, {headers})
     expect(res?.data?.me).not.toBeNull();
+    expect(res?.data?.me.user.lastName).not.toBeNull()
   })
 
   it("should not sign up with already user credentials", async () => {

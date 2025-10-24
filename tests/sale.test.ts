@@ -100,6 +100,7 @@ describe.sequential("Sales API", () => {
     let productId: string;
     let product: Product;
     let env: Awaited<ReturnType<typeof initTestEnv>>;
+    let transactionId: string|undefined;
     beforeAll(async() => {
         env = await initTestEnv()
         storeId = env?.storeId!
@@ -129,5 +130,14 @@ describe.sequential("Sales API", () => {
             transaction: createTransaction(product, storeId),
         })
         expect(res?.transaction?._id).not.toBeNull();
+        transactionId = res?.transaction._id;
+    })
+    it("should get transaction and transaction should contain sales", async () => {
+      const res = await transactionService.getTransaction({
+        transaction: {
+          _id: transactionId
+        }
+      })
+      expect(res?.transaction?.sales.length).greaterThan(0)
     })
 });
