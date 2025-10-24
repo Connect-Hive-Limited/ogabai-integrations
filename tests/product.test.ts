@@ -26,7 +26,6 @@ describe.sequential("Product API", () => {
             product,
             imageTypes: ["image/jpeg", "image/png"],
         })
-        console.log(JSON.stringify(res?.product))
         expect(res?.product).not.toBeNull();
         productId = res?.product?._id || "";
     });
@@ -36,7 +35,6 @@ describe.sequential("Product API", () => {
                 _id: productId
             },            
         })
-         console.log(res?.product)
         expect(res?.product).not.toBeNull();
         expect(res?.product.totalStockInMetricPackage).is.greaterThan(1)
     });
