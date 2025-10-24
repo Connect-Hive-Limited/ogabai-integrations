@@ -1,3 +1,30 @@
+// -------------------- Dashboard Statistics --------------
+export interface ProductCounts {
+  totalProduct: number;
+  totalProductThisMonth: number;
+  totalProductThisYear: number;
+  totalProductToday: number;
+}
+export interface RestockCounts {
+  totalRestock: number;
+  totalRestockThisMonth: number;
+  totalRestockThisYear: number;
+  totalRestockToday: number;
+}
+export interface SaleCounts {
+  totalSales: number;
+  totalSalesThisMonth: number;
+  totalSalesThisYear: number;
+  totalSalesToday: number;
+}
+export interface TransactionCounts {
+  totalTx: number;
+  totalTxThisMonth: number;
+  totalTxThisYear: number;
+  totalTxToday: number;
+}
+
+
 // -------------------- Enums as Unions --------------------
 export type UserStatus = "active" | "suspended" | "inactive";
 export type UserType = "manufacturer" | "distributor" | "admin";

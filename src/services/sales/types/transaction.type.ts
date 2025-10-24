@@ -4,7 +4,7 @@ import { ProductFields, productNameQuery } from "../../inventory/entities";
 import { SaleFields, saleQuery, TransactionFields, transactionQuery } from "../sale.entity";
 
 export interface GetTransactionRequest {
-    transaction: Promise<Transaction>;
+    transaction: Partial<Transaction>;
 }
 export interface GetTransactionResponse {
     transaction: Transaction

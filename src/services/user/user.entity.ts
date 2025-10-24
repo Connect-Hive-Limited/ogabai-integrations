@@ -1,4 +1,4 @@
-import { Account, NotificationChannels, ServiceUpdate, User, UserNotificationSettings, UserSetting, Wallet } from "../../types";
+import { Account, NotificationChannels, ProductCounts, RestockCounts, SaleCounts, ServiceUpdate, TransactionCounts, User, UserNotificationSettings, UserSetting, Wallet } from "../../types";
 
 export type AccountFields = (keyof Account)[];
 export type WalletFields = (keyof Wallet)[];
@@ -7,6 +7,28 @@ export type UserNotificationSettingsFields = (keyof UserNotificationSettings)[];
 export type NotificationChannelsFields = (keyof NotificationChannels)[];
 export type ServiceUpdateFields = (keyof ServiceUpdate)[]
 export type UserSettingFields = (keyof UserSetting)[]
+export type ProductCountsFields = (keyof ProductCounts)[];
+export type RestockCountsFields = (keyof RestockCounts)[]
+export type SaleCountsFields = (keyof SaleCounts)[];
+export type TransactionCountsFields = (keyof TransactionCounts)[];
+
+
+
+export const transactionCountsQuery:TransactionCountsFields = [
+    "totalTx", "totalTxThisMonth", "totalTxThisYear", "totalTxToday"
+]
+export const saleCountsQuery:SaleCountsFields = [
+    "totalSales", "totalSalesThisMonth", "totalSalesThisYear", 
+    "totalSalesToday"
+]
+export const restockCountsQuery:RestockCountsFields = [
+    "totalRestock", "totalRestockThisMonth", "totalRestockThisYear", 
+    "totalRestockToday"
+]
+export const productCountsQuery:ProductCountsFields = [
+    "totalProduct", "totalProductThisMonth", "totalProductThisYear",
+    "totalProductToday"
+]
 
 
 export const accountQuery:AccountFields = [

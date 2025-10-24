@@ -1,4 +1,11 @@
 export const userSchema = {
+  getUserDashStats: (query: string) => `
+    query getUserDashStats {
+      getUserDashStats {
+        ${query}
+      }
+    }
+  `,
   me: (query: string) => `
     query me {
       me {

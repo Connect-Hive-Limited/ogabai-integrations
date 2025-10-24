@@ -1,14 +1,44 @@
 import { 
     Account,
+    ProductCounts,
+    RestockCounts,
+    SaleCounts,
     Store,
+    TransactionCounts,
     User,
     UserSetting,
     UserType 
 } from "../../../types";
-import { AccountFields, accountQuery, UserFields, userQuery, UserSettingFields, userSettingQuery } from "../user.entity";
+import { AccountFields, ProductCountsFields, productCountsQuery, RestockCountsFields, restockCountsQuery, SaleCountsFields, saleCountsQuery, TransactionCountsFields, transactionCountsQuery, UserFields, userQuery, UserSettingFields, userSettingQuery } from "../user.entity";
 import { AddressFields, addressQuery, StoreFields, storeQuery } from "../../inventory/entities";
 import { getAccountResponseNestedFields } from "./account.type"
 
+
+// user dashboard stats 
+export interface GetUserDashStatsResponse {
+  outOfStockCount: number;
+  productCounts: ProductCounts;
+  restockCounts: RestockCounts;
+  saleCounts: SaleCounts;
+  stockValue: number;
+  transactionCounts: TransactionCounts;
+}
+export const getUserDashStatsResponse:(keyof GetUserDashStatsResponse)[] = [
+    "outOfStockCount", "productCounts", "restockCounts", "saleCounts",
+    "stockValue", "transactionCounts"
+]
+export interface GetUserDashStatsResponseNestedFields {
+    productCounts: ProductCountsFields;
+    restockCounts: RestockCountsFields;
+    saleCounts: SaleCountsFields;
+    transactionCounts: TransactionCountsFields;
+}
+export const getUserDashStatsResponseNestedFields:GetUserDashStatsResponseNestedFields = {
+    productCounts: productCountsQuery,
+    restockCounts: restockCountsQuery,
+    saleCounts: saleCountsQuery,
+    transactionCounts: transactionCountsQuery
+}
 
 // get user 
 export interface GetUserRequest {
