@@ -5,6 +5,7 @@ import { getProduct } from "./dummy";
 import { Product, ProductPackage, Sale, Transaction } from "../src/types";
 import { type TransactionService, createTransactionService } from "../src/services/sales/transaction.service";
 import { initTestEnv } from "./testEnv";
+import { createUserService, UserService } from "../src/services/user/user.service";
 
 function getPackageMetricCount(
   packages: ProductPackage[],
@@ -95,6 +96,7 @@ function createTransaction(product: Product, storeId: string): Partial<Transacti
 describe.sequential("Sales API", () => {
     let productService: ProductService;
     let transactionService: TransactionService
+    let userService: UserService
     let storeId: string
     
     let productId: string;
@@ -107,6 +109,7 @@ describe.sequential("Sales API", () => {
         const storeClient = env?.storeClient!
         productService = createProductService(storeClient);
         transactionService = createTransactionService(storeClient);
+        userService = createUserService(storeClient);
     });
     it("should create product", async () => {
         const res = await productService.addProduct({
@@ -139,5 +142,10 @@ describe.sequential("Sales API", () => {
         }
       })
       expect(res?.transaction?.sales.length).greaterThan(0)
+    })
+    it("transaction count should increase", async () => {
+      const res = await userService.getUserDashStats()
+      console.log({ res })
+      expect(res?.saleCounts.totalSales).greaterThan(0)
     })
 });

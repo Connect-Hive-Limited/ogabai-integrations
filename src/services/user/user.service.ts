@@ -11,8 +11,8 @@ export const createUserService = (client: GraphQLClient) => ({
       nestedFields?: GetUserDashStatsResponseNestedFields
     },
     option?: RequestOption
-  ): Promise<GraphQLResponse<{ getUserDashStats: GetUserDashStatsResponse }>> {
-    return client.request<{ getUserDashStats: GetUserDashStatsResponse }>(
+  ): Promise<GetUserDashStatsResponse|undefined>{
+    const res = await  client.request<{ getUserDashStats: GetUserDashStatsResponse }>(
       userSchema.getUserDashStats(
         gqlQueryStringBuilder<GetUserDashStatsResponse, GetUserDashStatsResponseNestedFields>(
           fetchFields?.root ?? getUserDashStatsResponse,
@@ -22,6 +22,7 @@ export const createUserService = (client: GraphQLClient) => ({
       {},
       option
     );
+    return res.data?.getUserDashStats;
   },
   async me(
     fetchFields?: {
