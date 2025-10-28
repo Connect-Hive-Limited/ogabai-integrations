@@ -14,6 +14,7 @@ export type Sale = {
   quantityInMetricUnit: number;  // int64
   createdAt: string;
   storeId: string;
+  transactionId?: string;
 };
 
 // -------------------- Transaction --------------------

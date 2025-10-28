@@ -52,6 +52,7 @@ describe.sequential("Product Package API", () => {
             limit: 100,
             skip: 0,
         })
+        // console.log({ res: JSON.stringify(res, null, 2) })
         expect(res?.productPackages.length).greaterThan(0)
     })
     it("should update package", async () => {
