@@ -19,6 +19,18 @@ export class GraphQLClient {
   private headersFactory: () => Promise<Record<string, string>>;
   private middlewares: Middleware[];
 
+  public async token(): Promise<string | null> {
+    return this.tokenProvider();
+  }
+
+  public async headers(): Promise<Record<string, string>> {
+    return this.headersFactory();
+  }
+
+  public async getUrl(){
+    return this.url
+  }
+
   constructor(opts: ClientOptions) {
     this.url = opts.url;
     this.tokenProvider = toAsyncTokenProvider(opts.tokenProvider);
