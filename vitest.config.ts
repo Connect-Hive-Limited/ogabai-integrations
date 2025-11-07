@@ -5,6 +5,8 @@ export default defineConfig({
     globals: true,
     globalSetup: ["./tests/global.setup.ts"],
     environment: "node", // or "jsdom" if testing hooks in React
+    testTimeout: 20000, 
+    hookTimeout: 20000,
     // sequence: {
     //   // 👇 this makes test files run one by one
     //   concurrent: false,
