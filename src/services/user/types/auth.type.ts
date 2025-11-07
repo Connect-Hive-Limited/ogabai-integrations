@@ -10,6 +10,18 @@ export const checkRegistrationResponse:(keyof CheckRegistrationResponse)[] = [
     "isRegistered"
 ]
 
+// change pin
+export interface ChangePinRequest {
+    userId: string;
+    oldPin: string;
+    newPin: string;
+}
+export interface ChangePinResponse {
+    success: boolean;
+}
+export const changePinResponse:(keyof ChangePinResponse)[] = [
+    "success"
+]
 
 // update tx pin
 export interface UpdateTxPinRequest {

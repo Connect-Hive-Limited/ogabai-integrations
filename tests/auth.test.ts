@@ -10,7 +10,9 @@ describe.sequential("Auth API", () => {
   let otp: string = "";
   let phone = chance.phone()
   let pin = chance.integer({min: 10000000, max: 99999999}).toString()
+  let newPin = chance.integer({min: 10000000, max: 99999999}).toString()
   let authService: AuthService;
+  let userId: string|undefined;
   let env: Awaited<ReturnType<typeof initTestEnv>>;
   const headers: { 
     "ojami-store-id": string; 
@@ -40,6 +42,7 @@ describe.sequential("Auth API", () => {
       storeLocation: chance.address()
     });
     expect(res?.data?.signUp).not.toBeNull();
+    userId = res?.data?.signUp?.userId;
   })
   it("should login with user credentials", async () => {
     const res = await authService?.login({
@@ -57,8 +60,27 @@ describe.sequential("Auth API", () => {
     const res = await userService?.me({}, {headers})
     expect(res?.data?.me).not.toBeNull();
     expect(res?.data?.me.user.lastName).not.equal("")
+    headers["ojami-store-id"] = res?.data?.me?.stores?.[0]?._id as string
   })
-
+  it("change login pin", async () => {
+    const res = await authService?.changePin({
+      userId: userId as string,
+      oldPin: pin,
+      newPin,
+    }, {}, { headers });
+    console.log({ res: JSON.stringify(res) });
+    expect(res?.data?.changePin).toBeDefined();
+  })
+  it("login with new pin", async () => {
+    const res = await authService?.login({
+      pin: newPin,
+      phone,
+    });
+    if(res?.data?.login.accessToken){
+      headers.Authorization = `Bearer ${res?.data.login.accessToken}`;
+    }
+    expect(res?.data?.login).not.toBeNull();
+  })
   it("should not sign up with already user credentials", async () => {
     const res = await authService?.signUp({
       pin,
