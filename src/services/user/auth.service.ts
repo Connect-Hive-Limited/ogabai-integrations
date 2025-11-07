@@ -3,6 +3,9 @@ import { gqlQueryStringBuilder } from "../../helpers/query";
 import { GraphQLResponse } from "../../types";
 import {authSchema} from "./schemas/auth.schema";
 import { 
+  ChangePinRequest,
+  changePinResponse,
+  ChangePinResponse,
   LoginRequest, loginResponse, LoginResponse, 
   ResetPinRequest, resetPinResponse, ResetPinResponse, 
   SendOTPRequest, sendOTPResponse, SendOTPResponse, 
@@ -12,6 +15,23 @@ import {
 } from "./types/auth.type";
 
 export const createAuthService = (client: GraphQLClient) => ({
+  async changePin(
+    input: ChangePinRequest, 
+    fetchFields?: {
+      root?: (keyof ChangePinResponse)[],
+    },
+    option?: RequestOption
+  ): Promise<GraphQLResponse<{ changePin: ChangePinResponse }>> {
+    return client.request<{ changePin: ChangePinResponse }, ChangePinRequest>(
+      authSchema.changePin(
+        gqlQueryStringBuilder<ChangePinResponse>(
+          fetchFields?.root ?? changePinResponse,
+        )
+      ), 
+      input,
+      option
+    );
+  },
   async updateTxPin(
     input: UpdateTxPinRequest, 
     fetchFields?: {

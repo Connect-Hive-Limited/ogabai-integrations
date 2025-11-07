@@ -1,4 +1,12 @@
 export const authSchema = {
+  // change pin 
+  changePin: (query: string) => `
+    mutation changePin($userId: String!, $oldPin: String!, $newPin: String!) {
+      changePin(userId: $userId, oldPin: $oldPin, newPin: $newPin) {
+        ${query}
+      }
+    }
+  `,
   checkRegistration: (query: string) => `
     query checkRegistration($phone: String!) {
       checkRegistration(phone: $phone) {
