@@ -145,7 +145,6 @@ describe.sequential("Sales API", () => {
     })
     it("transaction count should increase", async () => {
       const res = await userService.getUserDashStats()
-      console.log({ res: JSON.stringify(res, null, 2) })
       expect(res?.saleCounts.totalSales).greaterThan(0)
     })
 });

@@ -1,5 +1,7 @@
+import FormData from "form-data";
 import { GraphQLClient, RequestOption } from "../../client";
 import { gqlQueryStringBuilder } from "../../helpers/query";
+import { Product } from "../../types";
 import { productSchema } from "./schema/product.schema";
 import { 
   AddProductRequest, AddProductResponse, addProductResponseFields, addProductResponseNestedFields, 
@@ -27,8 +29,13 @@ import {
   searchCategoriesAndTemplateResponse,
   searchCategoriesAndTemplateResponseNestedFields, 
 } from "./types/product.type";
+import { createFileService } from "../file/file.service";
 
 export const createProductService = (client: GraphQLClient) => ({
+  async uploadProductImage(form: FormData) {
+    const fileClient = createFileService(client);
+    return ((await fileClient.uploadFile<{product: Product}>(form)).product);
+  },
   async searchCategoriesAndTemplate(
     input: SearchCategoriesAndTemplateRequest, 
     fetchFields?: {

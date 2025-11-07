@@ -27,7 +27,7 @@ export class GraphQLClient {
     return this.headersFactory();
   }
 
-  public async getUrl(){
+  public getUrl(){
     return this.url
   }
 
