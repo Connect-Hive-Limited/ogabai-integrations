@@ -1,5 +1,3 @@
-import FormData from "form-data";
-import fetch from "node-fetch";
 import type { GraphQLClient } from "../../client";
 
 export const createFileService = (client: GraphQLClient) => ({
@@ -7,14 +5,15 @@ export const createFileService = (client: GraphQLClient) => ({
     const url = client["url"].replace("/graphql", "") + "/api/upload";
     const token = await client.token();
 
-    const headers = formData.getHeaders({
+    const headers: Record<string, string> = {
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
-    });
+    };
 
+    // ✅ Do not use formData.getHeaders() — not available in React Native/browser
     const res = await fetch(url, {
       method: "POST",
       headers,
-      body: formData, // ✅ critical: stream body, not string
+      body: formData, // native FormData works fine
     });
 
     const text = await res.text();

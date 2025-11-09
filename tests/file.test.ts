@@ -1,7 +1,6 @@
 import { beforeAll, describe, expect, it } from "vitest";
 import fs from "fs";
 import path from "path";
-import FormData from "form-data";
 import { initTestEnv } from "./testEnv";
 import { createFileService } from "../src/services/file/file.service";
 import { createProductService } from "../src/services/inventory/product.service";
@@ -38,9 +37,10 @@ describe.sequential("File Upload API", () => {
         const formData = new FormData();
         formData.append("productId", productId);
         formData.append("storeId", env?.storeId || "");
-        formData.append("file", fs.createReadStream(testImagePath));
+        // formData.append("file", fs.createReadStream(testImagePath));
+        formData.append("file", new Blob([fs.readFileSync(testImagePath)], { type: "image/jpeg" }), "test-image.jpg");
 
-        const updateProduct = await productService.uploadProductImage(formData);
+        const updateProduct = await productService.uploadProductImage(formData as any);
 
         expect(updateProduct).toBeDefined();
         expect(updateProduct?.images?.length).toBeGreaterThan(0);
@@ -57,10 +57,10 @@ describe.sequential("File Upload API", () => {
         const testTextPath = path.resolve(__dirname, "assets/test-text.txt");
         const formData = new FormData();
         formData.append("productId", productId);
-        formData.append("file", fs.createReadStream(testTextPath));
+        formData.append("file", fs.createReadStream(testTextPath) as any);
 
         await expect(
-        fileService.uploadFile<TestUploadResponse>(formData)
+        fileService.uploadFile<TestUploadResponse>(formData as any)
         ).rejects.toThrow(/File upload failed/i);
     });
 });
