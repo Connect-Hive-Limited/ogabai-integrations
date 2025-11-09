@@ -16,7 +16,7 @@ export const getProduct = (storeId: string):Partial<Product> => ({
         status: "",
         isTemplate: ""
     },
-    metricPackageId: "1",
+    smallestPackageId: "1",
     productPackages: [
         {
             _id: "1",
@@ -75,7 +75,7 @@ export const getProduct = (storeId: string):Partial<Product> => ({
     productAttributes: [],
     tag: "",
     createdAt: "",
-    totalStockInMetricPackage: 0,
+    totalStockInSmallestPackage: 0,
     _id: ""
     
 })

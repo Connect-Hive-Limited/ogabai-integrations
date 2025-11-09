@@ -9,13 +9,13 @@ import { createUserService, UserService } from "../src/services/user/user.servic
 
 function getPackageMetricCount(
   packages: ProductPackage[],
-  metricPackageId: string,
+  smallestPackageId: string,
   targetPackageId: string
 ): number {
   if (!packages?.length) throw new Error("Package list is empty");
 
   const sortedPackages = [...packages].sort((a, b) => a.trackIndex - b.trackIndex);
-  const metricIndex = sortedPackages.findIndex((p) => p._id === metricPackageId);
+  const metricIndex = sortedPackages.findIndex((p) => p._id === smallestPackageId);
   const targetIndex = sortedPackages.findIndex((p) => p._id === targetPackageId);
 
   if (metricIndex === -1 || targetIndex === -1) {
@@ -58,7 +58,7 @@ function createTransaction(product: Product, storeId: string): Partial<Transacti
   const qty = 3;
   const metricCount = getPackageMetricCount(
     sortedPackages,
-    product.metricPackageId,
+    product.smallestPackageId,
     randomPackage._id
   );
 
