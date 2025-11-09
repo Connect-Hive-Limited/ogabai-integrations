@@ -21,7 +21,7 @@ export interface GetProductResponse {
 export interface GetProductResponseNestedFields {
     product: ProductFields;
     productPackages: PackageFields;
-    metricPackage: PackageFields;
+    smallestPackage: PackageFields;
     category: CategoryFields;
     price: PriceFields;
     stocks: StockFields;
@@ -32,7 +32,7 @@ export const getProductResponseFields: (keyof GetProductResponse)[] = [
 ]
 export const _getProductResponseNestedFields: Omit<GetProductResponseNestedFields, "product"> = {
     productPackages: packageQuery,
-    metricPackage: packageQuery,
+    smallestPackage: packageQuery,
     category: categoryQuery,
     price: priceQuery,
     stocks: stockQuery,

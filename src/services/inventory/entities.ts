@@ -62,14 +62,14 @@ export const productQuery:ProductFields = [
     "createdAt",
     "description",
     "images",
-    "metricPackage",
-    "metricPackageId",
+    "smallestPackage",
+    "smallestPackageId",
     "name",
     "productAttributes",
     "productPackages",
     "storeId",
     "tag", 
-    "totalStockInMetricPackage",
+    "totalStockInSmallestPackage",
 ]
 export type ProductNamesFields = (keyof ProductName)[]
 export const productNameQuery: ProductNamesFields = [

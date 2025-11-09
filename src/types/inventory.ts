@@ -23,16 +23,16 @@ export interface Product extends ProductName {
   barcode: string;
   description: string;
   categoryId: string;
-  metricPackageId: string;
+  smallestPackageId: string;
   images: string[];
   productAttributes: ProductAttribute[];
   tag: string;
   storeId: string;
   createdAt: string;
-  totalStockInMetricPackage: number;
+  totalStockInSmallestPackage: number;
   productPackages: ProductPackage[];
   category: ProductCategory;
-  metricPackage: ProductPackage;
+  smallestPackage: ProductPackage;
 }
 
 export interface ProductLight {

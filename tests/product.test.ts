@@ -36,7 +36,7 @@ describe.sequential("Product API", () => {
             },            
         })
         expect(res?.product).not.toBeNull();
-        expect(res?.product.totalStockInMetricPackage).is.greaterThan(1)
+        expect(res?.product.totalStockInSmallestPackage).is.greaterThan(1)
     });
     it("should search products", async () => {
         const res = await productService.searchProductNames({
