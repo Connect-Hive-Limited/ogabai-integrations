@@ -1,4 +1,3 @@
-import FormData from "form-data";
 import { GraphQLClient, RequestOption } from "../../client";
 import { gqlQueryStringBuilder } from "../../helpers/query";
 import { Product } from "../../types";
@@ -34,7 +33,7 @@ import { createFileService } from "../file/file.service";
 export const createProductService = (client: GraphQLClient) => ({
   async uploadProductImage(form: FormData) {
     const fileClient = createFileService(client);
-    return ((await fileClient.uploadFile<{product: Product}>(form)).product);
+    return ((await fileClient.uploadFile<{product: Product}>(form as any)).product);
   },
   async searchCategoriesAndTemplate(
     input: SearchCategoriesAndTemplateRequest, 
