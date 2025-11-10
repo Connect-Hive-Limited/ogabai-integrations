@@ -60,7 +60,7 @@ describe.sequential("File Upload API", () => {
         formData.append("file", fs.createReadStream(testTextPath) as any);
 
         await expect(
-        fileService.uploadFile<TestUploadResponse>(formData as any)
+            await productService.uploadProductImage(formData as any)
         ).rejects.toThrow(/File upload failed/i);
     });
 });
