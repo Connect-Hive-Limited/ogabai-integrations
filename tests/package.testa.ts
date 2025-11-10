@@ -24,6 +24,14 @@ describe.sequential("Product Package API", () => {
             product: getProduct(storeId)
         })
         expect(res?.product).not.toBeNull();
+        console.log("**************************")
+        console.log({ res })
+        console.log("**************************")
+        res?.product.productPackages?.forEach(item => {
+            if(item.trackIndex !== 0){
+                expect(item.unit.length).greaterThan(0)
+            }
+        })
         productId = res?.product._id!
     })
     it("should create package", async () => {
