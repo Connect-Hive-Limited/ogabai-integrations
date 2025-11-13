@@ -8,7 +8,6 @@ export const createFileService = (client: GraphQLClient) => ({
     const headers: Record<string, string> = {
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
     };
-
     // ✅ Do not use formData.getHeaders() — not available in React Native/browser
     const res = await fetch(url, {
       method: "POST",
