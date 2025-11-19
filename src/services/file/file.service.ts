@@ -3,12 +3,11 @@ import type { GraphQLClient } from "../../client";
 export const createFileService = (client: GraphQLClient) => ({
   async uploadFile<TResponse = any>(formData: FormData): Promise<TResponse> {
     const url = client["url"].replace("/graphql", "") + "/api/upload";
-    const token = await client.token();
+    const token = await client["tokenProvider"]();
 
     const headers: Record<string, string> = {
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
     };
-
     // ✅ Do not use formData.getHeaders() — not available in React Native/browser
     const res = await fetch(url, {
       method: "POST",

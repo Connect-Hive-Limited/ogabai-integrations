@@ -26,10 +26,17 @@ describe.sequential("Product Package API", () => {
         expect(res?.product).not.toBeNull();
         console.log("**************************")
         console.log({ res })
+        res?.product.productPackages.forEach((item) => {
+            console.log({ item })
+        })
         console.log("**************************")
         res?.product.productPackages?.forEach(item => {
             if(item.trackIndex !== 0){
                 expect(item.unit.length).greaterThan(0)
+                console.log("#################")
+                console.log(item.price)
+                console.log("#################")
+                expect(item.price?._id.length).greaterThan(0)
             }
         })
         productId = res?.product._id!

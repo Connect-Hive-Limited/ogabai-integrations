@@ -69,8 +69,34 @@ export const getProduct = (storeId: string):Partial<Product> => ({
                 storeId: "",
                 createdAt: ""
             }
-        ],
-    }],
+        ]},
+        {
+            _id: "3",
+            name: chance.name(),
+            description: "",
+            trackIndex: 1,
+            productId: "",
+            unit: "2",
+            unitQuantity: 10,
+            totalStock: 0,
+            barcode: "",
+            priorityPrice: 0,
+            stockLimit: 0,
+            storeId: "",
+            createdAt: "",
+            deduction: 0,
+            stocks: [{
+                _id: "",
+                packageId: "",
+                stockQty: 0,
+                costPerPackage: 100,
+                sellPerPackage: 120,
+                deduction: 0,
+                storeId: "",
+                createdAt: ""
+            }
+        ]}
+    ],
     barcode: "",
     categoryId: "",
     images: [],
