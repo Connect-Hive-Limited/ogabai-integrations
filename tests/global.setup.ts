@@ -24,6 +24,7 @@ export default async function globalSetup() {
     storeLocation: "Lagos, Nigeria",
   });
 
+  console.log({ res: JSON.stringify(res) });
   const accessToken = res?.data?.signUp?.accessToken ?? "";
   if (!accessToken) throw new Error("Signup failed — no access token");
 
@@ -31,11 +32,14 @@ export default async function globalSetup() {
   const userService = createUserService(privateClient);
   const me = await userService.me();
 
+  console.log({ me: JSON.stringify(me) });
+
   const userData = me?.data?.me;
   if (!userData) throw new Error("No user data");
   const storeId = userData?.stores?.[0]?._id;
   if (!storeId) throw new Error("No store ID");
 
+  9157375245
   const envData = {
     accessToken,
     storeId,

@@ -14,9 +14,11 @@ export type GlobalTestEnv = {
 };
 
 let cachedEnv: GlobalTestEnv | null = null;
+// const ENDPOINT_URL = "https://getselqla-backend-1010591944835.europe-west1.run.app" // 
+const ENDPOINT_URL = "http://localhost:8080"
 export const createClient = (accessToken?: string, storeId?: string) =>
     new GraphQLClient({
-        url: "http://localhost:8080/graphql",
+        url: `${ENDPOINT_URL}/graphql`,
         headersFactory: async () => ({
         "ojami-store-id": storeId || "",
         }),
