@@ -26,11 +26,23 @@ describe.sequential("Auth API", () => {
     env = await initTestEnv();  
     authService = createAuthService(createClient());
   })
-  it("should not login with none user credentials", async () => {
-    const res = await authService?.login({
-      pin, phone
+  it("phone number should not exist", async () => {
+    const res = await authService.checkRegistration({
+      phone
     });
-    expect(res?.data?.login).toBeNull();
+    expect(res?.data?.checkRegistration).toEqual({
+      isRegistered: false
+    })
+    phone = chance.phone()
+  })
+  it("should not login with none user credentials", async () => {
+    try{
+      const res = await authService?.login({
+        pin, phone
+      });
+    }catch(e){
+      expect((e as Error).message.toLowerCase()).contains("user not found");
+    }
   });
   it("should sign up with user credentials", async () => {
     const res = await authService?.signUp({
@@ -43,6 +55,14 @@ describe.sequential("Auth API", () => {
     });
     expect(res?.data?.signUp).not.toBeNull();
     userId = res?.data?.signUp?.userId;
+  })
+  it("check registration to return is registered", async () => {
+    const res = await authService.checkRegistration({
+      phone
+    });
+    expect(res?.data?.checkRegistration).toEqual({
+      isRegistered: true
+    })
   })
   it("should login with user credentials", async () => {
     const res = await authService?.login({
@@ -68,7 +88,6 @@ describe.sequential("Auth API", () => {
       oldPin: pin,
       newPin,
     }, {}, { headers });
-    console.log({ res: JSON.stringify(res) });
     expect(res?.data?.changePin).toBeDefined();
   })
   it("login with new pin", async () => {
@@ -82,15 +101,18 @@ describe.sequential("Auth API", () => {
     expect(res?.data?.login).not.toBeNull();
   })
   it("should not sign up with already user credentials", async () => {
-    const res = await authService?.signUp({
-      pin,
-      phone,
-      storeName: chance.name() + " store",
-      lastName: chance.name(),
-      firstName: chance.name(),
-      storeLocation: chance.address()
-    });
-    expect(res?.data?.signUp).toBeNull();
+    try {
+      const res = await authService?.signUp({
+        pin,
+        phone,
+        storeName: chance.name() + " store",
+        lastName: chance.name(),
+        firstName: chance.name(),
+        storeLocation: chance.address()
+      });
+    }catch(e){
+      expect((e as Error).message.toLowerCase()).contains("user already exist");
+    }
   })
   it("send otp", async () => {
     const res = await authService?.sendOTP({
