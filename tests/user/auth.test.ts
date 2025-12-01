@@ -1,9 +1,9 @@
 import { describe, it, expect, test, beforeAll } from "vitest";
-import { createUserService } from "../src/services/user/user.service";
+import { createUserService } from "../../src/services/user/user.service";
 import Chance from "chance";
 // import { createClient } from "./global.setup";
-import { AuthService, createAuthService } from "../src/services/user/auth.service";
-import { createClient, initTestEnv } from "./testEnv";
+import { AuthService, createAuthService } from "../../src/services/user/auth.service";
+import { createClient, initTestEnv } from "../testEnv";
 const chance = new Chance();
 
 describe.sequential("Auth API", () => {

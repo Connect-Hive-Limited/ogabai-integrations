@@ -1,11 +1,11 @@
 import { beforeAll, describe, expect, it } from "vitest";
 import fs from "fs";
 import path from "path";
-import { initTestEnv } from "./testEnv";
-import { createFileService } from "../src/services/file/file.service";
-import { createProductService } from "../src/services/inventory/product.service";
-import { getProduct } from "./dummy";
-import { Product } from "../src/types";
+import { initTestEnv } from "../testEnv";
+import { createFileService } from "../../src/services/file/file.service";
+import { createProductService } from "../../src/services/inventory/product.service";
+import { getProduct } from "../dummy";
+import { Product } from "../../src/types";
 
 interface TestUploadResponse {
   product: Product;
