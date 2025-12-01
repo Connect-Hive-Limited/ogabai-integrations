@@ -1,10 +1,10 @@
 import { beforeAll, describe, expect, it } from "vitest";
-import { ProductPackage } from "../src/types";
-import { createPackageService, ProductPackageService } from "../src/services/inventory/package.service";
-import { getProduct } from "./dummy";
-import { initTestEnv } from "./testEnv";
-import { createProductService, ProductService } from "../src/services/inventory";
-export { type PackageService } from "../src/services/inventory/package.service";
+import { ProductPackage } from "../../src/types";
+import { createPackageService, ProductPackageService } from "../../src/services/inventory/package.service";
+import { getProduct } from "../dummy";
+import { initTestEnv } from "../testEnv";
+import { createProductService, ProductService } from "../../src/services/inventory";
+export { type PackageService } from "../../src/services/inventory/package.service";
 
 describe.sequential("Product Package API", () => {
     let productService: ProductService;
@@ -24,18 +24,9 @@ describe.sequential("Product Package API", () => {
             product: getProduct(storeId)
         })
         expect(res?.product).not.toBeNull();
-        console.log("**************************")
-        console.log({ res })
-        res?.product.productPackages.forEach((item) => {
-            console.log({ item })
-        })
-        console.log("**************************")
         res?.product.productPackages?.forEach(item => {
             if(item.trackIndex !== 0){
                 expect(item.unit.length).greaterThan(0)
-                console.log("#################")
-                console.log(item.price)
-                console.log("#################")
                 expect(item.price?._id.length).greaterThan(0)
             }
         })

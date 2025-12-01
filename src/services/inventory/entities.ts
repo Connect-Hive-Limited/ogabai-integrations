@@ -1,5 +1,20 @@
-import { Address, Price, Product, ProductAttribute, ProductCategory, ProductName, ProductPackage, Stock, Store } from "../../types";
+import { Address, Price, Product, ProductAttribute, ProductCategory, ProductName, ProductPackage, Stock, Store, StoreCategory, StoreCategoryProduct } from "../../types";
 
+export type StoreCategoryProductFields = (keyof StoreCategoryProduct)[]
+export const storeCategoryProductQuery: StoreCategoryProductFields = [
+    "_id",
+    "createdAt",
+    "productId",
+    "storeCategoryId"
+]
+export type StoreCategoryFields = (keyof StoreCategory)[]
+export const storeCategoryQuery: StoreCategoryFields = [
+    "_id",
+    "name",
+    "description",
+    "tags",
+    "createdAt"
+]
 
 export type AttributeFields = (keyof ProductAttribute)[]
 export const attributeQuery: AttributeFields = [

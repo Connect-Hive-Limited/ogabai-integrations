@@ -1,3 +1,17 @@
+export interface StoreCategory {
+  _id: string;
+  name: string;
+  description: string;
+  tags: string[];
+  createdAt: string;
+}
+export interface StoreCategoryProduct {
+  _id: string;
+  storeCategoryId: string;
+  productId: string;
+  createdAt: string;
+}
+
 export type CategoryStatus = "active" | "inactive";
 export interface ProductAttribute {
   name: string;

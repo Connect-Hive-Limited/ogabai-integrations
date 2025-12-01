@@ -1,8 +1,8 @@
 import { beforeAll, describe, expect, it } from "vitest";
-import { type ProductService, createProductService } from "../src/services/inventory/product.service";
-import { getProduct } from "./dummy";
-import { initTestEnv } from "./testEnv";
-import { Product } from "../src/types";
+import { type ProductService, createProductService } from "../../src/services/inventory/product.service";
+import { getProduct } from "../dummy";
+import { initTestEnv } from "../testEnv";
+import { Product } from "../../src/types";
 
 describe.sequential("Product API", () => {
     let productService: ProductService;
