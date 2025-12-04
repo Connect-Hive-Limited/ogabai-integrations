@@ -1,7 +1,7 @@
 export const storeSchema = {
   getStore: (query: string) => `
     query getStore($store: StoreInput!) {
-      store(store: $store) {
+      getStore(store: $store) {
         ${query}
       }
     }
@@ -9,7 +9,7 @@ export const storeSchema = {
 
   getStores: (query: string) => `
     query getStores($search: String, $store: StoreInput, $storeIds: [String], $limit: Int, $skip: Int) {
-      stores(search: $search, store: $store, storeIds: $storeIds, limit: $limit, skip: $skip) {
+      getStores(search: $search, store: $store, storeIds: $storeIds, limit: $limit, skip: $skip) {
         ${query}
       }
     }
