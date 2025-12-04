@@ -1,7 +1,7 @@
 import type { GraphQLClient, RequestOption } from "../../client";
 import { gqlQueryStringBuilder } from "../../helpers/query";
 import userSchema from "./schemas/user.schema";
-import { getUserDashStatsResponse, GetUserDashStatsResponse, getUserDashStatsResponseNestedFields, GetUserDashStatsResponseNestedFields, GetUserRequest, getUserResponse, GetUserResponse, GetUserResponseNestedFields, getUserResponseNestedFields, GetUsersRequest, getUsersResponse, GetUsersResponse, getUsersResponseNestedFields, GetUsersResponseNestedFields, meResponse, MeResponse, meResponseNestedFields, MeResponseNestedFields } from "./types/user.type";
+import { getUserDashStatsResponse, GetUserDashStatsResponse, getUserDashStatsResponseNestedFields, GetUserDashStatsResponseNestedFields, GetUserRequest, getUserResponse, GetUserResponse, GetUserResponseNestedFields, getUserResponseNestedFields, GetUsersRequest, getUsersResponse, GetUsersResponse, getUsersResponseNestedFields, GetUsersResponseNestedFields, meResponse, MeResponse, meResponseNestedFields, MeResponseNestedFields, UpdateUserRequest, updateUserResponse, UpdateUserResponse, updateUserResponseNestedFields, UpdateUserResponseNestedFields } from "./types/user.type";
 import { GraphQLResponse } from "../../types";
 
 export const createUserService = (client: GraphQLClient) => ({  
@@ -74,6 +74,25 @@ export const createUserService = (client: GraphQLClient) => ({
           gqlQueryStringBuilder<GetUsersResponse, GetUsersResponseNestedFields>(
             fetchFields?.root ?? getUsersResponse,
             fetchFields?.nestedFields ?? getUsersResponseNestedFields
+          )
+        ), 
+        input,
+        option
+      );
+    },
+  async updateUser(
+      input: UpdateUserRequest,
+      fetchFields?: {
+        root?: (keyof UpdateUserResponse)[],
+        nestedFields?: UpdateUserResponseNestedFields
+      },
+      option?: RequestOption
+    ): Promise<GraphQLResponse<{ updateUser: UpdateUserResponse }>> {
+      return client.request<{ updateUser: UpdateUserResponse }>(
+        userSchema.updateUser(
+          gqlQueryStringBuilder<UpdateUserResponse, UpdateUserResponseNestedFields>(
+            fetchFields?.root ?? updateUserResponse,
+            fetchFields?.nestedFields ?? updateUserResponseNestedFields
           )
         ), 
         input,
