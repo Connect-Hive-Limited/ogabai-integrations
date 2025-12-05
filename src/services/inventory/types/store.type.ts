@@ -2,7 +2,7 @@ import { Store } from "../../../types";
 import { AddressFields, addressQuery, storeQuery, type StoreFields } from "../entities"
 
 export interface GetStoreRequest {
-    store: Promise<Store>;
+    store: Partial<Store>;
 }
 export interface GetStoreResponse {
     store?: Store;
@@ -24,7 +24,7 @@ export const getStoreResponseNestedFields: GetStoreResponseNestedFields = {
 
 // get stores 
 export interface GetStoresRequest {
-    store?: Promise<Store>;
+    store?: Partial<Store>;
     storeIds?: string[];
     limit: number;
     skip: number;
@@ -53,7 +53,7 @@ export const addStoreResponseNestedFields = getStoreResponseNestedFields;
 // update store 
 export interface UpdateStoreRequest {
     storeId: string;
-    store: Promise<Store>;
+    store: Partial<Store>;
 }
 export type UpdateStoreResponse = GetStoreResponse;
 export const updateStoreResponse = getStoreResponse;

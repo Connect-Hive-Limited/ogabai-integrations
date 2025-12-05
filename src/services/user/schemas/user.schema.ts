@@ -28,10 +28,10 @@ export const userSchema = {
       }
     }
   `,
-  updateUser: (mutation: string) => `
-    mutation updateUser($userId: String!, $userUpdate: UpdateUserFieldInput, $imageType: String) {
+  updateUser: (query: string) => `
+    mutation updateUser($userId: String!, $userUpdate: UserUpdateInput, $imageType: String) {
       updateUser(userId: $userId, userUpdate: $userUpdate, imageType: $imageType) {
-        ${mutation}
+        ${query}
       }
     }
   `,
