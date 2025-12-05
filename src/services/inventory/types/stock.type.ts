@@ -2,7 +2,7 @@ import { Stock } from "../../../types";
 import { stockQuery, type StockFields } from "../entities"
 
 export interface GetStockRequest {
-    stock: Promise<Stock>;
+    stock: Partial<Stock>;
 }
 export interface GetStockResponse {
     stock?: Stock;
@@ -19,7 +19,7 @@ export const getStockResponseNestedFields: GetStockResponseNestedFields = {
 
 // get stocks 
 export interface GetStocksRequest {
-    stock?: Promise<Stock>;
+    stock?: Partial<Stock>;
     stockIds?: string[];
     limit: number;
     skip: number;
@@ -47,7 +47,7 @@ export const addStockResponseNestedFields = getStockResponseNestedFields;
 // update stock 
 export interface UpdateStockRequest {
     stockId: string;
-    stock: Promise<Stock>;
+    stock: Partial<Stock>;
 }
 export type UpdateStockResponse = GetStockResponse;
 export const updateStockResponse = getStockResponse;

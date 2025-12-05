@@ -100,7 +100,7 @@ export const addUserResponseNestedFields = getUserResponseNestedFields;
 // update user 
 export interface UpdateUserRequest {
     userId: string;
-    user: User;
+    user: Partial<User>;
 }
 export interface UploadUserImageResponse {
     url: string;
@@ -110,16 +110,17 @@ export interface UpdateUserResponse {
     user: User;
     uploadImageResponse: UploadUserImageResponse
 }
-export interface UpdateUserResponseNestedFields extends GetUserResponseNestedFields {
+export interface UpdateUserResponseNestedFields {
     uploadImageResponse: (keyof UploadUserImageResponse)[]
+    user: UserFields
 }
-export const updateUserResponse = {
-    ...getUserResponse,
-    "uploadImageResponse": ["fileUrl", "url"]
-}
+export const updateUserResponse: (keyof UpdateUserResponse)[] = [
+    "uploadImageResponse", "user"
+]
+
 export const updateUserResponseNestedFields: UpdateUserResponseNestedFields = {
-    ...getUserResponseNestedFields,
-    uploadImageResponse: ["fileUrl", "url"]
+    uploadImageResponse: ["fileUrl", "url"],
+    user: userQuery,
 }
 
 // me 

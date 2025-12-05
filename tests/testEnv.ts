@@ -6,6 +6,7 @@ const CACHE_PATH = path.resolve(__dirname, ".global-env-cache.json");
 
 export type GlobalTestEnv = {
   accessToken: string;
+  userId: string;
   storeId: string;
   userData: any;
   pin: string;
@@ -20,7 +21,7 @@ export const createClient = (accessToken?: string, storeId?: string) =>
     new GraphQLClient({
         url: `${ENDPOINT_URL}/graphql`,
         headersFactory: async () => ({
-        "ojami-store-id": storeId || "",
+          "ojami-store-id": storeId || "",
         }),
         tokenProvider: async () => accessToken || "",
     });

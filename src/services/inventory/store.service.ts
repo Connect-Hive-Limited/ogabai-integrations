@@ -62,7 +62,7 @@ export const createStoreService = (client: GraphQLClient) => ({
     },
     option?: RequestOption
   ): Promise<AddStoreResponse | null> {
-    const res = await client.request<{ addStore: AddStoreResponse }, AddStoreRequest>(
+    const res = await client.request<{ createStore: AddStoreResponse }, AddStoreRequest>(
       storeSchema.createStore(
         gqlQueryStringBuilder<AddStoreResponse, AddStoreResponseNestedFields>(
           fetchFields?.root ?? addStoreResponse,
@@ -72,7 +72,7 @@ export const createStoreService = (client: GraphQLClient) => ({
       input, 
       option
     );
-    return res.data?.addStore ?? null;
+    return res.data?.createStore ?? null;
   },
   async getStore(
     input: GetStoreRequest, 
@@ -115,3 +115,5 @@ export const createStoreService = (client: GraphQLClient) => ({
     return res.data?.getStores ?? null;
   },
 })
+
+export type StoreService = ReturnType<typeof createStoreService>;
