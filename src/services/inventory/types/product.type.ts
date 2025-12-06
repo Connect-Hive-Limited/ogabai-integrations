@@ -14,6 +14,7 @@ import {
 
 export interface GetProductRequest {
     product: Partial<Product>
+    template?: boolean;
 }
 export interface GetProductResponse {
     product: Product

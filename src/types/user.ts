@@ -1,3 +1,24 @@
+export interface Notification {
+  id: string;
+  notificationType: "product" | "sale" | "order" | "transaction" | "setting" |"stock"|"debt"|"debtor";
+  notificationAction: "new" | "update" | "delete";
+  notificationStatus: "active"|"inactive"
+  title: string;
+  description: string;
+  createdAt: string;
+  updatedAt: string;
+}
+export interface UserNotification {
+  id: string;
+  userId: string;
+  notificationStatus: "read" | "unread";
+  createdAt: string;
+  updatedAt: string;
+  itemId?: string;
+  notificationId: string;
+  notification?: Notification
+}
+
 // -------------------- Dashboard Statistics --------------
 export interface ProductCounts {
   totalProduct: number;
