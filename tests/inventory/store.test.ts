@@ -46,4 +46,11 @@ describe.sequential("Store API", () => {
         console.log({ res: JSON.stringify(res) })
         expect(res?.stores?.length).greaterThan(0)
     })
+    it("should remove store", async () => {
+        const res = await storeService.removeStore({
+            storeId
+        })
+        expect(res?.storeId).not.toBeNull();
+        expect(res?.storeId).equal(storeId)
+    })
 })
