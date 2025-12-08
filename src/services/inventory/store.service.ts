@@ -43,7 +43,7 @@ export const createStoreService = (client: GraphQLClient) => ({
     },
     option?: RequestOption
   ): Promise<RemoveStoreResponse | null> {
-    const res = await client.request<{ removeStore: RemoveStoreResponse }, RemoveStoreRequest>(
+    const res = await client.request<{ deleteStore: RemoveStoreResponse }, RemoveStoreRequest>(
       storeSchema.deleteStore(
         gqlQueryStringBuilder<RemoveStoreResponse>(
           fetchFields?.root ?? removeStoreResponse,
@@ -52,7 +52,7 @@ export const createStoreService = (client: GraphQLClient) => ({
       input, 
       option
     );
-    return res.data?.removeStore ?? null;
+    return res.data?.deleteStore ?? null;
   },
   async addStore(
     input: AddStoreRequest, 
