@@ -11,7 +11,6 @@ export type Sale = {
   packageId: string;
   quantity: number;              // int32
   amountTotal: number;           // float
-  quantityInMetricUnit: number;  // int64
   createdAt: string;
   storeId: string;
   transactionId?: string;

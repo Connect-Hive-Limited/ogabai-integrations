@@ -1,4 +1,4 @@
-import { Account, NotificationChannels, ProductCounts, RestockCounts, SaleCounts, ServiceUpdate, TransactionCounts, User, UserNotification, UserNotificationSettings, UserSetting, Wallet } from "../../types";
+import { Account, Notification, NotificationChannels, ProductCounts, RestockCounts, SaleCounts, ServiceUpdate, TransactionCounts, User, UserNotification, UserNotificationSettings, UserSetting, Wallet } from "../../types";
 
 export type AccountFields = (keyof Account)[];
 export type WalletFields = (keyof Wallet)[];
@@ -12,20 +12,31 @@ export type RestockCountsFields = (keyof RestockCounts)[]
 export type SaleCountsFields = (keyof SaleCounts)[];
 export type TransactionCountsFields = (keyof TransactionCounts)[];
 export type UserNotificationFields = (keyof UserNotification)[];
+export type NotificationFields = (keyof Notification)[]
 
 
 
 
-
-export const userNotificationQuery:UserNotificationFields = [
+export const notificationQuery: NotificationFields = [
     "createdAt",
+    "description",
     "id",
     "notificationAction",
     "notificationStatus",
     "notificationType",
+    "title",
+    "updatedAt"
+]
+export const userNotificationQuery:UserNotificationFields = [
+    "createdAt",
+    "id",
+    "notificationStatus",
     "updatedAt",
     "userId",
-    "itemId"
+    "itemId",
+    "notificationId",
+    "notification",
+    "storeId"
 ]
 export const transactionCountsQuery:TransactionCountsFields = [
     "totalTx", "totalTxThisMonth", "totalTxThisYear", "totalTxToday"

@@ -1,5 +1,5 @@
 import { UserNotification } from "../../../types";
-import { UserNotificationFields, userNotificationQuery } from "../user.entity";
+import { NotificationFields, notificationQuery, UserNotificationFields, userNotificationQuery } from "../user.entity";
 
 export interface GetUserNotificationsRequest {
     search?: string;
@@ -13,8 +13,10 @@ export interface GetUserNotificationsResponse {
 }
 export const getUserNotificationsResponseFields: (keyof GetUserNotificationsResponse)[] = ["userNotifications"]
 export interface GetUserNotificationsResponseNestedFields {
+    notification: NotificationFields
     userNotifications: UserNotificationFields
 }
 export const getUserNotificationsResponseNestedFields: GetUserNotificationsResponseNestedFields = {
+    notification: notificationQuery,
     userNotifications: userNotificationQuery
 }

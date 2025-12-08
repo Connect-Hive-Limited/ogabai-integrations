@@ -36,6 +36,5 @@ export const saleQuery: SaleFields = [
     "packageId", 
     "productId", 
     "quantity", 
-    "quantityInMetricUnit", 
     "storeId"
 ]

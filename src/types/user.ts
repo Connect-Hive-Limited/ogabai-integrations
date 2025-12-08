@@ -11,6 +11,7 @@ export interface Notification {
 export interface UserNotification {
   id: string;
   userId: string;
+  storeId: string;
   notificationStatus: "read" | "unread";
   createdAt: string;
   updatedAt: string;
