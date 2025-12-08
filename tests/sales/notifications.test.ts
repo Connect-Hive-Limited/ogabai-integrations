@@ -2,11 +2,12 @@ import { beforeAll, describe, expect, it } from "vitest";
 import { createProductService, ProductService } from "../../src/services/inventory/product.service";
 export { type PackageService } from "../../src/services/inventory/package.service";
 import { getProduct } from "../dummy";
-import { Product, ProductPackage, Sale, Transaction } from "../../src/types";
+import { Product, Sale, Transaction } from "../../src/types";
 import { type TransactionService, createTransactionService } from "../../src/services/sales/transaction.service";
 import { initTestEnv } from "../testEnv";
-import { createUserService, UserService } from "../../src/services/user/user.service";
+import { createUserNotificationService, UserNotificationService } from "../../src/services/user/user-notification.service";
 
+const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 function createTransaction(product: Product, storeId: string): Partial<Transaction> {
   if (!product?.productPackages?.length) {
     throw new Error(`Product ${product._id} has no packages`);
@@ -20,7 +21,7 @@ function createTransaction(product: Product, storeId: string): Partial<Transacti
   const randomPackage =
     sortedPackages[Math.floor(Math.random() * sortedPackages.length)];
 
-  const qty = 3;
+  const qty = 52;
 
   const sale: Sale = {
     _id: crypto.randomUUID(),
@@ -55,8 +56,9 @@ function createTransaction(product: Product, storeId: string): Partial<Transacti
 describe.sequential("Sales API", () => {
     let productService: ProductService;
     let transactionService: TransactionService
-    let userService: UserService
+    let userNotificationService: UserNotificationService
     let storeId: string
+    let userId: string
     
     let productId: string;
     let product: Product;
@@ -65,10 +67,11 @@ describe.sequential("Sales API", () => {
     beforeAll(async() => {
         env = await initTestEnv()
         storeId = env?.storeId!
+        userId = env?.userId!
         const storeClient = env?.storeClient!
         productService = createProductService(storeClient);
         transactionService = createTransactionService(storeClient);
-        userService = createUserService(storeClient);
+        userNotificationService = createUserNotificationService(storeClient);
     });
     it("should create product", async () => {
         const res = await productService.addProduct({
@@ -94,16 +97,16 @@ describe.sequential("Sales API", () => {
         expect(res?.transaction?._id).not.toBeNull();
         transactionId = res?.transaction._id;
     })
-    it("should get transaction and transaction should contain sales", async () => {
-      const res = await transactionService.getTransaction({
-        transaction: {
-          _id: transactionId
-        }
-      })
-      expect(res?.transaction?.sales.length).greaterThan(0)
-    })
-    it("transaction count should increase", async () => {
-      const res = await userService.getUserDashStats()
-      expect(res?.saleCounts.totalSales).greaterThan(0)
+    it("should get user notification", async () => {
+        await wait(5000)
+        const res = await userNotificationService.getUserNotifications({
+            userNotification: {
+              storeId
+            },
+            limit: 100,
+            skip: 0
+        })
+        expect(res?.userNotifications.length).greaterThan(0);
     })
 });
+
