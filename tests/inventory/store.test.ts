@@ -43,7 +43,6 @@ describe.sequential("Store API", () => {
                 ownerId: env?.userId
             }
         })
-        console.log({ res: JSON.stringify(res) })
         expect(res?.stores?.length).greaterThan(0)
     })
     it("should remove store", async () => {
