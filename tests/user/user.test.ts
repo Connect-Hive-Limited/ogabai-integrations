@@ -17,13 +17,15 @@ describe.sequential("User API", () => {
     })
 
     it("should update user", async () => {
+        const newLastName = chance.name();
         const res = await userService.updateUser({
             userId,
             user: {
-                lastName: chance.name(),
+                lastName: newLastName,
             }
         })
         expect(res?.data?.updateUser?.user._id).toEqual(userId);
+        expect(res.data?.updateUser.user.lastName).toEqual(newLastName);
     })
 
 })
