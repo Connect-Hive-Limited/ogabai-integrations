@@ -28,4 +28,16 @@ describe.sequential("User API", () => {
         expect(res.data?.updateUser.user.lastName).toEqual(newLastName);
     })
 
+    // list users 
+    it("should list users", async() => {
+        const res = await userService.getUsers({
+            user: {
+                _id: userId
+            },
+            limit: 100,
+            skip: 0
+        })
+        expect(res?.data?.getUsers?.users.length).greaterThan(0);
+    })
+
 })

@@ -86,7 +86,6 @@ export interface User {
   country: string;
   profileImageUrl: string;
   dob: string;
-  isAdmin: string;         // could be boolean in practice
   createdAt: string;
   updatedAt: string;
 }
