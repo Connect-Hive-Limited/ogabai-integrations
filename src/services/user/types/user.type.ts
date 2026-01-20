@@ -65,8 +65,9 @@ export const getUserResponseNestedFields: GetUserResponseNestedFields = {
 
 // get users
 export interface GetUsersRequest {
+    // search?: string;
     userIds?: string[];
-    user?: User;
+    user?: Partial<User>;
     limit: number;
     skip: number;
 }

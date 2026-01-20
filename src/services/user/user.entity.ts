@@ -63,7 +63,7 @@ export const walletQuery: WalletFields = [
 ]
 export const userQuery:UserFields = [
     "_id", "country", "createdAt", "dob", "email",
-    "firstName", "isAdmin", "lastName", "phone",
+    "firstName", "lastName", "phone",
     "phoneVerified", "phoneVerifiedAt", "profileImageUrl", 
     "updatedAt"
 ]

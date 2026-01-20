@@ -15,8 +15,9 @@ export type GlobalTestEnv = {
 };
 
 let cachedEnv: GlobalTestEnv | null = null;
+// const ENDPOINT_URL = "https://ogabai-prod-1010591944835.europe-west9.run.app"
 // const ENDPOINT_URL = "https://getselqla-backend-1010591944835.europe-west1.run.app" // 
-const ENDPOINT_URL = "https://ogabai-prod-1010591944835.europe-west9.run.app" // "http://localhost:8080"
+const ENDPOINT_URL = "http://localhost:8080"
 export const createClient = (accessToken?: string, storeId?: string) =>
     new GraphQLClient({
         url: `${ENDPOINT_URL}/graphql`,
