@@ -1,3 +1,10 @@
+export interface UserTypeCounts {
+  total: number;
+  customers: number;
+  manufacturer: number;
+  distributors: number;
+}
+
 export interface Notification {
   id: string;
   notificationType: "product" | "sale" | "order" | "transaction" | "setting" |"stock"|"debt"|"debtor";
@@ -20,6 +27,11 @@ export interface UserNotification {
   notification?: Notification
 }
 
+// --------------------Admin Dashboard Statistics --------------
+export interface MonthlyUserStat {
+  month: number;
+  total: number;
+}
 // -------------------- Dashboard Statistics --------------
 export interface ProductCounts {
   totalProduct: number;

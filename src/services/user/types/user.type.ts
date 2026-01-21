@@ -1,5 +1,6 @@
 import { 
     Account,
+    MonthlyUserStat,
     ProductCounts,
     RestockCounts,
     SaleCounts,
@@ -7,11 +8,44 @@ import {
     TransactionCounts,
     User,
     UserSetting,
-    UserType 
+    UserType, 
+    UserTypeCounts
 } from "../../../types";
-import { AccountFields, ProductCountsFields, productCountsQuery, RestockCountsFields, restockCountsQuery, SaleCountsFields, saleCountsQuery, TransactionCountsFields, transactionCountsQuery, UserFields, userQuery, UserSettingFields, userSettingQuery } from "../user.entity";
+import { AccountFields, MonthlyUserStatFields, monthlyUserStatQuery, ProductCountsFields, productCountsQuery, RestockCountsFields, restockCountsQuery, SaleCountsFields, saleCountsQuery, TransactionCountsFields, transactionCountsQuery, UserFields, userQuery, UserSettingFields, userSettingQuery, UserTypeCountsFields, userTypeCountsQuery } from "../user.entity";
 import { AddressFields, addressQuery, StoreFields, storeQuery } from "../../inventory/entities";
 import { getAccountResponseNestedFields } from "./account.type"
+
+// admin dashboard stats 
+
+export interface GetUserTypeCountsResponse {
+    userTypeCounts: UserTypeCounts
+}
+export const getUserTypeCountsResponse:(keyof GetUserTypeCountsResponse)[] = [
+    "userTypeCounts"
+]
+export interface GetUserTypeCountsResponseNestedFields {
+    userTypeCounts: UserTypeCountsFields
+}
+export const getUserTypeCountsResponseNestedFields:GetUserTypeCountsResponseNestedFields = {
+    userTypeCounts: userTypeCountsQuery
+}
+
+
+export interface GetMonthlyUserStatsByYearRequest {
+    year: number;
+}
+export interface GetMonthlyUserStatsByYearResponse {
+    monthlyUserStat: MonthlyUserStat[];
+}
+export interface GetMonthlyUserStatsByYearResponseNestedFields {
+    monthlyUserStat: MonthlyUserStatFields;
+}
+export const getMonthlyUserStatsByYearResponse: (keyof GetMonthlyUserStatsByYearResponse)[] = [
+    "monthlyUserStat"
+]
+export const getMonthlyUserStatsByYearResponseNestedFields: GetMonthlyUserStatsByYearResponseNestedFields = {
+    monthlyUserStat: monthlyUserStatQuery
+}
 
 
 // user dashboard stats 

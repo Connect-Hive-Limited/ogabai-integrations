@@ -1,4 +1,21 @@
 export const userSchema = {
+
+  // admin dashboard stats
+  getUserTypeCounts: (query: string) => `
+    query getUserTypeCounts {
+      getUserTypeCounts {
+        ${query}
+      }
+    }
+  `,
+  getMonthlyUserStatsByYear: (query: string) => `
+    query getMonthlyUserStatsByYear($year: Int!) {
+      getMonthlyUserStatsByYear(year: $year) {
+        ${query}
+      }
+    }
+  `,
+  // mobile dashboard stats
   getUserDashStats: (query: string) => `
     query getUserDashStats {
       getUserDashStats {
