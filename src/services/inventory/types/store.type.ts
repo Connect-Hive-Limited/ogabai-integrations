@@ -1,6 +1,14 @@
 import { Store } from "../../../types";
 import { AddressFields, addressQuery, storeQuery, type StoreFields } from "../entities"
 
+export type GetStoreCountRequest = GetStoreRequest;
+export interface GetStoreCountResponse {
+    count: number;
+}
+export const getStoreCountResponse: (keyof GetStoreCountResponse)[] = [
+    "count"
+]
+
 export interface GetStoreRequest {
     store: Partial<Store>;
 }

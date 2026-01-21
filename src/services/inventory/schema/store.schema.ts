@@ -1,4 +1,11 @@
 export const storeSchema = {
+  getStoreCount: (query: string) => `
+    query getStoreCount($store: StoreInput!) {
+      getStoreCount(store: $store) {
+        ${query}
+      }
+    }
+  `,
   getStore: (query: string) => `
     query getStore($store: StoreInput!) {
       getStore(store: $store) {

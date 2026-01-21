@@ -130,16 +130,21 @@ export interface StoreSetting {
   shouldSendSalesAlert: string;
 }
 
+/**
+ * message CustomersProductCount {
+  string userId = 1;
+  string storeId = 2;
+  int64 count = 3;
+}
+ */
+export interface CustomersProductCount {
+  userId: string;
+  storeId: string;
+  count: number;
+}
 export interface UserProductCounts {
   totalProduct: number;
   totalProductThisYear: number;
   totalProductThisMonth: number;
   totalProductToday: number;
 }
-
-// export interface RestockCounts {
-//   totalRestock: number;
-//   totalRestockThisYear: number;
-//   totalRestockThisMonth: number;
-//   totalRestockToday: number;
-// }

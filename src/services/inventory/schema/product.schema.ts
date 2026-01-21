@@ -1,4 +1,11 @@
 export const productSchema = {
+  getCustomerProductCountsByIds: (query: string) => `
+    query getCustomerProductCountsByIds($userIds: [String]!) {
+      getCustomerProductCountsByIds(userIds: $userIds) {
+        ${query}
+      }
+    }
+  `,
   searchCategoriesAndTemplate: (query: string) => `
     query searchCategoriesAndTemplate($search: String, $shouldGetFromAllStores: Boolean){
       searchCategoriesAndTemplate(search: $search, shouldGetFromAllStores: $shouldGetFromAllStores) {

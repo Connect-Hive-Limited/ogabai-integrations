@@ -26,7 +26,12 @@ import {
   SearchCategoriesAndTemplateResponseNestedFields,
   SearchCategoriesAndTemplateRequest,
   searchCategoriesAndTemplateResponse,
-  searchCategoriesAndTemplateResponseNestedFields, 
+  searchCategoriesAndTemplateResponseNestedFields,
+  GetCustomerProductCountsByIdsRequest,
+  GetCustomerProductCountsByIdsResponse,
+  getCustomerProductCountsByIdsResponse,
+  GetCustomerProductCountsByIdsResponseNestedFields,
+  getCustomerProductCountsByIdsResponseNestedFields, 
 } from "./types/product.type";
 import { createFileService } from "../file/file.service";
 
@@ -34,6 +39,26 @@ export const createProductService = (client: GraphQLClient) => ({
   async uploadProductImage(form: FormData) {
     const fileClient = createFileService(client);
     return ((await fileClient.uploadFile<{product: Product}>(form as any)).product);
+  },
+  async getCustomerProductCountsByIds(
+    input: GetCustomerProductCountsByIdsRequest, 
+    fetchFields?: {
+      root?: (keyof GetCustomerProductCountsByIdsResponse)[],
+      nestedFields?: GetCustomerProductCountsByIdsResponseNestedFields
+    },
+    option?: RequestOption
+  ): Promise<GetCustomerProductCountsByIdsResponse | null> {
+    const res = await client.request<{ getCustomerProductCountsByIds: GetCustomerProductCountsByIdsResponse }, GetCustomerProductCountsByIdsRequest>(
+      productSchema.getCustomerProductCountsByIds(
+        gqlQueryStringBuilder<GetCustomerProductCountsByIdsResponse, GetCustomerProductCountsByIdsResponseNestedFields>(
+          fetchFields?.root ?? getCustomerProductCountsByIdsResponse,
+          fetchFields?.nestedFields ?? getCustomerProductCountsByIdsResponseNestedFields
+        )
+      ), 
+      input, 
+      option
+    );
+    return res.data?.getCustomerProductCountsByIds ?? null;
   },
   async searchCategoriesAndTemplate(
     input: SearchCategoriesAndTemplateRequest, 

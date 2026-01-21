@@ -1,4 +1,14 @@
-import { Address, Price, Product, ProductAttribute, ProductCategory, ProductName, ProductPackage, Stock, Store, StoreCategory, StoreCategoryProduct } from "../../types";
+import { Address, CustomersProductCount, Price, Product, ProductAttribute, ProductCategory, ProductName, ProductPackage, Stock, Store, StoreCategory, StoreCategoryProduct } from "../../types";
+
+
+
+export type CustomersProductCountFields = (keyof CustomersProductCount)[]
+export const customersProductCountQuery: CustomersProductCountFields = [
+    "count",
+    "storeId",
+    "userId"
+]
+
 
 export type StoreCategoryProductFields = (keyof StoreCategoryProduct)[]
 export const storeCategoryProductQuery: StoreCategoryProductFields = [

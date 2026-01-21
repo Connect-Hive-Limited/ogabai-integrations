@@ -12,11 +12,13 @@ describe.sequential("Product API", () => {
     let productName: string;
     let categoryName: string;
     let product: Partial<Product>
+    let userId: string;
     beforeAll(async() => {
         env = await initTestEnv()
         const _storeId = env?.storeId!
         productService = createProductService(env?.storeClient!);
         storeId = _storeId
+        userId = env?.userId!
     });
     it("should create product", async () => {
         product =  getProduct(storeId || "")
@@ -29,6 +31,12 @@ describe.sequential("Product API", () => {
         expect(res?.product).not.toBeNull();
         productId = res?.product?._id || "";
     });
+    it("should get product counts by user ids", async () => {
+        const res = await productService.getCustomerProductCountsByIds({
+            userIds: [userId]
+        })
+        expect(res?.customersProductCounts.length).greaterThan(0);
+    })
     it("should get product & should have stock in metric package", async () => {
         const res = await productService.getProduct({
             product: {
