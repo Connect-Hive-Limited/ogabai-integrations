@@ -1,9 +1,11 @@
-import { Product, ProductCategory } from "../../../types"
+import { CustomersProductCount, Product, ProductCategory } from "../../../types"
 import { 
     AttributeFields,
     attributeQuery,
     CategoryFields,
     categoryQuery,
+    CustomersProductCountFields,
+    customersProductCountQuery,
     PackageFields, packageQuery, 
     PriceFields, 
     priceQuery, 
@@ -11,6 +13,24 @@ import {
     productQuery, 
     StockFields,
     stockQuery} from "../entities"
+
+
+
+export interface GetCustomerProductCountsByIdsRequest {
+    userIds: string[]
+}
+export interface GetCustomerProductCountsByIdsResponse {
+    customersProductCounts: CustomersProductCount[]
+}
+export const getCustomerProductCountsByIdsResponse: (keyof GetCustomerProductCountsByIdsResponse)[] = [
+    "customersProductCounts"
+]
+export interface GetCustomerProductCountsByIdsResponseNestedFields {
+    customersProductCounts: CustomersProductCountFields
+}
+export const getCustomerProductCountsByIdsResponseNestedFields: GetCustomerProductCountsByIdsResponseNestedFields = {
+    customersProductCounts: customersProductCountQuery
+}
 
 export interface GetProductRequest {
     product: Partial<Product>

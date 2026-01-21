@@ -25,6 +25,15 @@ describe.sequential("Store API", () => {
         expect(res?.store?._id.length).greaterThan(0);
         if(res?.store?._id) storeId = res?.store?._id
     })
+    it("store count should be more than 0", async () => {
+        const res = await storeService.getStoreCount({
+            store: {
+                ownerId: env?.userId
+            }
+        })
+        console.log({ res })
+        expect(res?.count).greaterThan(0)
+    })
     it("should get store", async () => {
         if(!storeId) return
         const res = await storeService.getStore({

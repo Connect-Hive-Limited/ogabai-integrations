@@ -3,6 +3,9 @@ import { gqlQueryStringBuilder } from "../../helpers/query";
 import { storeSchema } from "./schema/store.schema";
 import { 
   AddStoreRequest, addStoreResponse, AddStoreResponse, AddStoreResponseNestedFields, addStoreResponseNestedFields, 
+  GetStoreCountRequest, 
+  getStoreCountResponse, 
+  GetStoreCountResponse, 
   GetStoreRequest, getStoreResponse, GetStoreResponse, GetStoreResponseNestedFields, getStoreResponseNestedFields, 
   GetStoresRequest, getStoresResponse, GetStoresResponse, GetStoresResponseNestedFields, getStoresResponseNestedFields,
   RemoveStoreRequest,
@@ -73,6 +76,24 @@ export const createStoreService = (client: GraphQLClient) => ({
       option
     );
     return res.data?.createStore ?? null;
+  },
+  async getStoreCount(
+    input: GetStoreCountRequest, 
+    fetchFields?: {
+      root?: (keyof GetStoreCountResponse)[],
+    },
+    option?: RequestOption
+  ): Promise<GetStoreCountResponse | null> {
+    const res = await client.request<{ getStoreCount: GetStoreCountResponse }, GetStoreCountRequest>(
+      storeSchema.getStoreCount(
+        gqlQueryStringBuilder<GetStoreCountResponse>(
+          fetchFields?.root ?? getStoreCountResponse,
+        )
+      ), 
+      input, 
+      option
+    );
+    return res.data?.getStoreCount ?? null;
   },
   async getStore(
     input: GetStoreRequest, 
