@@ -24,6 +24,7 @@ describe.sequential("Store API", () => {
         })
         expect(res?.store?._id.length).greaterThan(0);
         if(res?.store?._id) storeId = res?.store?._id
+        console.log({ storeId })
     })
     it("store count should be more than 0", async () => {
         const res = await storeService.getStoreCount({
