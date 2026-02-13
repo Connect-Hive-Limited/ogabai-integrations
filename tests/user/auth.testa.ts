@@ -74,10 +74,11 @@ describe.sequential("Auth API", () => {
     expect(res?.data?.login).not.toBeNull();
   })
 
-  it("should be fetch user information using access token", async () => {
+  it("should fetch user information using access token", async () => {
     const client = createClient(headers.Authorization || "")
     const userService = createUserService(client)
     const res = await userService?.me({}, {headers})
+    console.log("User info:", JSON.stringify(res?.data?.me));
     expect(res?.data?.me).not.toBeNull();
     expect(res?.data?.me.user.lastName).not.equal("")
     headers["ojami-store-id"] = res?.data?.me?.stores?.[0]?._id as string
