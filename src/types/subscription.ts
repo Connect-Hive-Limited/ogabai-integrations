@@ -17,5 +17,6 @@ export interface SubscriptionPlan {
     subscriptionPlanStatus: "none" | "active" | "inactive";
     createdAt: string;
     updatedAt: string;
+    subscriptionPlanFeatureIds: string[];
     features: SubscriptionPlanFeature[]
 }
