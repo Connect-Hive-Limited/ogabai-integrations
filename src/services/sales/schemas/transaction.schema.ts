@@ -6,6 +6,7 @@ export const transactionSchema = {
             }
         }
     `,
+
     getTransactions: (query: string) => `
         query getTransactions($dateFilter: DateFilterInput, $transactionIds: [String], $transaction: TransactionInput, $limit: Int, $skip: Int, $shouldGetFromAllStores: Boolean){
             getTransactions(dateFilter: $dateFilter, transactionIds: $transactionIds, transaction: $transaction, limit: $limit, skip: $skip, shouldGetFromAllStores: $shouldGetFromAllStores){
