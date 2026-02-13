@@ -20,3 +20,20 @@ export interface SubscriptionPlan {
     subscriptionPlanFeatureIds: string[];
     features: SubscriptionPlanFeature[]
 }
+export interface Subscription {
+    id: string;
+    userId: string;
+    subscriptionPlanId: string;
+    price: number;
+    currency: string;
+    subscriptionStatus: "active"|"past_due"|"cancelled"|"trail"
+    currentPeriodStart: string;
+    currentPeriodEnd: string;
+    trialEnd: string;
+    cancelAtPeriodEnd: string;
+    canceledAt: string;
+    defaultPaymentMethodId: string;
+    version: number;
+    createdAt: string;
+    updatedAt: string;
+}
