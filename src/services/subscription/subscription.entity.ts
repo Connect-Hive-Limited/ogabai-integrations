@@ -23,5 +23,6 @@ export const subscriptionPlanQuery: SubscriptionPlanFields = [
     "subscriptionPlanStatus", 
     "createdAt", 
     "updatedAt", 
-    "features"
+    "subscriptionPlanFeatureIds",
+    "features",
 ]
