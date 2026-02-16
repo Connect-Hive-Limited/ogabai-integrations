@@ -7,7 +7,7 @@ export const subscriptionPlanSchema = {
         }
     `,
     getSubscriptionPlans: (query: string) => `
-        query getSubscriptionPlans($search String, $subscriptionPlanIds: [String], $subscriptionPlan: SubscriptionPlanInput, $limit: Int!, $skip: Int!) {
+        query getSubscriptionPlans($search: String, $subscriptionPlanIds: [String], $subscriptionPlan: SubscriptionPlanInput, $limit: Int!, $skip: Int!) {
             getSubscriptionPlans(search: $search, subscriptionPlanIds: $subscriptionPlanIds, subscriptionPlan: $subscriptionPlan, limit: $limit, skip: $skip) {
                 ${query}
             }
