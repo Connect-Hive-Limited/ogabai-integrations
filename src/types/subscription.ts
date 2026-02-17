@@ -10,7 +10,7 @@ export interface SubscriptionPlan {
     code: string;
     title: string;
     description: string;
-    price: number;
+    subscriptionPlanPrice: number;
     currency: string;
     period: "none" | "monthly" | "yearly";
     trialDays: number;

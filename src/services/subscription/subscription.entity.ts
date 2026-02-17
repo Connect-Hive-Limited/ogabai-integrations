@@ -35,7 +35,7 @@ export const subscriptionPlanQuery: SubscriptionPlanFields = [
     "code", 
     "title", 
     "description", 
-    "price", 
+    "subscriptionPlanPrice", 
     "currency", 
     "period", 
     "trialDays", 
