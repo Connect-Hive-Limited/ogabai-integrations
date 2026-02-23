@@ -1,5 +1,5 @@
 import { SubscriptionPlan } from "../../../types";
-import { SubscriptionPlanFields, subscriptionPlanQuery } from "../subscription.entity";
+import { SubscriptionPlanFeatureFields, subscriptionPlanFeatureQuery, SubscriptionPlanFields, subscriptionPlanQuery } from "../subscription.entity";
 
 export interface GetSubscriptionPlanRequest {
     subscriptionPlan: Partial<SubscriptionPlan>;
@@ -12,10 +12,11 @@ export const getSubscriptionPlanResponse: (keyof GetSubscriptionPlanResponse)[] 
 ]
 export interface GetSubscriptionPlanResponseNestedFields {
     subscriptionPlan: SubscriptionPlanFields
+    features: SubscriptionPlanFeatureFields
 }
 export const _getSubscriptionPlanResponseNestedFields: 
 Omit<GetSubscriptionPlanResponseNestedFields, "subscriptionPlan"> = {
-    
+    features: subscriptionPlanFeatureQuery
 }
 export const getSubscriptionPlanResponseNestedFields: GetSubscriptionPlanResponseNestedFields = {
     ..._getSubscriptionPlanResponseNestedFields,
