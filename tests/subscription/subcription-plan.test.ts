@@ -8,6 +8,7 @@ const chance = new Chance();
 describe.sequential("Subscription Plan API", () => {
     let env: Awaited<ReturnType<typeof initTestEnv>>;   
     let subscriptionPlanService: SubscriptionPlanService
+    let subscriptionPlanId: string|undefined;
     beforeAll(async () => {
         env = await initTestEnv();  
         subscriptionPlanService = createSubscriptionPlanService(env?.storeClient!);
@@ -21,8 +22,10 @@ describe.sequential("Subscription Plan API", () => {
                 subscriptionPlanPrice: chance.integer({min: 10000000, max: 99999999})
             }
         })
+        console.log({ res: JSON.stringify(res) })
         expect(res?.subscriptionPlan).not.toBeNull();
         expect(res?.subscriptionPlan.id).not.equal("");
+        subscriptionPlanId = res?.subscriptionPlan.id
     })
 
     it("list subscription plans", async () => {
@@ -30,8 +33,29 @@ describe.sequential("Subscription Plan API", () => {
             limit: 10,
             skip: 0
         })
-        console.log({ res })
         expect(res?.subscriptionPlans.length).greaterThan(0);
         expect(res?.total).greaterThan(0);
+    })
+
+    it("update subscription plan", async () => {
+        if(!subscriptionPlanId) return
+        const res = await subscriptionPlanService.updateSubscriptionPlan({
+            subscriptionPlanId,
+            subscriptionPlan: {
+                title: chance.name(),
+                description: chance.string(),
+                subscriptionPlanPrice: chance.integer({min: 10000000, max: 99999999})
+            }
+        })
+        expect(res?.subscriptionPlan).not.toBeNull();
+        expect(res?.subscriptionPlan.id).not.equal("");
+    })
+
+    it("remove subscription plan", async () => {
+        if(!subscriptionPlanId) return
+        const res = await subscriptionPlanService.removeSubscriptionPlan({
+            subscriptionPlanId
+        })
+        expect(res?.subscriptionPlanId).not.toBeNull();
     })
 })
