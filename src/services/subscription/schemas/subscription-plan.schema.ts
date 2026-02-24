@@ -22,14 +22,14 @@ export const subscriptionPlanSchema = {
     `,
     updateSubscriptionPlan: (query: string) => `
         mutation updateSubscriptionPlan($subscriptionPlanId: String!, $subscriptionPlan: SubscriptionPlanInput!) {
-            updateSubscriptionPlan(subscriptionPlanId: $subcriptionPlanId, subscriptionPlan: $subscriptionPlan) {
+            updateSubscriptionPlan(subscriptionPlanId: $subscriptionPlanId, subscriptionPlan: $subscriptionPlan) {
                 ${query}
             }
         }
     `,
     removeSubscriptionPlan: (query: string) => `
         mutation removeSubscriptionPlan($subscriptionPlanId: String!) {
-            removeSubscriptionPlan(subscriptionPlanId: $subcriptionPlanId) {
+            removeSubscriptionPlan(subscriptionPlanId: $subscriptionPlanId) {
                 ${query}
             }
         }
