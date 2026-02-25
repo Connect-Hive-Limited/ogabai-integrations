@@ -3,6 +3,9 @@ import path from "path";
 import { createAuthService } from "../src/services/user/auth.service";
 import { createUserService } from "../src/services/user/user.service";
 import { createClient, writeCache } from "./testEnv";
+import Chance from "chance";
+
+const chance = new Chance()
 
 const CACHE_PATH = path.resolve(__dirname, ".global-env-cache.json");
 
@@ -18,6 +21,7 @@ export default async function globalSetup() {
   const res = await authService.signUp({
     pin,
     phone,
+    email: chance.email(),
     storeName: "global setup test store",
     lastName: "Setup",
     firstName: "Global",

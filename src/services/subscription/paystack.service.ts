@@ -1,9 +1,31 @@
 import { GraphQLClient, RequestOption } from "../../client";
 import { gqlQueryStringBuilder } from "../../helpers/query";
 import { paystackSchema } from "./schemas/paystack.schema";
-import { PaystackInitializePaymentRequest, paystackInitializePaymentResponse, PaystackInitializePaymentResponse } from "./types/paystack";
+import { PaystackInitializeSubscriptionRequest, PaystackInitializeSubscriptionResponse } from "./types";
+import { PaystackInitializePaymentRequest, paystackInitializePaymentResponse, PaystackInitializePaymentResponse, paystackInitializeSubscriptionResponse } from "./types/paystack";
 
 export const createPaystackService = (client: GraphQLClient) => ({
+    async paystackInitializeSubscription(
+        input: PaystackInitializeSubscriptionRequest, 
+        fetchFields?: {
+            root?: (keyof PaystackInitializeSubscriptionResponse)[],
+        },
+        option?: RequestOption
+    ): Promise<PaystackInitializeSubscriptionResponse | null> {
+        const res = await client.request<
+            { paystackInitializeSubscription: PaystackInitializeSubscriptionResponse }, 
+            PaystackInitializeSubscriptionRequest
+        >(
+            paystackSchema.paystackInitializeSubscription(
+                gqlQueryStringBuilder<PaystackInitializeSubscriptionResponse>(
+                    fetchFields?.root ?? paystackInitializeSubscriptionResponse,
+                )
+            ), 
+            input, 
+            option
+        );
+        return res.data?.paystackInitializeSubscription ?? null;
+    },
     async paystackInitializePayment(
             input: PaystackInitializePaymentRequest,
             fetchFields?: {
