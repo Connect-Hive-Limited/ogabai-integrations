@@ -2,12 +2,20 @@ export interface PaystackInitializePaymentRequest{
     userId: string;
 }
 export interface PaystackInitializePaymentResponse{
-    authorization_url: string;
-    access_code: string;
+    authorizationUrl: string;
+    accessCode: string;
     reference: string;
 }
 export const paystackInitializePaymentResponse:(keyof PaystackInitializePaymentResponse)[] = [
-    "access_code", 
-    "authorization_url", 
+    "accessCode", 
+    "authorizationUrl", 
     "reference"
 ]
+export interface PaystackInitializeSubscriptionRequest {
+    userId: string;
+    planId: string;
+}
+
+export type  PaystackInitializeSubscriptionResponse = PaystackInitializePaymentResponse;
+export const paystackInitializeSubscriptionResponse: (keyof PaystackInitializeSubscriptionResponse)[] = paystackInitializePaymentResponse
+

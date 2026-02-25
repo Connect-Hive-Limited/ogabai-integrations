@@ -10,7 +10,6 @@ export interface SubscriptionPlan {
     code: string;
     title: string;
     description: string;
-    subscriptionPlanPrice: number;
     currency: string;
     period: "none" | "monthly" | "yearly";
     trialDays: number;
@@ -19,6 +18,9 @@ export interface SubscriptionPlan {
     updatedAt: string;
     subscriptionPlanFeatureIds: string[];
     features: SubscriptionPlanFeature[]
+    paystackPlanId?: string;
+    monthlyPlanPrice: number;
+    annuallyPlanPrice: number;
 }
 export interface Subscription {
     id: string;
