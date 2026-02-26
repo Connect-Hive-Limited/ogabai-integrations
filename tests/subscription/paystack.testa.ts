@@ -23,41 +23,43 @@ describe.sequential("Flutter API", () => {
         subscriptionPlanService = createSubscriptionPlanService(client!);
     })
 
-    it("should initialize payment", async () => {
-        const res = await paystackService.paystackInitializePayment({
-            userId
-        })
-        console.log({ res })
-    })
+    // it("should initialize payment", async () => {
+    //     const res = await paystackService.paystackInitializePayment({
+    //         userId
+    //     })
+    //     console.log({ res })
+    // })
 
     it("should initialize subscription", async () => {
-        const subPlans = await subscriptionPlanService.getSubscriptionPlans({
-            limit: 100,
-            skip: 0
-        })
-        const plans = subPlans?.subscriptionPlans || [];
+        // const subPlans = await subscriptionPlanService.getSubscriptionPlans({
+        //     limit: 100,
+        //     skip: 0
+        // })
+        // const plans = subPlans?.subscriptionPlans || [];
         let planId: string = "";
-        for (let i = 0; i < plans.length; i++) {
-            const {  paystackPlanId, id } = plans[i];
-            if(paystackPlanId){
-                planId = id;
-                break;
+        // for (let i = 0; i < plans.length; i++) {
+        //     const {  paystackPlanId, id } = plans[i];
+        //     if(paystackPlanId){
+        //         planId = id;
+        //         break;
+        //     }
+        // }
+        // if(!planId){
+        // }
+        const newPlan = await subscriptionPlanService.addSubscriptionPlan({
+            subscriptionPlan: {
+                title: chance.name(),
+                description: chance.string(),
+                annuallyPlanPrice: chance.integer({min: 10000000, max: 99999999}),
+                monthlyPlanPrice: chance.integer({min: 1, max: 2000})
             }
-        }
-        if(!planId){
-            const newPlan = await subscriptionPlanService.addSubscriptionPlan({
-                subscriptionPlan: {
-                    title: chance.name(),
-                    description: chance.string(),
-                    subscriptionPlanPrice: chance.integer({min: 10000000, max: 99999999})
-                }
-            })
-            planId = newPlan?.subscriptionPlan.id || ""
-        }
+        })
+        planId = newPlan?.subscriptionPlan.id || ""
         if(planId && userId){
             const res = await paystackService.paystackInitializeSubscription({
                 userId,
-                planId
+                planId,
+                subscriptionFrequencyType: "annually"
             })
             console.log({ res: JSON.stringify(res) })
             expect(res?.authorizationUrl).not.toBeNull();
