@@ -14,6 +14,7 @@ export const paystackInitializePaymentResponse:(keyof PaystackInitializePaymentR
 export interface PaystackInitializeSubscriptionRequest {
     userId: string;
     planId: string;
+    subscriptionFrequencyType: "annually" | "monthly";
 }
 
 export type  PaystackInitializeSubscriptionResponse = PaystackInitializePaymentResponse;
