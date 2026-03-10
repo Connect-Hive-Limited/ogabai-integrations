@@ -1,6 +1,6 @@
 {
     "name": "@connect-plus-online/ogabai-integrations",
-    "version": "0.0.54",
+    "version": "0.0.55",
     "description": "Ogabai integrations for Connect Plus Online",
     "keywords": [
         "graphql",

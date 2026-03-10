@@ -1,3 +1,32 @@
+import { Store } from "./inventory";
+
+export type PrivilegeAction = "none" | "read" | "write" | "update" | "delete";
+export interface Privilege {
+  feature: string;
+  actions: PrivilegeAction[];
+}
+export interface UserRole {
+  id: string;
+  name: string;
+  shortname: string;
+  description: string;
+  privileges: Privilege[];
+  isRootAdmin: string;
+  isSuperAdmin: string;
+  createdAt: string;
+  storeId: string;
+  userRoleStatus: "active" | "inactive";
+}
+export interface UserAccount {
+  id: string;
+  userId: string;
+  createdAt: string;
+  storeId: string;
+  userRoleId: string;
+  userRole?: UserRole;
+  store?: Store;
+}
+
 export interface UserTypeCounts {
   total: number;
   customers: number;
