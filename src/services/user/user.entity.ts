@@ -1,4 +1,4 @@
-import { Account, MonthlyUserStat, Notification, NotificationChannels, ProductCounts, RestockCounts, SaleCounts, ServiceUpdate, TransactionCounts, User, UserNotification, UserNotificationSettings, UserSetting, UserTypeCounts, Wallet } from "../../types";
+import { Account, MonthlyUserStat, Notification, NotificationChannels, Privilege, ProductCounts, RestockCounts, SaleCounts, ServiceUpdate, TransactionCounts, User, UserAccount, UserNotification, UserNotificationSettings, UserRole, UserSetting, UserTypeCounts, Wallet } from "../../types";
 
 export type AccountFields = (keyof Account)[];
 export type WalletFields = (keyof Wallet)[];
@@ -15,9 +15,36 @@ export type UserNotificationFields = (keyof UserNotification)[];
 export type NotificationFields = (keyof Notification)[]
 export type MonthlyUserStatFields = (keyof MonthlyUserStat)[]
 export type UserTypeCountsFields = (keyof UserTypeCounts)[]
+export type UserRoleFields = (keyof UserRole)[]
+export type UserAccountFields = (keyof UserAccount)[]
+export type PrivilegeFields = (keyof Privilege)[]
 
 
 
+
+export const privilegeQuery:PrivilegeFields = [
+    "actions", "feature"
+]
+export const userAccountQuery:UserAccountFields = [
+    "createdAt",
+    "id",
+    "storeId",
+    "userId",
+    "userRoleId",
+    "store",
+    "userRole",
+]
+export const userRoleQuery:UserRoleFields = [
+    "createdAt", 
+    "description",
+    "id",
+    "isRootAdmin",
+    "name",
+    "privileges",
+    "shortname",
+    "storeId",
+    "userRoleStatus",
+]
 
 export const userTypeCountsQuery:UserTypeCountsFields = [
     "customers", "distributors", "manufacturer", "total"
