@@ -3,6 +3,9 @@ import { gqlQueryStringBuilder } from "../../helpers/query";
 import { GraphQLResponse } from "../../types";
 import {authSchema} from "./schemas/auth.schema";
 import { 
+  AuthenticateWithStoreRequest,
+  authenticateWithStoreResponse,
+  AuthenticateWithStoreResponse,
   ChangePinRequest,
   changePinResponse,
   ChangePinResponse,
@@ -18,6 +21,23 @@ import {
 } from "./types/auth.type";
 
 export const createAuthService = (client: GraphQLClient) => ({
+  async authenticateWithStore(
+    input: AuthenticateWithStoreRequest,
+    fetchFields?: {
+      root?: (keyof AuthenticateWithStoreResponse)[],
+    },
+    option?: RequestOption
+  ): Promise<GraphQLResponse<{ authenticateWithStore: AuthenticateWithStoreResponse }>> {
+    return client.request<{ authenticateWithStore: AuthenticateWithStoreResponse }, AuthenticateWithStoreRequest>(
+      authSchema.authenticateWithStore(
+        gqlQueryStringBuilder<AuthenticateWithStoreResponse>(
+          fetchFields?.root ?? authenticateWithStoreResponse,
+        )
+      ), 
+      input, 
+      option
+    );
+  },
   async checkRegistration(
     input: CheckRegistrationRequest, 
     fetchFields?: {
