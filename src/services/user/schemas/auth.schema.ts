@@ -1,4 +1,13 @@
+
+
 export const authSchema = {
+  authenticateWithStore: (query: string) => `
+    mutation authenticateWithStore($storeId: String!, $roleId: String!) {
+      authenticateWithStore(storeId: $storeId, roleId: $roleId) {
+        ${query}
+      }      
+    }
+  `,
   // change pin 
   changePin: (query: string) => `
     mutation changePin($userId: String!, $oldPin: String!, $newPin: String!) {

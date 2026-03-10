@@ -1,5 +1,16 @@
 import { UserType } from "../../../types";
 
+export interface AuthenticateWithStoreRequest {
+    storeId: string;
+    roleId: string;
+}
+export interface AuthenticateWithStoreResponse {
+    accessToken: string;
+}
+export const authenticateWithStoreResponse: (keyof AuthenticateWithStoreResponse)[] = [
+    "accessToken"
+]
+
 export interface CheckRegistrationRequest {
     phone: string;
 }
