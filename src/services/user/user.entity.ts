@@ -33,6 +33,7 @@ export const userAccountQuery:UserAccountFields = [
     "userRoleId",
     "store",
     "userRole",
+    "user"
 ]
 export const userRoleQuery:UserRoleFields = [
     "createdAt", 

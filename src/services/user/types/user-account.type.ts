@@ -2,7 +2,7 @@ import { EntityCRUD } from "../../../helpers/crud.contract";
 import { createDeleteIntegration, createListIntegration, createStandardEntityIntegration } from "../../../helpers/entity.factory";
 import { UserAccount } from "../../../types";
 import { storeQuery } from "../../inventory/entities";
-import { privilegeQuery, userAccountQuery } from "../user.entity";
+import { privilegeQuery, userAccountQuery, userQuery } from "../user.entity";
 
 const ENTITY = "userAccount" as const;
 
@@ -17,6 +17,7 @@ export const userAccountIntegration =
       userAccount: userAccountQuery,
       store: storeQuery,
       privileges: privilegeQuery,
+      user: userQuery,
     },
   });
 
@@ -29,6 +30,7 @@ export const userAccountListIntegration =
       privileges: privilegeQuery,
       userAccount: userAccountQuery,
       store: storeQuery,
+      user: userQuery,
     }
   });
 
