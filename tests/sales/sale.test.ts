@@ -103,7 +103,10 @@ describe.sequential("Sales API", () => {
       expect(res?.transaction?.sales.length).greaterThan(0)
     })
     it("transaction count should increase", async () => {
-      const res = await userService.getUserDashStats()
+      const res = await userService.getUserDashStats({
+        storeId
+      })
+      console.log({res: JSON.stringify(res)})
       expect(res?.saleCounts.totalSales).greaterThan(0)
     })
 });
