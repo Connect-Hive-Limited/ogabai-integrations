@@ -1,7 +1,7 @@
 import type { GraphQLClient, RequestOption } from "../../client";
 import { gqlQueryStringBuilder } from "../../helpers/query";
 import userSchema from "./schemas/user.schema";
-import { GetMonthlyUserStatsByYearRequest, getMonthlyUserStatsByYearResponse, GetMonthlyUserStatsByYearResponse, getMonthlyUserStatsByYearResponseNestedFields, GetMonthlyUserStatsByYearResponseNestedFields, getUserDashStatsResponse, GetUserDashStatsResponse, getUserDashStatsResponseNestedFields, GetUserDashStatsResponseNestedFields, GetUserRequest, getUserResponse, GetUserResponse, GetUserResponseNestedFields, getUserResponseNestedFields, GetUsersRequest, getUsersResponse, GetUsersResponse, getUsersResponseNestedFields, GetUsersResponseNestedFields, getUserTypeCountsResponse, GetUserTypeCountsResponse, getUserTypeCountsResponseNestedFields, GetUserTypeCountsResponseNestedFields, meResponse, MeResponse, meResponseNestedFields, MeResponseNestedFields, UpdateUserRequest, updateUserResponse, UpdateUserResponse, updateUserResponseNestedFields, UpdateUserResponseNestedFields } from "./types/user.type";
+import { GetMonthlyUserStatsByYearRequest, getMonthlyUserStatsByYearResponse, GetMonthlyUserStatsByYearResponse, getMonthlyUserStatsByYearResponseNestedFields, GetMonthlyUserStatsByYearResponseNestedFields, GetUserDashStatsRequest, getUserDashStatsResponse, GetUserDashStatsResponse, getUserDashStatsResponseNestedFields, GetUserDashStatsResponseNestedFields, GetUserRequest, getUserResponse, GetUserResponse, GetUserResponseNestedFields, getUserResponseNestedFields, GetUsersRequest, getUsersResponse, GetUsersResponse, getUsersResponseNestedFields, GetUsersResponseNestedFields, getUserTypeCountsResponse, GetUserTypeCountsResponse, getUserTypeCountsResponseNestedFields, GetUserTypeCountsResponseNestedFields, meResponse, MeResponse, meResponseNestedFields, MeResponseNestedFields, UpdateUserRequest, updateUserResponse, UpdateUserResponse, updateUserResponseNestedFields, UpdateUserResponseNestedFields } from "./types/user.type";
 import { GraphQLResponse } from "../../types";
 
 export const createUserService = (client: GraphQLClient) => ({  
@@ -47,6 +47,7 @@ export const createUserService = (client: GraphQLClient) => ({
   },
   // user dashboard stats
   async getUserDashStats(
+    input?: GetUserDashStatsRequest,
     fetchFields?: {
       root?: (keyof GetUserDashStatsResponse)[],
       nestedFields?: GetUserDashStatsResponseNestedFields
@@ -60,7 +61,7 @@ export const createUserService = (client: GraphQLClient) => ({
           fetchFields?.nestedFields ?? getUserDashStatsResponseNestedFields
         )
       ), 
-      {},
+      input,
       option
     );
     return res.data?.getUserDashStats;

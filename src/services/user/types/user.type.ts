@@ -47,7 +47,9 @@ export const getMonthlyUserStatsByYearResponseNestedFields: GetMonthlyUserStatsB
     monthlyUserStat: monthlyUserStatQuery
 }
 
-
+export interface GetUserDashStatsRequest {
+    storeId: string;
+}
 // user dashboard stats 
 export interface GetUserDashStatsResponse {
   outOfStockCount: number;
