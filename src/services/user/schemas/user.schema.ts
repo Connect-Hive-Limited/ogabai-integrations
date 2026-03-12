@@ -17,8 +17,8 @@ export const userSchema = {
   `,
   // mobile dashboard stats
   getUserDashStats: (query: string) => `
-    query getUserDashStats {
-      getUserDashStats {
+    query getUserDashStats($storeId: String!) {
+      getUserDashStats(storeId: $storeId) {
         ${query}
       }
     }
