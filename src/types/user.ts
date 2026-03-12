@@ -25,6 +25,7 @@ export interface UserAccount {
   userRoleId: string;
   userRole?: UserRole;
   store?: Store;
+  user?: User;
 }
 
 export interface UserTypeCounts {
