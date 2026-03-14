@@ -1,5 +1,15 @@
 import { Store } from "./inventory";
 
+
+export interface ApplicationFeature {
+  id: string;
+  shortname: string;
+  name: string;
+  description: string;
+  createdAt: string;
+  applicationFeatureStatus: "active" | "inactive";
+}
+
 export type PrivilegeAction = "none" | "read" | "write" | "update" | "delete";
 export interface Privilege {
   feature: string;
