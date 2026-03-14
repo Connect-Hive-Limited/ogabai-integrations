@@ -1,4 +1,4 @@
-import { Account, MonthlyUserStat, Notification, NotificationChannels, Privilege, ProductCounts, RestockCounts, SaleCounts, ServiceUpdate, TransactionCounts, User, UserAccount, UserNotification, UserNotificationSettings, UserRole, UserSetting, UserTypeCounts, Wallet } from "../../types";
+import { Account, ApplicationFeature, MonthlyUserStat, Notification, NotificationChannels, Privilege, ProductCounts, RestockCounts, SaleCounts, ServiceUpdate, TransactionCounts, User, UserAccount, UserNotification, UserNotificationSettings, UserRole, UserSetting, UserTypeCounts, Wallet } from "../../types";
 
 export type AccountFields = (keyof Account)[];
 export type WalletFields = (keyof Wallet)[];
@@ -18,10 +18,18 @@ export type UserTypeCountsFields = (keyof UserTypeCounts)[]
 export type UserRoleFields = (keyof UserRole)[]
 export type UserAccountFields = (keyof UserAccount)[]
 export type PrivilegeFields = (keyof Privilege)[]
+export type ApplicationFeatureFields = (keyof ApplicationFeature)[]
 
 
 
-
+export const applicationFeatureQuery:ApplicationFeatureFields = [
+    "createdAt",
+    "description",
+    "id",
+    "name",
+    "shortname",
+    "applicationFeatureStatus",
+]
 export const privilegeQuery:PrivilegeFields = [
     "actions", "feature"
 ]
