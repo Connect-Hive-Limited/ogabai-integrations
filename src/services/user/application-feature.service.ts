@@ -8,14 +8,14 @@ export const createApplicationFeatureService = (client: GraphQLClient) =>  ({
     createApplicationFeature: createOperationExecutor<
         "createApplicationFeature",
         ApplicationFeatureCRUD["CreateRequest"],
-        ApplicationFeatureCRUD["CreateResponse"] & { pin?: string },
+        ApplicationFeatureCRUD["CreateResponse"],
         typeof applicationFeatureIntegration.create.nestedFields
     >(
         client,
         "createApplicationFeature",
         {
             schema: buildSchema(applicationFeatureSchema.create),
-            defaultRootFields: [...applicationFeatureIntegration.create.responseFields, "pin"],
+            defaultRootFields: applicationFeatureIntegration.create.responseFields,
             defaultNestedFields: applicationFeatureIntegration.create.nestedFields,
         }
     ),

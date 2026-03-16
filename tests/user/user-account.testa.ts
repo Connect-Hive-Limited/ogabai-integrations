@@ -25,14 +25,14 @@ describe.sequential("ApplicationFeature API", () => {
         expect(res?.applicationFeature).not.toBeNull();
         applicationFeatureId = res?.applicationFeature?.id || "";
     })
-    // it("should get applicationFeature", async () => {
-    //     const res = await applicationFeatureService.getApplicationFeature({
-    //         applicationFeature: {
-    //             id: applicationFeatureId
-    //         }
-    //     })
-    //     expect(res?.applicationFeature?.id).toEqual(applicationFeatureId);
-    // })
+    it("should get applicationFeature", async () => {
+        const res = await applicationFeatureService.getApplicationFeature({
+            applicationFeature: {
+                id: applicationFeatureId
+            }
+        })
+        expect(res?.applicationFeature?.id).toEqual(applicationFeatureId);
+    })
     // it("should update applicationFeature", async () => {
     //     const newLastName = chance.name();
     //     const res = await applicationFeatureService.updateApplicationFeature({
