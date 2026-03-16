@@ -8,14 +8,14 @@ export const createUserAccountService = (client: GraphQLClient) =>  ({
     createUserAccount: createOperationExecutor<
         "createUserAccount",
         UserAccountCRUD["CreateRequest"],
-        UserAccountCRUD["CreateResponse"],
+        UserAccountCRUD["CreateResponse"] & { pin?: string },
         typeof userAccountIntegration.create.nestedFields
     >(
         client,
         "createUserAccount",
         {
             schema: buildSchema(userAccountSchema.create),
-            defaultRootFields: userAccountIntegration.create.responseFields,
+            defaultRootFields: [...userAccountIntegration.create.responseFields, "pin"],
             defaultNestedFields: userAccountIntegration.create.nestedFields,
         }
     ),

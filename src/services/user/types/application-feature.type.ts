@@ -12,9 +12,6 @@ export const applicationFeatureIntegration =
   createStandardEntityIntegration({
     key: ENTITY,
     fields: applicationFeatureQuery,
-    nested: {
-      privileges: privilegeQuery,
-    },
   });
 
 
@@ -22,9 +19,6 @@ export const applicationFeatureListIntegration =
   createListIntegration({
     key: "applicationFeatures",
     fields: applicationFeatureQuery,
-    nested: {
-      privileges: privilegeQuery,
-    }
   });
 
 export const applicationFeatureDeleteIntegration =
