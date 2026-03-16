@@ -2,7 +2,7 @@ import { beforeAll, describe, expect, it } from "vitest";
 import { createProductService, ProductService } from "../../src/services/inventory/product.service";
 export { type PackageService } from "../../src/services/inventory/package.service";
 import { getProduct } from "../dummy";
-import { Product, ProductPackage, Sale, Transaction } from "../../src/types";
+import { Product, Sale, Transaction } from "../../src/types";
 import { type TransactionService, createTransactionService } from "../../src/services/sales/transaction.service";
 import { initTestEnv } from "../testEnv";
 import { createUserService, UserService } from "../../src/services/user/user.service";

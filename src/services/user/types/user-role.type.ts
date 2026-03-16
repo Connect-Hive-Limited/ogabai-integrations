@@ -1,4 +1,4 @@
-import { EntityCRUD } from "../../../helpers/crud.contract";
+ import { EntityCRUD } from "../../../helpers/crud.contract";
 import { createDeleteIntegration, createListIntegration, createStandardEntityIntegration } from "../../../helpers/entity.factory";
 import { UserRole } from "../../../types";
 import { privilegeQuery, userRoleQuery } from "../user.entity";
