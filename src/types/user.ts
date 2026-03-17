@@ -35,7 +35,7 @@ export interface UserAccount {
   userRoleId: string;
   userRole?: UserRole;
   store?: Store;
-  user?: User;
+  user?: Partial<User>;
 }
 
 export interface UserTypeCounts {
