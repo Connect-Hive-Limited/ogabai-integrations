@@ -3,13 +3,17 @@ import { beforeAll, describe, expect, it } from "vitest";
 import { initTestEnv } from "../testEnv";
 import { createUserAccountService, UserAccountService } from "../../src/services/user/user-account.service";
 import { createUserRoleService } from "../../src/services/user/user-role.service";
+import { createAuthService, AuthService } from "../../src/services/user/auth.service";
 
 const chance = new Chance();
 
 describe.sequential("UserAccount API", () => {
     let userId: string, storeId: string, userAccountId: string;
     let userAccountService: UserAccountService;
+    let authService: AuthService;
     let roleId: string;
+    let pin: string;
+    const phone = chance.phone();
 
 
     beforeAll(async () => {
@@ -17,6 +21,7 @@ describe.sequential("UserAccount API", () => {
         userId = env?.userId ?? ""
         storeId = env?.storeId!
         userAccountService = createUserAccountService(env?.storeClient!);
+        authService = createAuthService(env?.storeClient!);
         const userRoleService = createUserRoleService(env?.storeClient!);
         const userRoleRes = await userRoleService.getUserRole({
             userRole: {
@@ -31,7 +36,7 @@ describe.sequential("UserAccount API", () => {
         const res = await userAccountService.createUserAccount({
             userAccount: {
                 user: {
-                    phone: chance.phone(),
+                    phone,
                 }, 
                 storeId,
                 userRoleId: roleId,
@@ -40,6 +45,15 @@ describe.sequential("UserAccount API", () => {
         console.log({ res: JSON.stringify(res) })
         expect(res?.userAccount).not.toBeNull();
         userAccountId = res?.userAccount?.id || "";
+        pin = res?.pin || "";
+    })
+    it("login with new pin", async () => {
+        const res = await authService?.login({
+            pin,
+            phone,
+        });
+        console.log({ login: JSON.stringify(res) })
+        expect(res?.data?.login).not.toBeNull();
     })
     // it("should get userAccount", async () => {
     //     const res = await userAccountService.getUserAccount({
