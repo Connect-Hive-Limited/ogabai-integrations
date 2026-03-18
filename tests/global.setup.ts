@@ -31,11 +31,11 @@ export default async function globalSetup() {
   const userId = res?.data?.signUp.userId ?? ""
   if (!accessToken) throw new Error("Signup failed — no access token");
 
-
-  console.log({ accessToken })
   const privateClient = createClient(accessToken);
   const userService = createUserService(privateClient);
   const me = await userService.me();
+
+  // console.log({ me: JSON.stringify(me)})
 
   const userData = me?.data?.me;
   if (!userData) throw new Error("No user data");

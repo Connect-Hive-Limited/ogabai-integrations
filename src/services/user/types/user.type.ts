@@ -7,13 +7,15 @@ import {
     Store,
     TransactionCounts,
     User,
+    UserAccount,
     UserSetting,
     UserType, 
     UserTypeCounts
 } from "../../../types";
-import { AccountFields, MonthlyUserStatFields, monthlyUserStatQuery, ProductCountsFields, productCountsQuery, RestockCountsFields, restockCountsQuery, SaleCountsFields, saleCountsQuery, TransactionCountsFields, transactionCountsQuery, UserFields, userQuery, UserSettingFields, userSettingQuery, UserTypeCountsFields, userTypeCountsQuery } from "../user.entity";
+import { AccountFields, MonthlyUserStatFields, monthlyUserStatQuery, ProductCountsFields, productCountsQuery, RestockCountsFields, restockCountsQuery, SaleCountsFields, saleCountsQuery, TransactionCountsFields, transactionCountsQuery, UserAccountFields, UserFields, userQuery, UserSettingFields, userSettingQuery, UserTypeCountsFields, userTypeCountsQuery } from "../user.entity";
 import { AddressFields, addressQuery, StoreFields, storeQuery } from "../../inventory/entities";
 import { getAccountResponseNestedFields } from "./account.type"
+import { userAccountListIntegration } from "./user-account.type";
 
 // admin dashboard stats 
 
@@ -166,22 +168,26 @@ export interface MeResponse {
     account?: Account;
     stores?: Store[];
     userSetting?: UserSetting;
+    userAccounts?: UserAccount[]
 }
 export const meResponse: (keyof MeResponse)[] = [
     "user",
     "account",
     "stores",
-    "userSetting"
+    "userSetting",
+    "userAccounts"
 ]
 export interface MeResponseNestedFields extends GetUserResponseNestedFields {
     user: UserFields;
     account: AccountFields;
     stores: StoreFields;
     userSetting: UserSettingFields;
+    userAccounts: UserAccountFields;
 }
 export const meResponseNestedFields: MeResponseNestedFields = {
     stores: storeQuery,
     userSetting: userSettingQuery,
+    ...userAccountListIntegration.nestedFields,
     ...getUserResponseNestedFields,
     ...getAccountResponseNestedFields,
 }
