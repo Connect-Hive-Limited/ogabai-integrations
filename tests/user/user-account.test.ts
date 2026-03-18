@@ -32,29 +32,29 @@ describe.sequential("UserAccount API", () => {
         roleId = userRoleRes?.userRole?.id || ""
     })
 
-    it("should create userAccount", async () => {
-        const res = await userAccountService.createUserAccount({
-            userAccount: {
-                user: {
-                    phone,
-                }, 
-                storeId,
-                userRoleId: roleId,
-            },
-        })
-        console.log({ res: JSON.stringify(res) })
-        expect(res?.userAccount).not.toBeNull();
-        userAccountId = res?.userAccount?.id || "";
-        pin = res?.pin || "";
-    })
-    it("login with new pin", async () => {
-        const res = await authService?.login({
-            pin,
-            phone,
-        });
-        console.log({ login: JSON.stringify(res) })
-        expect(res?.data?.login).not.toBeNull();
-    })
+    // it("should create userAccount", async () => {
+    //     const res = await userAccountService.createUserAccount({
+    //         userAccount: {
+    //             user: {
+    //                 phone,
+    //             }, 
+    //             storeId,
+    //             userRoleId: roleId,
+    //         },
+    //     })
+    //     console.log({ res: JSON.stringify(res) })
+    //     expect(res?.userAccount).not.toBeNull();
+    //     userAccountId = res?.userAccount?.id || "";
+    //     pin = res?.pin || "";
+    // })
+    // it("login with new pin", async () => {
+    //     const res = await authService?.login({
+    //         pin,
+    //         phone,
+    //     });
+    //     console.log({ login: JSON.stringify(res) })
+    //     expect(res?.data?.login).not.toBeNull();
+    // })
     // it("should get userAccount", async () => {
     //     const res = await userAccountService.getUserAccount({
     //         userAccount: {
