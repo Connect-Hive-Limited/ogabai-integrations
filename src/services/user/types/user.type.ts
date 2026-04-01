@@ -5,6 +5,7 @@ import {
     RestockCounts,
     SaleCounts,
     Store,
+    Subscription,
     TransactionCounts,
     User,
     UserAccount,
@@ -16,6 +17,7 @@ import { AccountFields, MonthlyUserStatFields, monthlyUserStatQuery, ProductCoun
 import { AddressFields, addressQuery, StoreFields, storeQuery } from "../../inventory/entities";
 import { getAccountResponseNestedFields } from "./account.type"
 import { userAccountListIntegration } from "./user-account.type";
+import { getSubscriptionResponseNestedFields } from "../../subscription";
 
 // admin dashboard stats 
 
@@ -169,13 +171,15 @@ export interface MeResponse {
     stores?: Store[];
     userSetting?: UserSetting;
     userAccounts?: UserAccount[]
+    subscription?: Subscription;
 }
 export const meResponse: (keyof MeResponse)[] = [
     "user",
     "account",
     "stores",
     "userSetting",
-    "userAccounts"
+    "userAccounts",
+    "subscription",
 ]
 export interface MeResponseNestedFields extends GetUserResponseNestedFields {
     user: UserFields;
@@ -188,6 +192,7 @@ export const meResponseNestedFields: MeResponseNestedFields = {
     stores: storeQuery,
     userSetting: userSettingQuery,
     ...userAccountListIntegration.nestedFields,
+    ...getSubscriptionResponseNestedFields,
     ...getUserResponseNestedFields,
     ...getAccountResponseNestedFields,
 }
