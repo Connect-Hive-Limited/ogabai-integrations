@@ -1,7 +1,7 @@
 import { EntityCRUD } from "../../../helpers/crud.contract";
 import { createDeleteIntegration, createListIntegration, createStandardEntityIntegration } from "../../../helpers/entity.factory";
 import { ApplicationFeature } from "../../../types";
-import { privilegeQuery, applicationFeatureQuery } from "../user.entity";
+import { applicationFeatureQuery } from "../user.entity";
 
 const ENTITY = "applicationFeature" as const;
 

@@ -1,12 +1,43 @@
 import { Subscription, SubscriptionPlan, 
-    SubscriptionPlanFeature } from "../../types";
+    SubscriptionPlanFeature,
+    SubscriptionPlanFeatureBehaviour,
+    SubscriptionPlanFeatureLimitValue, 
+    SubscriptionPlanFeatureAccessValue,
+    SubscriptionPlanFeatureBehaviourValue
+} from "../../types";
 
 export type SubscriptionPlanFeatureFields = (keyof SubscriptionPlanFeature)[];
 export type SubscriptionPlanFields = (keyof SubscriptionPlan)[];
 export type SubscriptionFields = (keyof Subscription)[]
+export type SubscriptionPlanFeatureBehaviourFields = (keyof SubscriptionPlanFeatureBehaviour)[];
+
+
+export type SubscriptionLimitValueFields = (keyof SubscriptionPlanFeatureLimitValue)[];
+export type SubscriptionAccessValueFields = (keyof SubscriptionPlanFeatureAccessValue)[];
+export type SubscriptionBehaviourValueFields = (keyof SubscriptionPlanFeatureBehaviourValue)[];
 
 
 
+export const subscriptionLimitValueFields: SubscriptionLimitValueFields = [
+    "featureKey",
+    "limitValue"
+]
+export const subscriptionAccessValueFields: SubscriptionAccessValueFields = [
+    "featureKey",
+    "featureAccessValue"
+]
+export const subscriptionBehaviourValueFields: SubscriptionBehaviourValueFields = [
+    "featureKey",
+    "behaviourIds"
+]
+export const subscriptionPlanFeatureBehaviourQuery: SubscriptionPlanFeatureBehaviourFields = [
+    "id",
+    "createdAt",
+    "description",
+    "shortname",
+    "subscriptionPlanFeatureKey",
+    "title",
+]
 export const subscriptionQuery: SubscriptionFields = [
     "cancelAtPeriodEnd",
     "canceledAt",
@@ -41,7 +72,6 @@ export const subscriptionPlanQuery: SubscriptionPlanFields = [
     "subscriptionPlanStatus", 
     "createdAt", 
     "updatedAt", 
-    "subscriptionPlanFeatureIds",
     "features", 
     "monthlyPlanPrice",
     "annuallyPlanPrice"
