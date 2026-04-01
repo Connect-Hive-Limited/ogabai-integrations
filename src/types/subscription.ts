@@ -1,17 +1,15 @@
-export type SubscriptionPlanFeaturePolicy =
-  | "limit"
-  | "access"
-  | "tier"
-  | "unlimited";
+export interface SubscriptionPlanFeatureBehaviour {
+  id: string;
+  subscriptionPlanFeatureKey: SubscriptionPlanFeatureKey;
+  shortname: string;
+  title: string;
+  description: string;
+  createdAt: string;
+}
 
 export type SubscriptionPlanFeatureStatus =
   | "active"
   | "inactive";
-
-export type SubscriptionPlanFeatureTier =
-  | "basic"
-  | "standard"
-  | "pro";
 
 export type SubscriptionPlanFeatureKey =
   | "product"
@@ -30,9 +28,27 @@ export type SubscriptionPlanFeatureKey =
   | "scanSell"
   | "stockAlert";
 
+export const SubscriptionPlanFeatureKeyLabels: Partial<Record<SubscriptionPlanFeatureKey, string>> = {
+  product: "Product",
+  stock: "Stock",
+  sale: "Sale",
+  store: "Store",
+  scanAdd: "Scan & Add",
+  // expense: "Expense",
+  // report: "Report",
+  // order: "Order",
+  // export: "Export",
+  // offline: "Offline Mode",
+  // tax: "Tax Management",
+  // loyalty: "Loyalty Program",
+  // staff: "Staff Management",
+  // scanSell: "Scan & Sell",
+  // stockAlert: "Stock Alert"
+};
+
 export type SubscriptionPlanFeatureAccess =
-  | "true"
-  | "false";
+  | "yes"
+  | "no";
 export type SubscriptionPlanFeature = {
   id: string;
   title: string;
@@ -47,7 +63,7 @@ export type SubscriptionPlanFeature = {
   createdAt: string;
   limitValue: number;
   accessValue: SubscriptionPlanFeatureAccess;
-  tierValue: SubscriptionPlanFeatureTier;
+  subscriptionPlanFeatureBehaviourIds: string[];
 };
 
 
@@ -62,16 +78,15 @@ export interface SubscriptionPlan {
     subscriptionPlanStatus: "none" | "active" | "inactive";
     createdAt: string;
     updatedAt: string;
-    subscriptionPlanFeatureIds: string[];
     features: SubscriptionPlanFeature[]
     paystackPlanId?: string;
     monthlyPlanPrice: number;
     annuallyPlanPrice: number;
 }
 
-export interface SubscriptionPlanFeatureTierValue {
+export interface SubscriptionPlanFeatureBehaviourValue {
   featureKey: SubscriptionPlanFeatureKey;
-  featureTierValue: SubscriptionPlanFeatureTier;
+  behaviourIds: string[];
 }
 export interface SubscriptionPlanFeatureLimitValue {
   featureKey: SubscriptionPlanFeatureKey;
@@ -97,7 +112,7 @@ export interface Subscription {
     version: number;
     createdAt: string;
     updatedAt: string;
-    subscriptionTiers: SubscriptionPlanFeatureTierValue[];
+    subscriptionTiers: SubscriptionPlanFeatureBehaviourValue[];
     subscriptionLimits: SubscriptionPlanFeatureLimitValue[];
     subscriptionAccesses: SubscriptionPlanFeatureAccessValue[];
 }
