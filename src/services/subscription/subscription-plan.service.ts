@@ -1,122 +1,81 @@
-import { GraphQLClient, RequestOption } from "../../client";
-import { gqlQueryStringBuilder } from "../../helpers/query";
+import { GraphQLClient } from "../../client";
+import { createOperationExecutor } from "../../helpers/service.factory";
+import { buildSchema } from "../../helpers/schema-builder";
+import { SubscriptionPlanCRUD, subscriptionPlanDeleteIntegration, subscriptionPlanIntegration, subscriptionPlanListIntegration } from "./types/subscription-plan.type";
 import { subscriptionPlanSchema } from "./schemas/subscription-plan.schema";
-import { AddSubscriptionPlanRequest, addSubscriptionPlanResponse, AddSubscriptionPlanResponse, addSubscriptionPlanResponseNestedFields, AddSubscriptionPlanResponseNestedFields, GetSubscriptionPlanRequest, getSubscriptionPlanResponse, GetSubscriptionPlanResponse, getSubscriptionPlanResponseNestedFields, GetSubscriptionPlanResponseNestedFields, GetSubscriptionPlansRequest, getSubscriptionPlansResponse, GetSubscriptionPlansResponse, getSubscriptionPlansResponseNestedFields, GetSubscriptionPlansResponseNestedFields, RemoveSubscriptionPlanRequest, removeSubscriptionPlanResponse, RemoveSubscriptionPlanResponse, UpdateSubscriptionPlanRequest, updateSubscriptionPlanResponse, UpdateSubscriptionPlanResponse, updateSubscriptionPlanResponseNestedFields, UpdateSubscriptionPlanResponseNestedFields } from "./types/subscription-plan.type";
 
-export const createSubscriptionPlanService = (client: GraphQLClient) => ({
-      async removeSubscriptionPlan(
-            input: RemoveSubscriptionPlanRequest, 
-            fetchFields?: {
-                root?: (keyof RemoveSubscriptionPlanResponse)[],
-            },
-            option?: RequestOption
-        ): Promise<RemoveSubscriptionPlanResponse | null> {
-            const res = await client.request<
-                { removeSubscriptionPlan: RemoveSubscriptionPlanResponse }, 
-                RemoveSubscriptionPlanRequest
-            >(
-                subscriptionPlanSchema.removeSubscriptionPlan(
-                    gqlQueryStringBuilder<RemoveSubscriptionPlanResponse>(
-                        fetchFields?.root ?? removeSubscriptionPlanResponse,
-                    )
-                ), 
-                input, 
-                option
-            );
-            return res.data?.removeSubscriptionPlan ?? null;
-      },
-      async updateSubscriptionPlan(
-            input: UpdateSubscriptionPlanRequest, 
-            fetchFields?: {
-            root?: (keyof UpdateSubscriptionPlanResponse)[],
-            nestedFields?: UpdateSubscriptionPlanResponseNestedFields
-            },
-            option?: RequestOption
-        ): Promise<UpdateSubscriptionPlanResponse | null> {
-            const res = await client.request<
-                { updateSubscriptionPlan: UpdateSubscriptionPlanResponse }, 
-                UpdateSubscriptionPlanRequest
-            >(
-                subscriptionPlanSchema.updateSubscriptionPlan(
-                    gqlQueryStringBuilder<UpdateSubscriptionPlanResponse, UpdateSubscriptionPlanResponseNestedFields>(
-                    fetchFields?.root ?? updateSubscriptionPlanResponse,
-                    fetchFields?.nestedFields ?? updateSubscriptionPlanResponseNestedFields
-                    )
-                ), 
-                input, 
-                option
-            );
-            return res.data?.updateSubscriptionPlan ?? null;
-      },
-      async addSubscriptionPlan(
-            input: AddSubscriptionPlanRequest, 
-            fetchFields?: {
-            root?: (keyof AddSubscriptionPlanResponse)[],
-            nestedFields?: AddSubscriptionPlanResponseNestedFields
-            },
-            option?: RequestOption
-        ): Promise<AddSubscriptionPlanResponse | null> {
-            const res = await client.request<
-                { addSubscriptionPlan: AddSubscriptionPlanResponse }, 
-                AddSubscriptionPlanRequest
-            >(
-                subscriptionPlanSchema.addSubscriptionPlan(
-                    gqlQueryStringBuilder<AddSubscriptionPlanResponse, AddSubscriptionPlanResponseNestedFields>(
-                    fetchFields?.root ?? addSubscriptionPlanResponse,
-                    fetchFields?.nestedFields ?? addSubscriptionPlanResponseNestedFields
-                    )
-                ), 
-                input, 
-                option
-            );
-            return res.data?.addSubscriptionPlan ?? null;
-      },
-      async getSubscriptionPlan(
-            input: GetSubscriptionPlanRequest, 
-            fetchFields?: {
-            root?: (keyof GetSubscriptionPlanResponse)[],
-            nestedFields?: GetSubscriptionPlanResponseNestedFields
-            },
-            option?: RequestOption
-        ): Promise<GetSubscriptionPlanResponse | null> {
-            const res = await client.request<
-                { getSubscriptionPlan: GetSubscriptionPlanResponse }, 
-                GetSubscriptionPlanRequest
-            >(
-                subscriptionPlanSchema.getSubscriptionPlan(
-                    gqlQueryStringBuilder<GetSubscriptionPlanResponse, GetSubscriptionPlanResponseNestedFields>(
-                    fetchFields?.root ?? getSubscriptionPlanResponse,
-                    fetchFields?.nestedFields ?? getSubscriptionPlanResponseNestedFields
-                    )
-                ), 
-                input, 
-                option
-            );
-            return res.data?.getSubscriptionPlan ?? null;
-      },
-      async getSubscriptionPlans(
-            input: GetSubscriptionPlansRequest, 
-            fetchFields?: {
-            root?: (keyof GetSubscriptionPlansResponse)[],
-            nestedFields?: GetSubscriptionPlansResponseNestedFields
-            },
-            option?: RequestOption
-        ): Promise<GetSubscriptionPlansResponse | null> {
-            const res = await client.request<
-                { getSubscriptionPlans: GetSubscriptionPlansResponse }, 
-                GetSubscriptionPlansRequest
-            >(
-                subscriptionPlanSchema.getSubscriptionPlans(
-                    gqlQueryStringBuilder<GetSubscriptionPlansResponse, GetSubscriptionPlansResponseNestedFields>(
-                    fetchFields?.root ?? getSubscriptionPlansResponse,
-                    fetchFields?.nestedFields ?? getSubscriptionPlansResponseNestedFields
-                    )
-                ), 
-                input, 
-                option
-            );
-            return res.data?.getSubscriptionPlans ?? null;
-      },
+export const createSubscriptionPlanService = (client: GraphQLClient) =>  ({
+    createSubscriptionPlan: createOperationExecutor<
+        "createSubscriptionPlan",
+        SubscriptionPlanCRUD["CreateRequest"],
+        SubscriptionPlanCRUD["CreateResponse"],
+        typeof subscriptionPlanIntegration.create.nestedFields
+    >(
+        client,
+        "createSubscriptionPlan",
+        {
+            schema: buildSchema(subscriptionPlanSchema.create),
+            defaultRootFields: subscriptionPlanIntegration.create.responseFields,
+            defaultNestedFields: subscriptionPlanIntegration.create.nestedFields,
+        }
+    ),
+    updateSubscriptionPlan: createOperationExecutor<
+        "updateSubscriptionPlan",
+        SubscriptionPlanCRUD["UpdateRequest"],
+        SubscriptionPlanCRUD["UpdateResponse"],
+        typeof subscriptionPlanIntegration.update.nestedFields
+    >(
+        client,
+        "updateSubscriptionPlan",
+        {
+            schema: buildSchema(subscriptionPlanSchema.update),
+            defaultRootFields: subscriptionPlanIntegration.update.responseFields,
+            defaultNestedFields: subscriptionPlanIntegration.update.nestedFields,
+        }
+    ),
+    getSubscriptionPlan: createOperationExecutor<
+        "getSubscriptionPlan",
+        SubscriptionPlanCRUD["GetRequest"],
+        SubscriptionPlanCRUD["GetResponse"],
+        typeof subscriptionPlanIntegration.get.nestedFields
+    >(
+        client,
+        "getSubscriptionPlan",
+        {
+            schema: buildSchema(subscriptionPlanSchema.get),
+            defaultRootFields: subscriptionPlanIntegration.get.responseFields,
+            defaultNestedFields: subscriptionPlanIntegration.get.nestedFields,
+        }
+    ),
+    removeSubscriptionPlan: createOperationExecutor<
+        "removeSubscriptionPlan",
+        SubscriptionPlanCRUD["DeleteRequest"],
+        SubscriptionPlanCRUD["DeleteResponse"],
+        {}
+    >(
+        client,
+        "removeSubscriptionPlan",
+        {
+            schema: buildSchema(subscriptionPlanSchema.delete),
+            defaultRootFields: subscriptionPlanDeleteIntegration.responseFields,
+            defaultNestedFields: {},
+        }
+    ),
+    getSubscriptionPlans: createOperationExecutor<
+        "getSubscriptionPlans",
+        SubscriptionPlanCRUD["ListRequest"],
+        SubscriptionPlanCRUD["ListResponse"],
+        typeof subscriptionPlanListIntegration.nestedFields
+    >(
+        client,
+        "getSubscriptionPlans",
+        {
+            schema: buildSchema(subscriptionPlanSchema.list),
+            defaultRootFields: [...subscriptionPlanListIntegration.responseFields],
+            defaultNestedFields: subscriptionPlanListIntegration.nestedFields,
+        }
+    ),
+    
 })
 
-export type SubscriptionPlanService = ReturnType<typeof createSubscriptionPlanService>
+export type SubscriptionPlanService = ReturnType<typeof createSubscriptionPlanService>;
