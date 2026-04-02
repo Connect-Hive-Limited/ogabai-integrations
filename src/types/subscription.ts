@@ -7,6 +7,18 @@ export interface SubscriptionPlanFeatureBehaviour {
   createdAt: string;
 }
 
+export interface SubscriptionPlanFeatureDefinition {
+  id: string;
+  subscriptionPlanFeatureKey: SubscriptionPlanFeatureKey;
+  title: string;
+  description: string;
+  featureDefnitionStatus: "active" | "inactive";
+  limitDefinition: string;
+  accessDefinition: string;
+  behaviourDefinition: string;
+  createdAt: string;
+}
+
 export type SubscriptionPlanFeatureStatus =
   | "active"
   | "inactive";
@@ -50,20 +62,10 @@ export type SubscriptionPlanFeatureAccess =
   | "yes"
   | "no";
 export type SubscriptionPlanFeature = {
-  id: string;
-  title: string;
-  description: string;
-
   subscriptionPlanFeatureKey: SubscriptionPlanFeatureKey;
-  planId: string;
-
-  meta?: Record<string, string>;
-
-  featureStatus: SubscriptionPlanFeatureStatus;
-  createdAt: string;
   limitValue: number;
   accessValue: SubscriptionPlanFeatureAccess;
-  subscriptionPlanFeatureBehaviourIds: string[];
+  behaviourIds: string[];
 };
 
 

@@ -3,13 +3,15 @@ import { Subscription, SubscriptionPlan,
     SubscriptionPlanFeatureBehaviour,
     SubscriptionPlanFeatureLimitValue, 
     SubscriptionPlanFeatureAccessValue,
-    SubscriptionPlanFeatureBehaviourValue
+    SubscriptionPlanFeatureBehaviourValue,
+    SubscriptionPlanFeatureDefinition
 } from "../../types";
 
 export type SubscriptionPlanFeatureFields = (keyof SubscriptionPlanFeature)[];
 export type SubscriptionPlanFields = (keyof SubscriptionPlan)[];
 export type SubscriptionFields = (keyof Subscription)[]
 export type SubscriptionPlanFeatureBehaviourFields = (keyof SubscriptionPlanFeatureBehaviour)[];
+export type SubscriptionPlanFeatureDefinitionFields = (keyof SubscriptionPlanFeatureDefinition)[];
 
 
 export type SubscriptionLimitValueFields = (keyof SubscriptionPlanFeatureLimitValue)[];
@@ -18,15 +20,26 @@ export type SubscriptionBehaviourValueFields = (keyof SubscriptionPlanFeatureBeh
 
 
 
-export const subscriptionLimitValueFields: SubscriptionLimitValueFields = [
+export const subscriptionPlanFeatureDefinitionQuery: SubscriptionPlanFeatureDefinitionFields = [
+    "id",
+    "title",
+    "description",
+    "subscriptionPlanFeatureKey",
+    "featureDefnitionStatus",
+    "accessDefinition",
+    "limitDefinition",
+    "behaviourDefinition",
+    "createdAt",
+]
+export const subscriptionLimitValueQuery: SubscriptionLimitValueFields = [
     "featureKey",
     "limitValue"
 ]
-export const subscriptionAccessValueFields: SubscriptionAccessValueFields = [
+export const subscriptionAccessValueQuery: SubscriptionAccessValueFields = [
     "featureKey",
     "featureAccessValue"
 ]
-export const subscriptionBehaviourValueFields: SubscriptionBehaviourValueFields = [
+export const subscriptionBehaviourValueQuery: SubscriptionBehaviourValueFields = [
     "featureKey",
     "behaviourIds"
 ]
@@ -56,10 +69,10 @@ export const subscriptionQuery: SubscriptionFields = [
     "version"
 ]
 export const subscriptionPlanFeatureQuery: SubscriptionPlanFeatureFields = [
-    "id", 
-    "title", 
-    "description", 
-    "createdAt"
+    "limitValue",
+    "accessValue",
+    "behaviourIds",
+    "subscriptionPlanFeatureKey",
 ]
 export const subscriptionPlanQuery: SubscriptionPlanFields = [
     "id", 
