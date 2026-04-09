@@ -4,7 +4,8 @@ import { Subscription, SubscriptionPlan,
     SubscriptionPlanFeatureLimitValue, 
     SubscriptionPlanFeatureAccessValue,
     SubscriptionPlanFeatureBehaviourValue,
-    SubscriptionPlanFeatureDefinition
+    SubscriptionPlanFeatureDefinition,
+    SubscriptionTrial
 } from "../../types";
 
 export type SubscriptionPlanFeatureFields = (keyof SubscriptionPlanFeature)[];
@@ -18,8 +19,18 @@ export type SubscriptionLimitValueFields = (keyof SubscriptionPlanFeatureLimitVa
 export type SubscriptionAccessValueFields = (keyof SubscriptionPlanFeatureAccessValue)[];
 export type SubscriptionBehaviourValueFields = (keyof SubscriptionPlanFeatureBehaviourValue)[];
 
+export type SubscriptionTrialFields = (keyof SubscriptionTrial)[];
 
 
+
+export const subscriptionTrialQuery: SubscriptionTrialFields = [
+    "createdAt",
+    "endedAt",
+    "id",
+    "planId",
+    "storeId",
+    "userId"
+]
 export const subscriptionPlanFeatureDefinitionQuery: SubscriptionPlanFeatureDefinitionFields = [
     "id",
     "title",

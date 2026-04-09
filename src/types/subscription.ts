@@ -68,6 +68,14 @@ export type SubscriptionPlanFeature = {
   behaviourIds: string[];
 };
 
+export interface SubscriptionTrial {
+  id: string;
+  userId: string;
+  planId: string;
+  storeId: string;
+  createdAt: string;
+  endedAt: string;
+}
 
 export interface SubscriptionPlan {
     id: string;
