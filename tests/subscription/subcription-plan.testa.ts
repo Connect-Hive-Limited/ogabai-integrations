@@ -15,14 +15,13 @@ describe.sequential("Subscription Plan API", () => {
     })
 
     it("should create subscription plan", async () => {
-        const res = await subscriptionPlanService.addSubscriptionPlan({
+        const res = await subscriptionPlanService.createSubscriptionPlan({
             subscriptionPlan: {
                 title: chance.name(),
                 description: chance.string(),
-                subscriptionPlanPrice: chance.integer({min: 10000000, max: 99999999})
+                monthlyPlanPrice: chance.integer({min: 10000000, max: 99999999})
             }
         })
-        console.log({ res: JSON.stringify(res) })
         expect(res?.subscriptionPlan).not.toBeNull();
         expect(res?.subscriptionPlan.id).not.equal("");
         subscriptionPlanId = res?.subscriptionPlan.id
@@ -44,7 +43,7 @@ describe.sequential("Subscription Plan API", () => {
             subscriptionPlan: {
                 title: chance.name(),
                 description: chance.string(),
-                subscriptionPlanPrice: chance.integer({min: 10000000, max: 99999999})
+                monthlyPlanPrice: chance.integer({min: 10000000, max: 99999999})
             }
         })
         expect(res?.subscriptionPlan).not.toBeNull();

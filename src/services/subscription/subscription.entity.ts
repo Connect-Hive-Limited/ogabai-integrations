@@ -77,7 +77,9 @@ export const subscriptionQuery: SubscriptionFields = [
     "trialEnd",
     "updatedAt",
     "userId",
-    "version"
+    "version",
+    "paymentDataJson",
+    "paymentReference"
 ]
 export const subscriptionPlanFeatureQuery: SubscriptionPlanFeatureFields = [
     "limitValue",

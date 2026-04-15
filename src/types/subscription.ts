@@ -125,4 +125,6 @@ export interface Subscription {
     subscriptionTiers: SubscriptionPlanFeatureBehaviourValue[];
     subscriptionLimits: SubscriptionPlanFeatureLimitValue[];
     subscriptionAccesses: SubscriptionPlanFeatureAccessValue[];
+    paymentReference: string;
+    paymentDataJson: string;
 }
