@@ -118,3 +118,5 @@ export const createSubscriptionService = (client: GraphQLClient) => ({
             return res.data?.getSubscriptions ?? null;
       },
 })
+
+export type SubscriptionService = ReturnType<typeof createSubscriptionService>

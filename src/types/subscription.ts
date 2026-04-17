@@ -109,8 +109,9 @@ export interface SubscriptionPlanFeatureAccessValue {
 export interface Subscription {
     id: string;
     userId: string;
+    storeIds: string[];
     subscriptionPlanId: string;
-    price: number;
+    subscriptionPrice: number;
     currency: string;
     subscriptionStatus: "active"|"past_due"|"cancelled"|"trail"
     currentPeriodStart: string;
