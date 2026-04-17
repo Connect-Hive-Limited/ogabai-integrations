@@ -109,8 +109,9 @@ export interface SubscriptionPlanFeatureAccessValue {
 export interface Subscription {
     id: string;
     userId: string;
+    storeIds: string[];
     subscriptionPlanId: string;
-    price: number;
+    subscriptionPrice: number;
     currency: string;
     subscriptionStatus: "active"|"past_due"|"cancelled"|"trail"
     currentPeriodStart: string;
@@ -125,4 +126,6 @@ export interface Subscription {
     subscriptionTiers: SubscriptionPlanFeatureBehaviourValue[];
     subscriptionLimits: SubscriptionPlanFeatureLimitValue[];
     subscriptionAccesses: SubscriptionPlanFeatureAccessValue[];
+    paymentReference: string;
+    paymentDataJson: string;
 }

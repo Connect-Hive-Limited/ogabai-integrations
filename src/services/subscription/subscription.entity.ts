@@ -71,13 +71,16 @@ export const subscriptionQuery: SubscriptionFields = [
     "currentPeriodStart",
     "defaultPaymentMethodId",
     "id",
-    "price",
+    "subscriptionPrice",
     "subscriptionPlanId",
     "subscriptionStatus",
     "trialEnd",
     "updatedAt",
     "userId",
-    "version"
+    "storeIds",
+    "version",
+    "paymentDataJson",
+    "paymentReference"
 ]
 export const subscriptionPlanFeatureQuery: SubscriptionPlanFeatureFields = [
     "limitValue",
