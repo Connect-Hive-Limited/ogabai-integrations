@@ -33,6 +33,7 @@ export default async function globalSetup() {
 
   const privateClient = createClient(accessToken);
   const userService = createUserService(privateClient);
+
   const me = await userService.me();
 
   // console.log({ me: JSON.stringify(me)})
