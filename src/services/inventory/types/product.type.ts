@@ -149,6 +149,26 @@ export interface AddProductResponse {
     product: Product;
     uploadImageResponse: UploadImageResponse
 }
+export interface AddProductsRequest {
+    products: Partial<Product>[]
+    template?: boolean
+}
+export interface AddProductsResponse {
+    products: Product[];
+}
+export const addProductsResponseFields: (keyof AddProductsResponse)[] = [
+    "products"
+]
+export interface AddProductsResponseNestedFields extends Omit<GetProductResponseNestedFields, "product"> {
+    products: ProductFields
+}
+export const addProductsResponseNestedFields: AddProductsResponseNestedFields = {
+    products: productQuery,
+    ..._getProductResponseNestedFields,
+}
+
+
+
 export interface AddProductResponseNestedFields extends Omit<GetProductResponseNestedFields, "product"> {
     product: ProductFields;
     uploadImageResponse: (keyof UploadImageResponse)[];

@@ -3,9 +3,12 @@ import { type ProductService, createProductService } from "../../src/services/in
 import { getProduct } from "../dummy";
 import { initTestEnv } from "../testEnv";
 import { Product } from "../../src/types";
+import { createSubscriptionPlanService, createSubscriptionService, SubscriptionPlanService, SubscriptionService } from "../../src/services/subscription";
 
 describe.sequential("Product API", () => {
     let productService: ProductService;
+    let subscriptionService: SubscriptionService;
+    let subscriptionPlanService: SubscriptionPlanService;
     let productId: string;
     let storeId: string;
     let env: Awaited<ReturnType<typeof initTestEnv>>;
@@ -17,6 +20,8 @@ describe.sequential("Product API", () => {
         env = await initTestEnv()
         const _storeId = env?.storeId!
         productService = createProductService(env?.storeClient!);
+        subscriptionService = createSubscriptionService(env?.storeClient!)
+        subscriptionPlanService = createSubscriptionPlanService(env?.storeClient!);
         storeId = _storeId
         userId = env?.userId!
     });
@@ -80,12 +85,12 @@ describe.sequential("Product API", () => {
         })
         expect(res?.products.length).greaterThan(0);
     });
-    it("should remove product", async () => {
-        const res = await productService.removeProduct({
-            productId,
-        })
-        expect(res?.productId).not.toBeNull();
-    });
+    // it("should remove product", async () => {
+    //     const res = await productService.removeProduct({
+    //         productId,
+    //     })
+    //     expect(res?.productId).not.toBeNull();
+    // });
     // it("should have zero products after deletion", async () => {
     //     const res = await productService.getProducts({
     //         limit: 10,

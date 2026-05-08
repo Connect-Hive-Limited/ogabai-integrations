@@ -86,9 +86,10 @@ export const verifyOTPResponse: (keyof VerifyOTPResponse)[] = [
 
 // login
 export interface LoginRequest {
-    pin: string;
+    pin?: string;
     phone: string;
     userType?: UserType;
+    password?: string;
 }
 export interface LoginResponse {
     accessToken: string;

@@ -25,8 +25,8 @@ export const authSchema = {
   `,
 
   login: (query: string) => `
-    mutation login($phone: String!, $pin: String!, $userType: UserTypeEnum) {
-      login(phone: $phone, pin: $pin, userType: $userType) {
+    mutation login($phone: String!, $pin: String, $userType: UserTypeEnum, $password: String) {
+      login(phone: $phone, pin: $pin, userType: $userType, password: $password) {
         ${query}
       }
     }

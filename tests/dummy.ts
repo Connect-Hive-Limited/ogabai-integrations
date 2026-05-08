@@ -78,7 +78,7 @@ export const getProductTemplate = (storeId: string):Partial<Product> => ({
     
 })
 export const getProduct = (storeId: string):Partial<Product> => ({
-    name: chance.name(),
+    name: "Sample product", //chance.name(),
     description: chance.name(),
     storeId,
     category: {
