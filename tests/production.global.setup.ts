@@ -12,7 +12,7 @@ export default async function globalSetup() {
   const publicClient = createClient();
   const authService = createAuthService(publicClient);
 
-  const phone = "+2348071943026" // "08071943026"
+  const phone = "+2348071443026" // "08071943026"
   const pin = "533333";
 
   const res = await authService.login({
@@ -24,12 +24,12 @@ export default async function globalSetup() {
   if (!accessToken) throw new Error("Signup failed — no access token");
 
 
-  console.log({ accessToken })
+  // console.log({ accessToken })
   const privateClient = createClient(accessToken);
   const userService = createUserService(privateClient);
   const me = await userService.me();
 
-  console.log({ me : JSON.stringify(me)})
+  // console.log({ me : JSON.stringify(me)})
   const userData = me?.data?.me;
   if (!userData) throw new Error("No user data");
   const storeId = userData?.stores?.[0]?._id;

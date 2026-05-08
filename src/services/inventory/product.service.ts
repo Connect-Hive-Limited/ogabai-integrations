@@ -31,7 +31,12 @@ import {
   GetCustomerProductCountsByIdsResponse,
   getCustomerProductCountsByIdsResponse,
   GetCustomerProductCountsByIdsResponseNestedFields,
-  getCustomerProductCountsByIdsResponseNestedFields, 
+  getCustomerProductCountsByIdsResponseNestedFields,
+  AddProductsRequest,
+  AddProductsResponse,
+  AddProductsResponseNestedFields,
+  addProductsResponseFields,
+  addProductsResponseNestedFields, 
 } from "./types/product.type";
 import { createFileService } from "../file/file.service";
 
@@ -157,6 +162,26 @@ export const createProductService = (client: GraphQLClient) => ({
       option
     );
     return res.data?.addProduct ?? null;
+  },
+  async addProducts(
+    input: AddProductsRequest, 
+    fetchFields?: {
+      root?: (keyof AddProductsResponse)[],
+      nestedFields?: AddProductsResponseNestedFields
+    },
+    option?: RequestOption
+  ): Promise<AddProductsResponse | null> {
+    const res = await client.request<{ addProducts: AddProductsResponse }, AddProductsRequest>(
+      productSchema.addProducts(
+        gqlQueryStringBuilder<AddProductsResponse, AddProductsResponseNestedFields>(
+          fetchFields?.root ?? addProductsResponseFields,
+          fetchFields?.nestedFields ?? addProductsResponseNestedFields
+        )
+      ), 
+      input, 
+      option
+    );
+    return res.data?.addProducts ?? null;
   },
   async getProduct(
     input: GetProductRequest, 

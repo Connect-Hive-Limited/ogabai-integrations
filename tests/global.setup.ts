@@ -4,6 +4,7 @@ import { createAuthService } from "../src/services/user/auth.service";
 import { createUserService } from "../src/services/user/user.service";
 import { createClient, writeCache } from "./testEnv";
 import Chance from "chance";
+import { createSubscriptionPlanService, createSubscriptionService } from "../src/services/subscription";
 
 const chance = new Chance()
 
@@ -14,10 +15,10 @@ export default async function globalSetup() {
 
   const publicClient = createClient();
   const authService = createAuthService(publicClient);
-
+  
   const pin = "12345678";
   const phone = "080" + Math.floor(10000000 + Math.random() * 90000000).toString();
-
+  
   const res = await authService.signUp({
     pin,
     phone,
@@ -30,8 +31,10 @@ export default async function globalSetup() {
   const accessToken = res?.data?.signUp?.accessToken ?? "";
   const userId = res?.data?.signUp.userId ?? ""
   if (!accessToken) throw new Error("Signup failed — no access token");
-
+  
   const privateClient = createClient(accessToken);
+  const subscriptionService = createSubscriptionService(privateClient);
+  const subscriptionPlanService = createSubscriptionPlanService(privateClient);
   const userService = createUserService(privateClient);
 
   const me = await userService.me();
@@ -42,6 +45,28 @@ export default async function globalSetup() {
   if (!userData) throw new Error("No user data");
   const storeId = userData?.stores?.[0]?._id;
   if (!storeId) throw new Error("No store ID");
+
+  // subscribe this user 
+  // const plans = await subscriptionPlanService.getSubscriptionPlans({
+  //   limit: 10,
+  //   skip: 0,
+  //   subscriptionPlan: {
+  //     subscriptionPlanStatus: "active"
+  //   }
+  // })
+  // if (!plans?.subscriptionPlans.length) {
+  //   const plan = plans?.subscriptionPlans[0]
+  //   const subscription = await subscriptionService.addSubscription({
+  //     subscription: {
+
+  //     }
+  //   })
+  //   if (plan?.subscriptionPlan) {
+  //     const res = await subscriptionService.subscribeToPlan({
+  //       subscriptionPlanId: plan.subscriptionPlan.id
+  //     })
+  //   }
+  // }
 
   // 9157375245
   const envData = {
