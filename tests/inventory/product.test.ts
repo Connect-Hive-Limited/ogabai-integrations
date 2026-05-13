@@ -36,6 +36,14 @@ describe.sequential("Product API", () => {
         expect(res?.product).not.toBeNull();
         productId = res?.product?._id || "";
     });
+    it("should create multiple products", async () => {
+        const products = Array.from({ length: 5 }, () => getProduct(storeId || ""))
+        const res = await productService.addProducts({
+            products,
+        })
+        console.log({ res : JSON.stringify(res, null, 2) })
+        expect(res?.products.length).equal(5);
+     });
     it("should get product counts by user ids", async () => {
         const res = await productService.getCustomerProductCountsByIds({
             userIds: [userId]
