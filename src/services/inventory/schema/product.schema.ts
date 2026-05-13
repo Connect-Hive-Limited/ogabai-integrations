@@ -51,7 +51,7 @@ export const productSchema = {
     }
   `,
   addProducts: (mutation: string) => `
-    mutation addProducts($products: ProductsInput!, $template: Boolean) {
+    mutation addProducts($products: [ProductsInput]!, $template: Boolean) {
       addProducts(products: $products, template: $template) {
         ${mutation}
       }
