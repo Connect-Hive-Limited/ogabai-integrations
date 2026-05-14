@@ -2,7 +2,27 @@ import { Store } from "./inventory";
 
 
 
+/////////////////////////////////////////
+// CUSTOMER & CUSTOMER STORE BALANCE 
+/////////////////////////////////////////
+export interface Customer {
+  id: string;
+  name: string;
+  phone: string;
+  email: string;
+  storeIds: string[];
+  createdAt: string;
+  storeBalance: CustomerStoreBalance;
+}
 
+export interface CustomerStoreBalance {
+  id: string;
+  customerId: string;
+  storeId: string;
+  balance: number;
+  owed: number;
+  createdAt: string;
+}
 
 
 export const userRoleExample: UserRole = {
