@@ -30,6 +30,9 @@ export type Platform = "pos" | "commerce" | "wallet";
 // "pending" | "processing" | "completed" | "failed"
 export type TxStatus = "pending" | "processing" | "completed" | "failed";
 
+// "sale" | "refund" | "deposit" | "withdrawal"
+export type TransactionType = "sale" | "refund" | "deposit" | "withdrawal"| "customerRefund" | "customerDeposit";
+
 export type Transaction = {
   _id: string;
   from: string;
@@ -48,6 +51,8 @@ export type Transaction = {
   createdAt: string;
   sales: Sale[];
   storeId: string;
+  customerId: string;
+  transactionType: TransactionType;
 };
 
 // -------------------- Order --------------------

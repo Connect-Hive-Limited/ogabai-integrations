@@ -63,20 +63,20 @@ export const createCustomerService = (client: GraphQLClient) =>  ({
         }
     ),
     // only admin
-    getCustomers: createOperationExecutor<
-        "getCustomers",
-        CustomerCRUD["ListRequest"],
-        CustomerCRUD["ListResponse"],
-        typeof customerListIntegration.nestedFields
-    >(
-        client,
-        "getCustomers",
-        {
-            schema: buildSchema(customerSchema.list),
-            defaultRootFields: [...customerListIntegration.responseFields],
-            defaultNestedFields: customerListIntegration.nestedFields,
-        }
-    ),
+    // getCustomers: createOperationExecutor<
+    //     "getCustomers",
+    //     CustomerCRUD["ListRequest"],
+    //     CustomerCRUD["ListResponse"],
+    //     typeof customerListIntegration.nestedFields
+    // >(
+    //     client,
+    //     "getCustomers",
+    //     {
+    //         schema: buildSchema(customerSchema.list),
+    //         defaultRootFields: [...customerListIntegration.responseFields],
+    //         defaultNestedFields: customerListIntegration.nestedFields,
+    //     }
+    // ),
     getCustomersByStoreId: createOperationExecutor<
         "getCustomersByStoreId",
         CustomerCRUD["ListByStoreIdRequest"],

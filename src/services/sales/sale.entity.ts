@@ -18,7 +18,9 @@ export const transactionQuery: TransactionFields = [
     "storeId",
     "to", 
     "toWallet", 
-    "txStatus"
+    "txStatus",
+    "customerId",
+    "transactionType"
 ]
 export type OrderFields = (keyof Order)[];
 export const orderQuery: OrderFields = [
