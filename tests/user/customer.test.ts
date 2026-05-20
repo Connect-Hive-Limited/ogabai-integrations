@@ -37,7 +37,7 @@ describe.sequential("ApplicationFeature API", () => {
     it("should get customer", async () => {
         const res = await customerService.getCustomer({
             customer: {
-                id: customerId
+                id: "7f162061-e87b-4871-9278-9366df95ddef"
             }
         })
         console.log({ res: JSON.stringify(res, null, 2) })
