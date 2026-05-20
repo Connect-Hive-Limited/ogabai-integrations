@@ -1,3 +1,20 @@
+export interface ExpenseCategory {
+  id: string;
+  title: string;
+  description: string;
+  storeId: string;
+  createdAt: string;
+}
+export interface Expense {
+  id: string;
+  title: string;
+  description: string;
+  expenseCategoryId: string;
+  repeatedEvery: "day"|"week"|"month"|"year";
+  createdAt: string;
+}
+
+
 // -------------------- DateFilter --------------------
 export type DateFilter = {
   startDate: string;
@@ -30,6 +47,9 @@ export type Platform = "pos" | "commerce" | "wallet";
 // "pending" | "processing" | "completed" | "failed"
 export type TxStatus = "pending" | "processing" | "completed" | "failed";
 
+// "sale" | "refund" | "deposit" | "withdrawal"
+export type TransactionType = "sale" | "refund" | "deposit" | "withdrawal"| "customerRefund" | "customerDeposit" | "expense";
+
 export type Transaction = {
   _id: string;
   from: string;
@@ -48,6 +68,8 @@ export type Transaction = {
   createdAt: string;
   sales: Sale[];
   storeId: string;
+  customerId: string;
+  transactionType: TransactionType;
 };
 
 // -------------------- Order --------------------

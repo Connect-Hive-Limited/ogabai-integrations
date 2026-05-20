@@ -1,7 +1,7 @@
 import { EntityCRUD, ListEntityRequest, ListEntityResponse } from "../../../helpers/crud.contract";
 import { createDeleteIntegration, createListIntegration, createStandardEntityIntegration } from "../../../helpers/entity.factory";
 import { Customer, SubscriptionTrial } from "../../../types";
-import { customerQuery } from "../user.entity";
+import { customerQuery, customerStoreBalanceQuery } from "../user.entity";
 
 const ENTITY = "customer" as const;
 
@@ -29,6 +29,9 @@ export const customerIntegration =
   createStandardEntityIntegration({
     key: ENTITY,
     fields: customerQuery,
+    nested: {
+      customerStoreBalance: customerStoreBalanceQuery,
+    }
   });
 
 
@@ -36,6 +39,9 @@ export const customerListIntegration =
   createListIntegration({
     key: "customers",
     fields: customerQuery,
+    nested: {
+      customerStoreBalance: customerStoreBalanceQuery,
+    }
   });
 
 export const customerDeleteIntegration =

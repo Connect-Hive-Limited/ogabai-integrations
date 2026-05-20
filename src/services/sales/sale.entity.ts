@@ -1,4 +1,25 @@
-import { Order, Sale, Transaction } from "../../types";
+import { Expense, ExpenseCategory, Order, Sale, Transaction } from "../../types";
+
+
+export type ExpenseFields = (keyof Expense)[];
+export const expenseQuery: ExpenseFields = [
+    "id",
+    "createdAt",
+    "description",
+    "title",
+    "repeatedEvery",
+    "expenseCategoryId",
+];
+
+export type ExpenseCategoryFields = (keyof ExpenseCategory)[];
+export const expenseCategoryQuery: ExpenseCategoryFields = [
+    "id",
+    "createdAt",
+    "description",
+    "storeId",
+    "title"
+]
+
 
 export type TransactionFields = (keyof Transaction)[];
 export const transactionQuery: TransactionFields = [
@@ -18,7 +39,9 @@ export const transactionQuery: TransactionFields = [
     "storeId",
     "to", 
     "toWallet", 
-    "txStatus"
+    "txStatus",
+    "customerId",
+    "transactionType"
 ]
 export type OrderFields = (keyof Order)[];
 export const orderQuery: OrderFields = [

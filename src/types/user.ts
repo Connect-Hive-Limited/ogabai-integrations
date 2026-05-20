@@ -12,7 +12,7 @@ export interface Customer {
   email: string;
   storeIds: string[];
   createdAt: string;
-  storeBalance: CustomerStoreBalance;
+  customerStoreBalance: CustomerStoreBalance;
 }
 
 export interface CustomerStoreBalance {

@@ -1,5 +1,6 @@
 import { GraphQLClient, RequestOption } from "../../client";
 import { gqlQueryStringBuilder } from "../../helpers/query";
+import { Transaction } from "../../types";
 import { transactionSchema } from "./schemas/transaction.schema";
 import { 
   AddTransactionRequest, addTransactionResponse, AddTransactionResponse, AddTransactionResponseNestedFields, addTransactionResponseNestedFields, 
@@ -52,6 +53,46 @@ export const createTransactionService = (client: GraphQLClient) => ({
       option
     );
     return res.data?.addTransaction ?? null;
+  },
+  async addCustomerDeposit(
+    input: Pick<Transaction, "customerId" | "amountPaid">,
+    fetchFields?: {
+      root?: (keyof AddTransactionResponse)[],
+      nestedFields?: AddTransactionResponseNestedFields
+    },
+    option?: RequestOption
+  ): Promise<AddTransactionResponse | null> {
+    return this.addTransaction(
+      {
+        transaction: {
+          ...input,
+          transactionType: "customerDeposit",
+          platform: "pos",
+        }
+      },
+      fetchFields,
+      option
+    )
+  },
+  async addCustomerRefund(
+    input: Pick<Transaction, "customerId"|"amountPaid">,
+    fetchFields?: {
+      root?: (keyof AddTransactionResponse)[],
+      nestedFields?: AddTransactionResponseNestedFields
+    },
+    option?: RequestOption
+  ): Promise<AddTransactionResponse | null>{
+    return this.addTransaction(
+      {
+        transaction: {
+          ...input,
+          transactionType: "customerRefund",
+          platform: "pos",
+        }
+      },
+      fetchFields,
+      option
+    )
   },
   async getTransaction(
     input: GetTransactionRequest, 

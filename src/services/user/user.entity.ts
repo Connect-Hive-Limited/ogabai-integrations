@@ -25,7 +25,7 @@ export type CustomerStoreBalanceFields = (keyof CustomerStoreBalance)[];
 
 
 export const customerQuery:CustomerFields = [
-    "createdAt", "email", "id", "name", "phone", "storeBalance", "storeIds"
+    "createdAt", "email", "id", "name", "phone", "customerStoreBalance", "storeIds"
 ]
 export const customerStoreBalanceQuery:CustomerStoreBalanceFields = [
     "balance", "createdAt", "customerId", "id", "owed", "storeId"
