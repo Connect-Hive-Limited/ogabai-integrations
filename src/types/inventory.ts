@@ -47,6 +47,7 @@ export interface Product extends ProductName {
   productPackages: ProductPackage[];
   category: ProductCategory;
   smallestPackage: ProductPackage;
+  preExpirationNoticeInWeeks: string;
 }
 
 export interface ProductLight {
@@ -110,6 +111,7 @@ export interface Stock {
   deduction: number;
   storeId: string;
   createdAt: string;
+  expirationDate: string;
 }
 
 export interface StoreSetting {

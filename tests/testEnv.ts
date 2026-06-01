@@ -13,7 +13,6 @@ export type GlobalTestEnv = {
   storeClient?: GraphQLClient;
   privateClient?: GraphQLClient;
 };
-
 let cachedEnv: GlobalTestEnv | null = null;
 // const ENDPOINT_URL = "https://ogabai-prod-1010591944835.europe-west9.run.app"
 // const ENDPOINT_URL = "https://getsella-backend-1010591944835.europe-west1.run.app"// "https://getsella-backend-1010591944835.europe-west1.run.app" // 

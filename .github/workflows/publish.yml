@@ -1,0 +1,52 @@
+name: Publish SDK
+
+on:
+    push:
+        tags:
+            - "v*"
+
+jobs:
+    publish:
+        runs-on: ubuntu-latest
+
+        steps:
+            ###########################################
+            # Checkout
+            ###########################################
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            ###########################################
+            # Setup Node
+            ###########################################
+            - name: Setup Node
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "22"
+                  registry-url: "https://registry.npmjs.org"
+
+            ###########################################
+            # Install
+            ###########################################
+            - name: Install Dependencies
+              run: npm install
+
+            ###########################################
+            # Run Tests
+            ###########################################
+            - name: Run Tests
+              run: npm test
+
+            ###########################################
+            # Build
+            ###########################################
+            - name: Build SDK
+              run: npm run build
+
+            ###########################################
+            # Publish
+            ###########################################
+            - name: Publish Package
+              run: npm publish --access public
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

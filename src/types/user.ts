@@ -166,7 +166,7 @@ export interface TransactionCounts {
 
 // -------------------- Enums as Unions --------------------
 export type UserStatus = "active" | "suspended" | "inactive";
-export type UserType = "manufacturer" | "distributor" | "admin";
+export type UserType = "manufacturer" | "distributor" | "admin" | "retail";
 
 // -------------------- Core Entities --------------------
 export interface Manufacturer {
