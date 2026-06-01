@@ -3,8 +3,7 @@ name: SDK Integration Test
 on:
     pull_request:
         branches:
-            - main
-            - master
+            - dev
 
 jobs:
     integration-test:
