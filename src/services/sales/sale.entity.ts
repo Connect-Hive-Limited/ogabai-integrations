@@ -27,6 +27,7 @@ export const transactionQuery: TransactionFields = [
     "amountPaid",
     "amountTotal",
     "createdAt",
+    "createdById",
     "from", 
     "fromWallet", 
     "isCredit",
@@ -41,7 +42,7 @@ export const transactionQuery: TransactionFields = [
     "toWallet", 
     "txStatus",
     "customerId",
-    "transactionType"
+    "transactionType",
 ]
 export type OrderFields = (keyof Order)[];
 export const orderQuery: OrderFields = [

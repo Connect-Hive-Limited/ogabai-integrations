@@ -50,7 +50,8 @@ export const stockQuery: StockFields = [
     "sellPerPackage",
     "deduction",
     "storeId",
-    "createdAt"
+    "createdAt",
+    "expirationDate"
 ]
 export type StoreFields = (keyof Store)[]
 export const storeQuery: StoreFields = [
@@ -95,6 +96,7 @@ export const productQuery:ProductFields = [
     "storeId",
     "tag", 
     "totalStockInSmallestPackage",
+    "preExpirationNoticeInWeeks"
 ]
 export type ProductNamesFields = (keyof ProductName)[]
 export const productNameQuery: ProductNamesFields = [

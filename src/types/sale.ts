@@ -11,7 +11,15 @@ export interface Expense {
   description: string;
   expenseCategoryId: string;
   repeatedEvery: "day"|"week"|"month"|"year";
+  dispenseStaffIds: string[];
   createdAt: string;
+  //none,operation,staffRequest
+  expenseType: "none" | "operation" | "staffRequest";
+
+  // These fields are only relevant for expenses that have been dispensed
+  amount: number;
+  narration: string;
+  createdById: string;
 }
 
 
@@ -70,6 +78,10 @@ export type Transaction = {
   storeId: string;
   customerId: string;
   transactionType: TransactionType;
+  createdById: string;
+
+  expenseId: string;
+  narration: string;
 };
 
 // -------------------- Order --------------------

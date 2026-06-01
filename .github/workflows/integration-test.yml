@@ -1,0 +1,116 @@
+name: SDK Integration Test
+
+on:
+    pull_request:
+        branches:
+            - main
+            - master
+
+jobs:
+    integration-test:
+        runs-on: ubuntu-latest
+
+        services:
+            mongo:
+                image: mongo:7
+                ports:
+                    - 27017:27017
+
+        env:
+            PORT: 8080
+
+            MONGO_URI: mongodb://localhost:27017
+            DB_NAME: getsella_test
+            JWT_SECRET: test_secret
+            ENVIRONMENT: test
+
+        steps:
+            ################################################
+            # Checkout SDK Repo
+            ################################################
+            - name: Checkout SDK
+              uses: actions/checkout@v4
+
+            ################################################
+            # Checkout Backend Repo
+            ################################################
+            - name: Checkout Backend
+              uses: actions/checkout@v4
+              with:
+                  repository: Connect-Hive-Limited/getsella_be
+                  token: ${{ secrets.BACKEND_REPO_TOKEN }}
+                  path: backend
+
+            ################################################
+            # Setup Go
+            ################################################
+            - name: Setup Go
+              uses: actions/setup-go@v5
+              with:
+                  go-version: "1.24"
+
+            ################################################
+            # Build Backend
+            ################################################
+            - name: Install Backend Dependencies
+              working-directory: backend
+              run: |
+                  make install
+
+            - name: Build Backend
+              working-directory: backend
+              run: |
+                  go build -o main
+
+            ################################################
+            # Start Backend
+            ################################################
+            - name: Start Backend
+              working-directory: backend
+              run: |
+                  ./main &
+                  echo $! > backend.pid
+
+            ################################################
+            # Wait for Backend
+            ################################################
+            - name: Wait for Backend Health
+              run: |
+                  timeout 60 bash -c '
+                    until curl -f http://localhost:8080/health
+                    do
+                      echo "Waiting for backend..."
+                      sleep 2
+                    done
+                  '
+
+            ################################################
+            # Setup Node
+            ################################################
+            - name: Setup Node
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "22"
+
+            ################################################
+            # Install SDK Dependencies
+            ################################################
+            - name: Install SDK Dependencies
+              run: npm install
+
+            ################################################
+            # Run SDK Tests
+            ################################################
+            - name: Run SDK Integration Tests
+              env:
+                  API_URL: http://localhost:8080
+              run: npm run test:integration
+
+            ################################################
+            # Stop Backend
+            ################################################
+            - name: Stop Backend
+              if: always()
+              working-directory: backend
+              run: |
+                  kill $(cat backend.pid)

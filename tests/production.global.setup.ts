@@ -12,7 +12,12 @@ export default async function globalSetup() {
   const publicClient = createClient();
   const authService = createAuthService(publicClient);
 
-  const phone = "+2348071443026" // "08071943026"
+  // PRODUCTION LOGIN 
+  // const phone =  "+2348071943026" // "08071943026"
+  // const pin = "533333";
+
+  // DEVELOPMENT
+  const phone =  "+23408073773732" // "08071943026"
   const pin = "533333";
 
   const res = await authService.login({
@@ -28,6 +33,7 @@ export default async function globalSetup() {
   const privateClient = createClient(accessToken);
   const userService = createUserService(privateClient);
   const me = await userService.me();
+
 
   // console.log({ me : JSON.stringify(me)})
   const userData = me?.data?.me;

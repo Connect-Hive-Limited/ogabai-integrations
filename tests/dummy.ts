@@ -78,7 +78,7 @@ export const getProductTemplate = (storeId: string):Partial<Product> => ({
     
 })
 export const getProduct = (storeId: string):Partial<Product> => ({
-    name: "Sample product", //chance.name(),
+    name: chance.name(),
     description: chance.name(),
     storeId,
     category: {
@@ -116,7 +116,8 @@ export const getProduct = (storeId: string):Partial<Product> => ({
                 sellPerPackage: 120,
                 deduction: 0,
                 storeId: "",
-                createdAt: ""
+                createdAt: "",
+                expirationDate: new Date().toISOString()
             }]
         },
         {
@@ -142,7 +143,8 @@ export const getProduct = (storeId: string):Partial<Product> => ({
                 sellPerPackage: 120,
                 deduction: 0,
                 storeId: "",
-                createdAt: ""
+                createdAt: "",
+                expirationDate: ""
             }
         ]},
         {
@@ -168,7 +170,8 @@ export const getProduct = (storeId: string):Partial<Product> => ({
                 sellPerPackage: 120,
                 deduction: 0,
                 storeId: "",
-                createdAt: ""
+                createdAt: "",
+                expirationDate: ""
             }
         ]}
     ],
