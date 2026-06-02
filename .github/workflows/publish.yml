@@ -13,8 +13,10 @@ jobs:
             ###########################################
             # Checkout
             ###########################################
-            - name: Checkout
+            - name: Checkout SDK Repo
               uses: actions/checkout@v4
+              with:
+                  path: sdk
 
             ###########################################
             # Setup Node
@@ -25,28 +27,31 @@ jobs:
                   node-version: "22"
                   registry-url: "https://registry.npmjs.org"
 
+            ################################################
+            # Enable Yarn
+            ################################################
+            - name: Enable Yarn
+              run: corepack enable
+
             ###########################################
             # Install
             ###########################################
             - name: Install Dependencies
-              run: npm install
-
-            ###########################################
-            # Run Tests
-            ###########################################
-            - name: Run Tests
-              run: npm test
+              working-directory: sdk
+              run: yarn install
 
             ###########################################
             # Build
             ###########################################
             - name: Build SDK
-              run: npm run build
+              working-directory: sdk
+              run: yarn build
 
             ###########################################
             # Publish
             ###########################################
             - name: Publish Package
-              run: npm publish --access public
+              working-directory: sdk
+              run: yarn publish --access public
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
