@@ -14,7 +14,7 @@ export interface Expense {
   dispenseStaffIds: string[];
   createdAt: string;
   //none,operation,staffRequest
-  expenseType: "none" | "operation" | "staffRequest";
+  expenseType: "none" | "operation" | "staffRequest" | "staffRequestFulfilled";
 
   // These fields are only relevant for expenses that have been dispensed
   amount: number;
