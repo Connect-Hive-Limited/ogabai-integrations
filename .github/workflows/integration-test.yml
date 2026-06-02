@@ -34,6 +34,14 @@ jobs:
             ################################################
             # Checkout Backend Repo
             ################################################
+            - name: Debug token
+              run: |
+                  if [ -z "${{ secrets.BACKEND_REPO_TOKEN }}" ]; then
+                  echo "TOKEN EMPTY"
+                  exit 1
+                  fi
+                  echo "TOKEN PRESENT"
+
             - name: Checkout Backend
               uses: actions/checkout@v4
               with:
