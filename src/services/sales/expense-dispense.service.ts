@@ -96,13 +96,13 @@ export const createExpenseDispenseService = (client: GraphQLClient) =>  {
                     createdById: expense.createdById, 
                 }
             });
+            await expenseService.updateExpense({
+                expenseId,
+                expense: {
+                    expenseType: addToExpenseList ? "operation" : "staffRequestFulfilled",
+                },
+            });
             if(addToExpenseList) {
-                await expenseService.updateExpense({
-                    expenseId,
-                    expense: {
-                        expenseType: "operation",
-                    },
-                });
             }
             return transaction || null;
         },
