@@ -40,9 +40,9 @@ export const createExpenseDispenseService = (client: GraphQLClient) =>  {
             });
         },
         dispenseExpense: async (req: {
-            expenseDispense: Pick<Transaction, "expenseId" | "amountPaid" | "narration" | "createdById">;
+            expenseDispense: Pick<Transaction, "expenseId" | "amountPaid" | "narration" | "createdById" | "paymentType">;
         }) : Promise<EntityResponse<Transaction, "transaction"> | undefined> => {
-            const { amountPaid, narration, createdById, expenseId } = req.expenseDispense;
+            const { amountPaid, narration, createdById, expenseId, paymentType } = req.expenseDispense;
             const expenseRes = await expenseService.getExpense({
                 expense: {
                     id: expenseId,
@@ -65,6 +65,7 @@ export const createExpenseDispenseService = (client: GraphQLClient) =>  {
                     narration,
                     createdById,
                     expenseId,
+                    paymentType,
                 }
             });
 
@@ -94,6 +95,7 @@ export const createExpenseDispenseService = (client: GraphQLClient) =>  {
                     amountPaid: expense.amount, 
                     narration: expense.narration || "Approved expense dispense",
                     createdById: expense.createdById, 
+                    paymentType: expense.paymentType,
                 }
             });
             await expenseService.updateExpense({
@@ -106,6 +108,31 @@ export const createExpenseDispenseService = (client: GraphQLClient) =>  {
             }
             return transaction || null;
         },
+        declineExpenseDispense: async (req: {
+            expenseId: string;
+        }) : Promise<EntityResponse<Transaction, "transaction"> | null> => {
+            const { expenseId } = req;
+            const expenseRes = await expenseService.getExpense({
+                expense: {
+                    id: expenseId,
+                }
+            });
+            if (!expenseRes || !expenseRes.expense) {
+                throw new Error("Expense not found");
+            }
+            const expense = expenseRes.expense;
+
+            if (expense.expenseType !== "staffRequest") {
+                throw new Error("Only staff requested expenses can be declined for dispense");
+            }
+            await expenseService.updateExpense({
+                expenseId,
+                expense: {
+                    expenseType: "staffRequestDeclined",
+                },
+            });
+            return null;
+        }
     });
 }
 

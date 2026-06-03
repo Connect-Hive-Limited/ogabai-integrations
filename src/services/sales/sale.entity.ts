@@ -3,12 +3,19 @@ import { Expense, ExpenseCategory, Order, Sale, Transaction } from "../../types"
 
 export type ExpenseFields = (keyof Expense)[];
 export const expenseQuery: ExpenseFields = [
-    "id",
+    "amount",
     "createdAt",
+    "createdById",
     "description",
-    "title",
-    "repeatedEvery",
+    "dispenseStaffIds",
     "expenseCategoryId",
+    "expenseType",
+    "id",
+    "narration",
+    "paymentType",
+    "repeatedEvery",
+    "title",
+    "storeId"
 ];
 
 export type ExpenseCategoryFields = (keyof ExpenseCategory)[];

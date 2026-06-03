@@ -1,6 +1,7 @@
 import { GraphQLClient, RequestOption } from "../../client";
 import { gqlQueryStringBuilder } from "../../helpers/query";
 import { Transaction } from "../../types";
+import { createFileService } from "../file/file.service";
 import { transactionSchema } from "./schemas/transaction.schema";
 import { 
   AddTransactionRequest, addTransactionResponse, AddTransactionResponse, AddTransactionResponseNestedFields, addTransactionResponseNestedFields, 
@@ -14,6 +15,19 @@ import {
 } from "./types/transaction.type";
 
 export const createTransactionService = (client: GraphQLClient) => ({
+  /**
+   * Uploads a transaction receipt
+   * @param form {
+   *   file: File;
+   *   transactionId: string;
+   *   storeId: string;
+   * }
+   * @returns Transaction with updated receipt URL
+   */
+  async uploadExpenseReceipt(form: FormData) {
+      const fileClient = createFileService(client);
+      return ((await fileClient.uploadTxReceipt(form as any)).transaction);
+    },
   async updateTransaction(
     input: UpdateTransactionRequest, 
     fetchFields?: {

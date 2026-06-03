@@ -1,156 +1,156 @@
 name: SDK Integration Test
 
 on:
-    pull_request:
-        branches:
-            - dev
+  pull_request:
+    branches:
+      - dev
 
 jobs:
-    integration-test:
-        runs-on: ubuntu-latest
+  integration-test:
+    runs-on: ubuntu-latest
 
-        services:
-            mongo:
-                image: mongo:7
-                ports:
-                    - 27017:27017
+    services:
+      mongo:
+        image: mongo:7
+        ports:
+          - 27017:27017
 
+    env:
+      PORT: 8080
+
+      DB_URL: mongodb://localhost:27017
+      DATABASE: getsella_test
+      AUTH_SECRET: test_secret
+      ENVIRONMENT: test
+      SERVICE_ENABLED: false
+      SMTP_PORT: 465
+      SMTP_HOST: mail.ogabai.com
+      SMTP_FROM_NAME: OGABAI
+      SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+      COMPANY_EMAIL: ${{ secrets.SMTP_USERNAME }}
+      SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+
+    steps:
+      ################################################
+      # Checkout Backend Repo
+      ################################################
+      - name: Debug token
+        run: |
+          if [ -z "${{ secrets.BACKEND_REPO_TOKEN }}" ]; then
+          echo "TOKEN EMPTY"
+          exit 1
+          fi
+          echo "TOKEN PRESENT"
+
+      - name: Checkout Backend
+        uses: actions/checkout@v4
+        with:
+          repository: Connect-Hive-Limited/getsella_be
+          token: ${{ secrets.BACKEND_REPO_TOKEN }}
+          path: backend
+
+      ################################################
+      # Setup Go
+      ################################################
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.24"
+
+      ################################################
+      # Build Backend
+      ################################################
+      - name: Install Backend Dependencies
+        working-directory: backend
+        run: |
+          go work sync 
+          go mod tidy
+
+      - name: Build Backend
+        working-directory: backend
+        run: |
+          go build -o main
+
+      ################################################
+      # Start Backend
+      ################################################
+      - name: Start Backend
+        working-directory: backend
+        run: |
+          nohup ./main > backend.log 2>&1 &
+          echo $! > backend.pid
+          sleep 15
+
+      ################################################
+      # Print backend logs
+      ################################################
+      - name: Print backend logs
+        run: |
+          cat backend.log || true
+
+      ################################################
+      # Wait for Backend
+      ################################################
+      - name: Wait for Backend Health
+        run: |
+          timeout 60 bash -c '
+            until curl -f http://localhost:8080/health
+            do
+              echo "Waiting for backend..."
+              sleep 2
+            done
+          '
+      ################################################
+      # Checkout SDK repo
+      ################################################
+      - name: Checkout SDK Repo
+        uses: actions/checkout@v4
+        with:
+          path: sdk
+
+      ################################################
+      # Setup Node
+      ################################################
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      ################################################
+      # Enable Yarn
+      ################################################
+      - name: Enable Yarn
+        run: corepack enable
+
+      ################################################
+      # Install SDK Dependencies
+      ################################################
+      - name: Install SDK Dependencies
+        working-directory: sdk
+        run: yarn install
+
+      ################################################
+      # Run SDK Tests
+      ################################################
+      - name: Run SDK Integration Tests
+        working-directory: sdk
         env:
-            PORT: 8080
+          API_URL: http://localhost:8080
+        run: yarn test:run
 
-            DB_URL: mongodb://localhost:27017
-            DATABASE: getsella_test
-            AUTH_SECRET: test_secret
-            ENVIRONMENT: test
-            SERVICE_ENABLED: false
-            SMTP_PORT: 465
-            SMTP_HOST: mail.ogabai.com
-            SMTP_FROM_NAME: OGABAI
-            SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
-            COMPANY_EMAIL: ${{ secrets.SMTP_USERNAME }}
-            SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+      ################################################
+      # Stop Backend
+      ################################################
+      - name: Upload backend logs
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-logs
+          path: backend.log
 
-        steps:
-            ################################################
-            # Checkout Backend Repo
-            ################################################
-            - name: Debug token
-              run: |
-                  if [ -z "${{ secrets.BACKEND_REPO_TOKEN }}" ]; then
-                  echo "TOKEN EMPTY"
-                  exit 1
-                  fi
-                  echo "TOKEN PRESENT"
-
-            - name: Checkout Backend
-              uses: actions/checkout@v4
-              with:
-                  repository: Connect-Hive-Limited/getsella_be
-                  token: ${{ secrets.BACKEND_REPO_TOKEN }}
-                  path: backend
-
-            ################################################
-            # Setup Go
-            ################################################
-            - name: Setup Go
-              uses: actions/setup-go@v5
-              with:
-                  go-version: "1.24"
-
-            ################################################
-            # Build Backend
-            ################################################
-            - name: Install Backend Dependencies
-              working-directory: backend
-              run: |
-                  go work sync 
-                  go mod tidy
-
-            - name: Build Backend
-              working-directory: backend
-              run: |
-                  go build -o main
-
-            ################################################
-            # Start Backend
-            ################################################
-            - name: Start Backend
-              working-directory: backend
-              run: |
-                  nohup ./main > backend.log 2>&1 &
-                  echo $! > backend.pid
-                  sleep 15
-
-            ################################################
-            # Print backend logs
-            ################################################
-            - name: Print backend logs
-              run: |
-                  cat backend.log || true
-
-            ################################################
-            # Wait for Backend
-            ################################################
-            - name: Wait for Backend Health
-              run: |
-                  timeout 60 bash -c '
-                    until curl -f http://localhost:8080/health
-                    do
-                      echo "Waiting for backend..."
-                      sleep 2
-                    done
-                  '
-            ################################################
-            # Checkout SDK repo
-            ################################################
-            - name: Checkout SDK Repo
-              uses: actions/checkout@v4
-              with:
-                  path: sdk
-
-            ################################################
-            # Setup Node
-            ################################################
-            - name: Setup Node
-              uses: actions/setup-node@v4
-              with:
-                  node-version: "22"
-
-            ################################################
-            # Enable Yarn
-            ################################################
-            - name: Enable Yarn
-              run: corepack enable
-
-            ################################################
-            # Install SDK Dependencies
-            ################################################
-            - name: Install SDK Dependencies
-              working-directory: sdk
-              run: yarn install
-
-            ################################################
-            # Run SDK Tests
-            ################################################
-            - name: Run SDK Integration Tests
-              working-directory: sdk
-              env:
-                  API_URL: http://localhost:8080
-              run: yarn test:run
-
-            ################################################
-            # Stop Backend
-            ################################################
-            - name: Upload backend logs
-              if: failure()
-              uses: actions/upload-artifact@v4
-              with:
-                  name: backend-logs
-                  path: backend.log
-
-            - name: Stop backend
-              if: always()
-              run: |
-                  if [ -f backend.pid ]; then
-                      kill $(cat backend.pid) || true
-                  fi
+      - name: Stop backend
+        if: always()
+        run: |
+          if [ -f backend.pid ]; then
+              kill $(cat backend.pid) || true
+          fi
