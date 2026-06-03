@@ -14,12 +14,14 @@ export interface Expense {
   dispenseStaffIds: string[];
   createdAt: string;
   //none,operation,staffRequest
-  expenseType: "none" | "operation" | "staffRequest" | "staffRequestFulfilled";
+  expenseType: "none" | "operation" | "staffRequest" | "staffRequestFulfilled" | "staffRequestDeclined";
 
   // These fields are only relevant for expenses that have been dispensed
   amount: number;
   narration: string;
   createdById: string;
+  storeId: string;
+  paymentType: Transaction["paymentType"];
 }
 
 
@@ -82,6 +84,7 @@ export type Transaction = {
 
   expenseId: string;
   narration: string;
+  expenseReceiptUrl: string;
 };
 
 // -------------------- Order --------------------

@@ -41,9 +41,14 @@ import {
 import { createFileService } from "../file/file.service";
 
 export const createProductService = (client: GraphQLClient) => ({
+  /**
+   * 
+   * @param form { storeId: string; productId: string; file: File;}
+   * @returns Transaction
+   */
   async uploadProductImage(form: FormData) {
     const fileClient = createFileService(client);
-    return ((await fileClient.uploadFile<{product: Product}>(form as any)).product);
+    return ((await fileClient.uploadFileProductImage(form as any)).product);
   },
   async getCustomerProductCountsByIds(
     input: GetCustomerProductCountsByIdsRequest, 
