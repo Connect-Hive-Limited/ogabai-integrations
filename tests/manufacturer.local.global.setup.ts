@@ -3,43 +3,63 @@ import path from "path";
 import { createAuthService } from "../src/services/user/auth.service";
 import { createUserService } from "../src/services/user/user.service";
 import { createClient, writeCache } from "./testEnv";
+import Chance from "chance";
+import { createSubscriptionPlanService, createSubscriptionService } from "../src/services/subscription";
+
+const chance = new Chance()
 
 const CACHE_PATH = path.resolve(__dirname, ".global-env-cache.json");
 
 // PRODUCTION
-const ENDPOINT_URL = "https://ogabai-prod-1010591944835.europe-west9.run.app"
+// const ENDPOINT_URL = "https://ogabai-prod-1010591944835.europe-west9.run.app"
+
+// DEVELOPMENT
+// const ENDPOINT_URL = "https://getsella-backend-1010591944835.europe-west1.run.app"// "https://getsella-backend-1010591944835.europe-west1.run.app" // 
+
+
+const ENDPOINT_URL = "http://localhost:8080"
 
 export default async function globalSetup() {
   console.log("🌍 [global.setup.ts] Running once for all tests...");
 
   const publicClient = createClient(ENDPOINT_URL);
   const authService = createAuthService(publicClient);
+  
+  // const pin = "12345678";
+  // const phone = "+23480" + Math.floor(10000000 + Math.random() * 90000000).toString();
+  
+  // { pin: '12345678', phone: '+2348012684564' }
+  // const res = await authService.signUp({
+  //   pin,
+  //   phone,
+  //   email: chance.email(),
+  //   storeName: "global setup test store (manufacturer)",
+  //   lastName: "Sample",
+  //   firstName: "Manufacturer",
+  //   storeLocation: "Lagos, Nigeria",
+  //   userType: "manufacturer",
+  // });
 
-  // PRODUCTION LOGIN 
-  // const phone = "+2348064668635" //"+2348071943026" // "08071943026"
-  // const password = "12345678";
-
-  // DEVELOPMENT
-  const phone = "+2348071943026" // "08071943026"
-  const pin = "533333";
-
+  const pin = "12345678";
+  const phone = "+2348012684564";
+  
+  console.log({ pin, phone })
   const res = await authService.login({
     pin,
     phone,
-    // userType: "admin"
+    userType: "manufacturer",
   });
   const accessToken = res?.data?.login?.accessToken ?? "";
   const userId = res?.data?.login.userId ?? ""
   if (!accessToken) throw new Error("Signup failed — no access token");
-
-
-  // console.log({ accessToken })
+  
   const privateClient = createClient(ENDPOINT_URL, accessToken);
   const userService = createUserService(privateClient);
+
   const me = await userService.me();
 
+  // console.log({ me: JSON.stringify(me)})
 
-  // console.log({ me : JSON.stringify(me)})
   const userData = me?.data?.me;
   if (!userData) throw new Error("No user data");
   const storeId = userData?.stores?.[0]?._id;
@@ -52,6 +72,7 @@ export default async function globalSetup() {
     storeId,
     userData,
     pin,
+    password: undefined,
     userId
   };
 

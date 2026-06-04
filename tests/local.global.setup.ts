@@ -10,31 +10,39 @@ const chance = new Chance()
 
 const CACHE_PATH = path.resolve(__dirname, ".global-env-cache.json");
 
+// PRODUCTION
+// const ENDPOINT_URL = "https://ogabai-prod-1010591944835.europe-west9.run.app"
+
+// DEVELOPMENT
+// const ENDPOINT_URL = "https://getsella-backend-1010591944835.europe-west1.run.app"// "https://getsella-backend-1010591944835.europe-west1.run.app" // 
+
+
+const ENDPOINT_URL = "http://localhost:8080"
+
 export default async function globalSetup() {
   console.log("🌍 [global.setup.ts] Running once for all tests...");
 
-  const publicClient = createClient();
+  const publicClient = createClient(ENDPOINT_URL);
   const authService = createAuthService(publicClient);
   
   const pin = "12345678";
-  const phone = "080" + Math.floor(10000000 + Math.random() * 90000000).toString();
+  const phone = "08084063704" //"080" + Math.floor(10000000 + Math.random() * 90000000).toString();
   
-  const res = await authService.signUp({
+  const res = await authService.login({
     pin,
     phone,
-    email: chance.email(),
-    storeName: "global setup test store",
-    lastName: "Setup",
-    firstName: "Global",
-    storeLocation: "Lagos, Nigeria",
+    userType: "retail",
+    // email: chance.email(),
+    // storeName: "global setup test store",
+    // lastName: "Setup",
+    // firstName: "Global",
+    // storeLocation: "Lagos, Nigeria",
   });
-  const accessToken = res?.data?.signUp?.accessToken ?? "";
-  const userId = res?.data?.signUp.userId ?? ""
+  const accessToken = res?.data?.login?.accessToken ?? "";
+  const userId = res?.data?.login.userId ?? ""
   if (!accessToken) throw new Error("Signup failed — no access token");
   
-  const privateClient = createClient(accessToken);
-  const subscriptionService = createSubscriptionService(privateClient);
-  const subscriptionPlanService = createSubscriptionPlanService(privateClient);
+  const privateClient = createClient(ENDPOINT_URL, accessToken);
   const userService = createUserService(privateClient);
 
   const me = await userService.me();
@@ -46,34 +54,14 @@ export default async function globalSetup() {
   const storeId = userData?.stores?.[0]?._id;
   if (!storeId) throw new Error("No store ID");
 
-  // subscribe this user 
-  // const plans = await subscriptionPlanService.getSubscriptionPlans({
-  //   limit: 10,
-  //   skip: 0,
-  //   subscriptionPlan: {
-  //     subscriptionPlanStatus: "active"
-  //   }
-  // })
-  // if (!plans?.subscriptionPlans.length) {
-  //   const plan = plans?.subscriptionPlans[0]
-  //   const subscription = await subscriptionService.addSubscription({
-  //     subscription: {
-
-  //     }
-  //   })
-  //   if (plan?.subscriptionPlan) {
-  //     const res = await subscriptionService.subscribeToPlan({
-  //       subscriptionPlanId: plan.subscriptionPlan.id
-  //     })
-  //   }
-  // }
-
   // 9157375245
   const envData = {
+    backendUrl: ENDPOINT_URL,
     accessToken,
     storeId,
     userData,
     pin,
+    password: undefined,
     userId
   };
 

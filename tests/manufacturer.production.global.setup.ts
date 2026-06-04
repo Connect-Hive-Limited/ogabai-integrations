@@ -3,6 +3,8 @@ import path from "path";
 import { createAuthService } from "../src/services/user/auth.service";
 import { createUserService } from "../src/services/user/user.service";
 import { createClient, writeCache } from "./testEnv";
+import { Chance } from "chance";
+const chance = new Chance()
 
 const CACHE_PATH = path.resolve(__dirname, ".global-env-cache.json");
 
@@ -15,18 +17,29 @@ export default async function globalSetup() {
   const publicClient = createClient(ENDPOINT_URL);
   const authService = createAuthService(publicClient);
 
-  // PRODUCTION LOGIN 
-  // const phone = "+2348064668635" //"+2348071943026" // "08071943026"
-  // const password = "12345678";
+  // const pin = "12345678";
+  // const phone = "+23480" + Math.floor(10000000 + Math.random() * 90000000).toString();
+  // console.log({ pin, phone })
+  // const res = await authService.signUp({
+  //   pin,
+  //   phone,
+  //   email: chance.email(),
+  //   storeName: "global setup test store (manufacturer)",
+  //   lastName: "Sample",
+  //   firstName: "Manufacturer",
+  //   storeLocation: "Lagos, Nigeria",
+  //   userType: "manufacturer",
+  // });
+  // const accessToken = res?.data?.signUp?.accessToken ?? "";
+  // const userId = res?.data?.signUp.userId ?? ""
 
-  // DEVELOPMENT
-  const phone = "+2348071943026" // "08071943026"
-  const pin = "533333";
-
+  //{ pin: '12345678', phone: '+2348060873865' }
+  const pin = "12345678";
+  const phone = "+2348060873865";
   const res = await authService.login({
     pin,
     phone,
-    // userType: "admin"
+    userType: "manufacturer"
   });
   const accessToken = res?.data?.login?.accessToken ?? "";
   const userId = res?.data?.login.userId ?? ""

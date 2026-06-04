@@ -5,21 +5,23 @@ import { GraphQLClient } from "../src/client";
 const CACHE_PATH = path.resolve(__dirname, ".global-env-cache.json");
 
 export type GlobalTestEnv = {
+  backendUrl: string;
   accessToken: string;
   userId: string;
   storeId: string;
   userData: any;
-  pin: string;
+  pin?: string;
+  password?: string;
   storeClient?: GraphQLClient;
   privateClient?: GraphQLClient;
+  publicClient?: GraphQLClient;
 };
 let cachedEnv: GlobalTestEnv | null = null;
-// const ENDPOINT_URL = "https://ogabai-prod-1010591944835.europe-west9.run.app"
-// const ENDPOINT_URL = "https://getsella-backend-1010591944835.europe-west1.run.app"// "https://getsella-backend-1010591944835.europe-west1.run.app" // 
-const ENDPOINT_URL = "http://localhost:8080"
-export const createClient = (accessToken?: string, storeId?: string) =>
+
+
+export const createClient = (backendUrl: string, accessToken?: string, storeId?: string) =>
     new GraphQLClient({
-        url: `${ENDPOINT_URL}/graphql`,
+        url: `${backendUrl}/graphql`,
         headersFactory: async () => ({
           "ojami-store-id": storeId || "",
         }),
@@ -36,13 +38,15 @@ export async function initTestEnv(): Promise<GlobalTestEnv|null> {
   const raw = fs.readFileSync(CACHE_PATH, "utf8");
   const envData = JSON.parse(raw);
 
-  const privateClient = createClient(envData.accessToken);
-  const storeClient = createClient(envData.accessToken, envData.storeId);
+  const publicClient = createClient(envData.backendUrl);
+  const privateClient = createClient(envData.backendUrl, envData.accessToken);
+  const storeClient = createClient(envData.backendUrl, envData.accessToken, envData.storeId);
 
   cachedEnv = {
     ...envData,
     storeClient,
     privateClient,
+    publicClient,
   };
 
   return cachedEnv;
