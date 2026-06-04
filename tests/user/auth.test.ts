@@ -24,7 +24,7 @@ describe.sequential("Auth API", () => {
   };
   beforeAll(async () => {
     env = await initTestEnv();  
-    authService = createAuthService(createClient());
+    authService = createAuthService(env?.publicClient!);
   })
   it("phone number should not exist", async () => {
     const res = await authService.checkRegistration({
@@ -75,7 +75,7 @@ describe.sequential("Auth API", () => {
   })
 
   it("should fetch user information using access token", async () => {
-    const client = createClient(headers.Authorization || "")
+    const client = createClient(env?.backendUrl!, headers.Authorization || "")
     const userService = createUserService(client)
     const res = await userService?.me({}, {headers})
     console.log("User info:", JSON.stringify(res?.data?.me));

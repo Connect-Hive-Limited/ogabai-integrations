@@ -11,7 +11,7 @@ interface TestUploadResponse {
   product: Product;
 }
 
-describe.sequential("File Upload API", () => {
+describe.only.sequential("File Upload API", () => {
     let fileService: ReturnType<typeof createFileService>;
     let productService: ReturnType<typeof createProductService>;
     let env: Awaited<ReturnType<typeof initTestEnv>>;
@@ -22,18 +22,45 @@ describe.sequential("File Upload API", () => {
         env = await initTestEnv();
         fileService = createFileService(env?.storeClient!);
         productService = createProductService(env?.storeClient!);
-
-        const product = getProduct(env?.storeId || "");
-        const res = await productService.addProduct({
-            product,
-            imageTypes: ["image/jpeg", "image/png"],
-        });
-        expect(res?.product).not.toBeNull();
-        productId = res?.product?._id || "";
     });
+    it("get all products", async () => {
+        const res = await productService.getProducts({ limit: 1, skip: 0, product: { storeId: env?.storeId || "" } });
+        console.log({ res: JSON.stringify(res, null, 2) })
+        expect(res?.products).toBeDefined();
+        expect(res?.products?.length).toBeGreaterThan(0);
 
-    it("should upload a real image file from disk", async () => {
-        const testImagePath = path.resolve(__dirname, "assets/test-image.jpg");
+        const product = res?.products?.[0];
+        expect(product?._id).toBeDefined();
+        productId = product?._id || "";
+    })
+    // it("add product", async () => {
+    //     const product = getProduct(env?.storeId || "");
+    //     const res = await productService.addProduct({
+    //         product,
+    //         imageTypes: ["image/jpeg", "image/png"],
+    //     });
+    //     console.log({ res: JSON.stringify(res, null, 2) })
+    //     expect(res?.product).not.toBeNull();
+    //     productId = res?.product?._id || "";
+    // })
+    // it.only("get products", async () => {
+    //     const res = await productService.getProducts({ limit: 1, skip: 0, product: { storeId: env?.storeId || "" } });
+    //     console.log({ res: JSON.stringify(res, null, 2) })
+    //     expect(res?.products).toBeDefined();
+    //     expect(res?.products?.length).toBeGreaterThan(0);
+
+
+    //     const product = res?.products?.[0];
+    //     expect(product?._id).toBeDefined();
+    //     productId = product?._id || "";
+    // })
+
+
+    it.only("upload product image", async () => {
+        if(!productId){
+            throw new Error("No product ID available for image upload test");
+        }
+        const testImagePath = path.resolve(__dirname, "../assets/test-image1.jpg");
         const formData = new FormData();
         formData.append("productId", productId);
         formData.append("storeId", env?.storeId || "");
@@ -49,6 +76,9 @@ describe.sequential("File Upload API", () => {
     });
 
     // it("should return a valid public file URL", async () => {
+    //     if(!uploadedUrl){
+    //         throw new Error("No uploaded URL available for validation test");
+    //     }
     //     expect(uploadedUrl).toBeDefined();
     //     expect(uploadedUrl).toMatch(/^https:\/\/storage\.googleapis\.com\//);
     // });

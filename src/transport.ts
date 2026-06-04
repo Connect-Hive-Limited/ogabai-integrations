@@ -38,7 +38,7 @@ export const createTransport = (opts?: TransportOptions): Middleware => {
       try {
         parsed = JSON.parse(text);
       } catch {
-        resCtx.error = new Error("Invalid JSON response");
+        resCtx.error = new Error("Invalid JSON responseL " + text);
         resCtx.status = r.status;
         return;
       }
