@@ -62,13 +62,13 @@ export const createExpenseCategoryService = (client: GraphQLClient) =>  ({
         }
     ),
     getExpenseCategorys: createOperationExecutor<
-        "getExpenseCategorys",
+        "getExpenseCategories",
         ExpenseCategoryCRUD["ListRequest"],
         ExpenseCategoryCRUD["ListResponse"],
         typeof expenseCategoryListIntegration.nestedFields
     >(
         client,
-        "getExpenseCategorys",
+        "getExpenseCategories",
         {
             schema: buildSchema(expenseCategorySchema.list),
             defaultRootFields: [...expenseCategoryListIntegration.responseFields],
