@@ -10,7 +10,7 @@ export const expenseCategorySchema:Record<DefaultSchemaFields, SchemaConfig> = {
     },
     list: {
         operation: "query",
-        name: "getExpenseCategorys",
+        name: "getExpenseCategories",
         variables:
             "($limit: Int!, $skip: Int!, $search: String, $expenseCategory: ExpenseCategoryInput, $expenseCategoryIds: [String])",
         field:
