@@ -17,7 +17,7 @@ export const subscriptionTrialIntegration =
 
 export const subscriptionTrialListIntegration =
   createListIntegration({
-    key: "subscriptionTrials",
+    key: ENTITY,
     fields: subscriptionTrialQuery,
   });
 

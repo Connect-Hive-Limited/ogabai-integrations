@@ -27,7 +27,7 @@ export const userAccountIntegration =
 
 export const userAccountListIntegration =
   createListIntegration({
-    key: "userAccounts",
+    key: ENTITY,
     fields: userAccountQuery,
     nested: {
       userAccount: userAccountQuery,

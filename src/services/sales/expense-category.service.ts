@@ -61,7 +61,7 @@ export const createExpenseCategoryService = (client: GraphQLClient) =>  ({
             defaultNestedFields: {},
         }
     ),
-    getExpenseCategorys: createOperationExecutor<
+    getExpenseCategories: createOperationExecutor<
         "getExpenseCategories",
         ExpenseCategoryCRUD["ListRequest"],
         ExpenseCategoryCRUD["ListResponse"],

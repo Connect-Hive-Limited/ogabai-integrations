@@ -20,7 +20,7 @@ export const subscriptionPlanIntegration =
 
 export const subscriptionPlanListIntegration =
   createListIntegration({
-    key: "subscriptionPlans",
+    key: ENTITY,
     fields: subscriptionPlanQuery,
     nested: {
         features: subscriptionPlanFeatureQuery

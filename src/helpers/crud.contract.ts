@@ -44,16 +44,30 @@ export type ListEntityRequest<T, K extends EntityKey> = {
   search?: string;
 };
 
+export type Pluralize<K extends string> =
+  K extends `${infer Root}y`
+    ? `${Root}ies`
+    : `${K}s`;
+
 export type ListEntityResponse<T, K extends EntityKey> = {
-  [P in `${K}s`]: T[];
+  [P in Pluralize<K>]: T[];
 } & {
   total: number;
 };
+export type ListEntityResponseFields<K extends EntityKey> = [
+  Pluralize<K>,
+  "total"
+];
+// export type ListEntityResponse<T, K extends EntityKey> = {
+//   [P in `${K}s`]: T[];
+// } & {
+//   total: number;
+// };
 
-export type ListEntityResponseFields<K extends EntityKey> =
-  [`${K}s`, "total"];
+// export type ListEntityResponseFields<K extends EntityKey> =
+//   [`${K}s`, "total"];
 
-  export type ListEntityNestedFields<
+export type ListEntityNestedFields<
   K extends EntityKey,
   F extends Record<string, any>
 > = {

@@ -20,7 +20,7 @@ export const userRoleIntegration =
 
 export const userRoleListIntegration =
   createListIntegration({
-    key: "userRoles",
+    key: ENTITY,
     fields: userRoleQuery,
     nested: {
       privileges: privilegeQuery,
