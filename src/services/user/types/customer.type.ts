@@ -37,7 +37,7 @@ export const customerIntegration =
 
 export const customerListIntegration =
   createListIntegration({
-    key: "customers",
+    key: ENTITY,
     fields: customerQuery,
     nested: {
       customerStoreBalance: customerStoreBalanceQuery,

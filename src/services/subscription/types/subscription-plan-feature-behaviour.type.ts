@@ -17,7 +17,7 @@ export const subscriptionPlanFeatureBehaviourIntegration =
 
 export const subscriptionPlanFeatureBehaviourListIntegration =
   createListIntegration({
-    key: "subscriptionPlanFeatureBehaviours",
+    key: ENTITY,
     fields: subscriptionPlanFeatureBehaviourQuery,
   });
 

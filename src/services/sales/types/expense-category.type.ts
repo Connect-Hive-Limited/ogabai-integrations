@@ -20,7 +20,7 @@ export const expenseCategoryIntegration =
 
 export const expenseCategoryListIntegration =
   createListIntegration({
-    key: "expenseCategorys",
+    key: ENTITY,
     fields: expenseCategoryQuery,
     nested: {
         features: expenseCategoryQuery
