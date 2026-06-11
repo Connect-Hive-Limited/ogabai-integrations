@@ -3,7 +3,7 @@ import { defineConfig } from "vitest/config";
 export default defineConfig({
   test: {
     globals: true,
-    globalSetup: ["./tests/manufacturer.production.global.setup.ts"],
+    globalSetup: ["./tests/local.global.setup.ts"],
     // globalSetup: ["./tests/global.setup.ts"],
     environment: "node", // or "jsdom" if testing hooks in React
     testTimeout: 20000, 
