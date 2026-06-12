@@ -61,6 +61,7 @@ export const createExpenseDispenseService = (client: GraphQLClient) =>  {
             const transaction = await transactionService.addTransaction({
                 transaction: {
                     transactionType: "expense",
+                    platform,
                     amountPaid,
                     narration,
                     createdById,
