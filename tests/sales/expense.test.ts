@@ -1,23 +1,75 @@
 import { beforeAll, describe, expect, it } from "vitest";
-import { createExpenseService, ExpenseService } from "../../src";
+import { createExpenseService, Expense, ExpenseService } from "../../src";
 import { initTestEnv } from "../testEnv";
+import Chance from "chance"
+
+const chance = new Chance();
 
 
 describe.sequential("Expense Category API", () => {
-    let expenseCategoryService: ExpenseService;
-
+    let expenseService: ExpenseService;
+    let storeId: string | undefined, userId: string | undefined;
+    let expenseId: string | undefined; //"7935575e-5f0d-4f3c-8735-7858c6574f8c";
 
     beforeAll(async () => {
         const env = await initTestEnv();
-        expenseCategoryService = createExpenseService(env?.storeClient!);
+        storeId = env?.storeId
+        userId = env?.userId
+
+        expenseService = createExpenseService(env?.storeClient!);
     })
 
-    it("should list expense categories", async () => {
-        const res = await expenseCategoryService.getExpenses({
+    it("should create expense", async () => {
+        const expense: Partial<Expense> = {
+            title: chance.name(),
+            description: chance.string(),
+            expenseCategoryId: chance.guid(),
+            amount: chance.integer({ min: 10000000, max: 99999999 }),
+            repeatedEvery: "day",
+            dispenseStaffIds: [],
+            expenseType: "operation",
+            narration: "for something close",
+            createdById: userId,
+            storeId,
+            paymentType: "cash"
+        }
+        const res = await expenseService.createExpense({
+            expense
+        })
+        console.log({ res: JSON.stringify(res, null, 2) })
+        expect(res?.expense).not.toBeNull();
+        expenseId = res?.expense?.id;
+    })
+
+    it("should list expenses", async () => {
+        const res = await expenseService.getExpenses({
             skip: 0,
             limit: 1
         })
         console.log({ res: JSON.stringify(res, null, 2) })
-        expect(res?.total).toBeNull();
+        expect(res?.expenses.length).toEqual(1);
+    })
+
+    it("should delete expense", async () => {
+        if(!expenseId) {
+            return ;
+        }
+        const res = await expenseService.deleteExpense({
+            expenseId
+        })
+        console.log({ res: JSON.stringify(res, null, 2) })
+        expect(res?.expenseId).toEqual(expenseId);
+    })
+    it("should not see expense with same id", async () => {
+        if(!expenseId) {
+            return;
+        }
+        const res = await expenseService.getExpense({
+            expense: {
+                id: expenseId
+            }
+        })
+        console.log({ res: JSON.stringify(res, null, 2) })
+        expect(res?.expense).toBeNull();
     })
 })
