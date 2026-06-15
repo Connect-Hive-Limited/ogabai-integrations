@@ -50,6 +50,9 @@ export const transactionQuery: TransactionFields = [
     "txStatus",
     "customerId",
     "transactionType",
+    "expenseId",
+    "expenseReceiptUrl",
+    "narration",
 ]
 export type OrderFields = (keyof Order)[];
 export const orderQuery: OrderFields = [
