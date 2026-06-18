@@ -1,5 +1,10 @@
 import { Store } from "./inventory";
-
+export interface FeatureUserWhitelist {
+  id: string;
+  userId: string;
+  appFeatures: string[];
+  createdAt: string;
+}
 
 
 /////////////////////////////////////////
