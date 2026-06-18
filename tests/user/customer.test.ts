@@ -59,6 +59,7 @@ describe.sequential("ApplicationFeature API", () => {
         const res = await transactionService.addCustomerDeposit({
             customerId,
             amountPaid: 3000,
+            createdById: userId            
         })
 
         console.log({ res: JSON.stringify(res, null, 2) })
