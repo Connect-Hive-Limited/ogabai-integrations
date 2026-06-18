@@ -40,9 +40,9 @@ export const createExpenseDispenseService = (client: GraphQLClient) =>  {
             });
         },
         dispenseExpense: async (req: {
-            expenseDispense: Pick<Transaction, "expenseId" | "amountPaid" | "narration" | "createdById" | "paymentType">;
+            expenseDispense: Pick<Transaction, "expenseId" | "amountPaid" | "narration" | "createdById" | "paymentType" | "platform">;
         }) : Promise<EntityResponse<Transaction, "transaction"> | undefined> => {
-            const { amountPaid, narration, createdById, expenseId, paymentType } = req.expenseDispense;
+            const { amountPaid, narration, createdById, expenseId, paymentType, platform = "pos" } = req.expenseDispense;
             const expenseRes = await expenseService.getExpense({
                 expense: {
                     id: expenseId,
@@ -61,6 +61,7 @@ export const createExpenseDispenseService = (client: GraphQLClient) =>  {
             const transaction = await transactionService.addTransaction({
                 transaction: {
                     transactionType: "expense",
+                    platform,
                     amountPaid,
                     narration,
                     createdById,
@@ -96,6 +97,7 @@ export const createExpenseDispenseService = (client: GraphQLClient) =>  {
                     narration: expense.narration || "Approved expense dispense",
                     createdById: expense.createdById, 
                     paymentType: expense.paymentType,
+                    platform: "pos",
                 }
             });
             await expenseService.updateExpense({

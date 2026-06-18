@@ -69,7 +69,7 @@ export const createTransactionService = (client: GraphQLClient) => ({
     return res.data?.addTransaction ?? null;
   },
   async addCustomerDeposit(
-    input: Pick<Transaction, "customerId" | "amountPaid">,
+    input: Pick<Transaction, "customerId" | "amountPaid" | "createdById">,
     fetchFields?: {
       root?: (keyof AddTransactionResponse)[],
       nestedFields?: AddTransactionResponseNestedFields

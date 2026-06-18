@@ -41,46 +41,6 @@ export function createListIntegration<
   };
 }
 
-// version 1 
-// ============
-// export function createListIntegration<
-//   K extends EntityKey,
-//   Fields,
-//   Nested extends Record<string, any> = {}
-// >(config: {
-//   key: Pluralize<K>;
-//   fields: Fields;
-//   nested?: Nested;
-// }) {
-//   return {
-//     responseFields: [config.key, "total"] as const,
-//     nestedFields: {
-//       ...(config.nested ?? {}),
-//       [config.key]: config.fields,
-//     } as Record<Pluralize<K>, Fields> & Nested,
-//   };
-// }
-// version 0
-// ===========================================================
-
-// export function createListIntegration<
-//   K extends EntityKey,
-//   Fields,
-//   Nested extends Record<string, any> = {}
-// >(config: {
-//   key: `${K}s`;
-//   fields: Fields;
-//   nested?: Nested;
-// }) {
-//   return {
-//     responseFields: [config.key, "total"] as const,
-//     nestedFields: {
-//       ...(config.nested ?? {}),
-//       [config.key]: config.fields,
-//     } as Record<`${K}s`, Fields> & Nested,
-//   };
-// }
-
 export function createDeleteIntegration<K extends EntityKey>(key: K) {
   const idKey = `${key}Id` as const;
 

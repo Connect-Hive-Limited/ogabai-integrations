@@ -136,6 +136,7 @@ jobs:
         working-directory: sdk
         env:
           API_URL: http://localhost:8080
+          ENVIRONMENT: "development"
         run: yarn test:run
 
       ################################################

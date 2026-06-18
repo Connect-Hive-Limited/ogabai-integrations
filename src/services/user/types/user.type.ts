@@ -172,6 +172,7 @@ export interface MeResponse {
     userSetting?: UserSetting;
     userAccounts?: UserAccount[]
     subscription?: Subscription;
+    newFeaturesAllowed?: string[];
 }
 export const meResponse: (keyof MeResponse)[] = [
     "user",
@@ -180,6 +181,7 @@ export const meResponse: (keyof MeResponse)[] = [
     "userSetting",
     "userAccounts",
     "subscription",
+    "newFeaturesAllowed",
 ]
 export interface MeResponseNestedFields extends GetUserResponseNestedFields {
     user: UserFields;
