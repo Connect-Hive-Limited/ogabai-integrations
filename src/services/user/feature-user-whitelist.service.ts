@@ -9,14 +9,14 @@ export const createFeatureUserWhitelistService = (client: GraphQLClient) =>  ({
     createFeatureUserWhitelist: createOperationExecutor<
         "createFeatureUserWhitelist",
         FeatureUserWhitelistCRUD["CreateRequest"],
-        FeatureUserWhitelistCRUD["CreateResponse"] & { pin?: string },
+        FeatureUserWhitelistCRUD["CreateResponse"],
         typeof featureUserWhitelistIntegration.create.nestedFields
     >(
         client,
         "createFeatureUserWhitelist",
         {
             schema: buildSchema(featureUserWhitelistSchema.create),
-            defaultRootFields: [...featureUserWhitelistIntegration.create.responseFields, "pin"],
+            defaultRootFields: [...featureUserWhitelistIntegration.create.responseFields],
             defaultNestedFields: featureUserWhitelistIntegration.create.nestedFields,
         }
     ),
@@ -62,14 +62,14 @@ export const createFeatureUserWhitelistService = (client: GraphQLClient) =>  ({
             defaultNestedFields: {},
         }
     ),
-    getFeatureUserWhitelists: createOperationExecutor<
-        "getFeatureUserWhitelists",
+    listFeatureUserWhitelists: createOperationExecutor<
+        "listFeatureUserWhitelists",
         FeatureUserWhitelistCRUD["ListRequest"],
         FeatureUserWhitelistCRUD["ListResponse"],
         typeof featureUserWhitelistListIntegration.nestedFields
     >(
         client,
-        "getFeatureUserWhitelists",
+        "listFeatureUserWhitelists",
         {
             schema: buildSchema(featureUserWhitelistSchema.list),
             defaultRootFields: [...featureUserWhitelistListIntegration.responseFields],

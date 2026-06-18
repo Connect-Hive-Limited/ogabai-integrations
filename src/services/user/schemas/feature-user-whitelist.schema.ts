@@ -9,7 +9,7 @@ export const featureUserWhitelistSchema: Record<DefaultSchemaFields, SchemaConfi
     },
     list: {
         operation: "query",
-        name: "getFeatureUserWhitelists",
+        name: "listFeatureUserWhitelists",
         variables:
             "($limit: Int!, $skip: Int!, $search: String, $featureUserWhitelist: FeatureUserWhitelistInput, $featureUserWhitelistIds: [String])",
         field:

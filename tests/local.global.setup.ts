@@ -4,7 +4,10 @@ import { createAuthService } from "../src/services/user/auth.service";
 import { createUserService } from "../src/services/user/user.service";
 import { createClient, writeCache } from "./testEnv";
 import Chance from "chance";
+import dotenv from "dotenv"
 import { createSubscriptionPlanService, createSubscriptionService } from "../src/services/subscription";
+import { LoginResponse } from "../src/services/user/types/auth.type";
+dotenv.config()
 
 const chance = new Chance()
 
@@ -19,27 +22,35 @@ const CACHE_PATH = path.resolve(__dirname, ".global-env-cache.json");
 
 const ENDPOINT_URL = "http://localhost:8080"
 
+const authorizeUser = async (pin: string):Promise<LoginResponse|undefined> => {
+    const existingUserAccount = process.env.EXISTING_USER_ACCOUNT
+    const publicClient = createClient(ENDPOINT_URL);
+    const authService = createAuthService(publicClient);
+    if(existingUserAccount){
+      const res = await authService.login({
+        phone: "08084063704",
+        pin,
+        userType: "retail"
+      })
+      return res.data?.login
+    }
+    const res = await authService.signUp({
+      pin,
+      phone: "+23480" + Math.floor(10000000 + Math.random() * 90000000).toString(),
+      storeName: chance.name() + " store",
+      lastName: chance.name(),
+      firstName: chance.name(),
+      storeLocation: chance.address()
+    });
+    return res.data?.signUp
+}
+
 export default async function globalSetup() {
   console.log("🌍 [global.setup.ts] Running once for all tests...");
-
-  const publicClient = createClient(ENDPOINT_URL);
-  const authService = createAuthService(publicClient);
-  
-  const pin = "12345678";
-  const phone = "08084063704" //"080" + Math.floor(10000000 + Math.random() * 90000000).toString();
-  
-  const res = await authService.login({
-    pin,
-    phone,
-    userType: "retail",
-    // email: chance.email(),
-    // storeName: "global setup test store",
-    // lastName: "Setup",
-    // firstName: "Global",
-    // storeLocation: "Lagos, Nigeria",
-  });
-  const accessToken = res?.data?.login?.accessToken ?? "";
-  const userId = res?.data?.login.userId ?? ""
+  const pin = "12345678"
+  const res = await authorizeUser(pin);
+  const accessToken = res?.accessToken ?? "";
+  const userId = res?.userId ?? "";
   if (!accessToken) throw new Error("Signup failed — no access token");
   
   const privateClient = createClient(ENDPOINT_URL, accessToken);
