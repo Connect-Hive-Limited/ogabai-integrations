@@ -1,9 +1,13 @@
 import { defineConfig } from "vitest/config";
+import dotenv from "dotenv"
+dotenv.config()
+
+const ENVIRONMENT = process.env.ENVIRONMENT;
 
 export default defineConfig({
   test: {
     globals: true,
-    globalSetup: ["./tests/local.global.setup.ts"],
+    globalSetup: [`./tests/${ENVIRONMENT}.global.setup.ts`],
     // globalSetup: ["./tests/global.setup.ts"],
     environment: "node", // or "jsdom" if testing hooks in React
     testTimeout: 20000, 
