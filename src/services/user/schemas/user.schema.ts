@@ -1,5 +1,13 @@
 export const userSchema = {
 
+  // test features 
+  getTestFeatures: (query: string) => `
+    query getTestFeatures {
+      getTestFeatures {
+        ${query}
+      }
+    }
+  `,
   // admin dashboard stats
   getUserTypeCounts: (query: string) => `
     query getUserTypeCounts {

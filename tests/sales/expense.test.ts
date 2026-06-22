@@ -36,7 +36,6 @@ describe.sequential("Expense Category API", () => {
         const res = await expenseService.createExpense({
             expense
         })
-        console.log({ res: JSON.stringify(res, null, 2) })
         expect(res?.expense).not.toBeNull();
         expenseId = res?.expense?.id;
     })
@@ -46,7 +45,6 @@ describe.sequential("Expense Category API", () => {
             skip: 0,
             limit: 1
         })
-        console.log({ res: JSON.stringify(res, null, 2) })
         expect(res?.expenses.length).toEqual(1);
     })
 
@@ -57,7 +55,6 @@ describe.sequential("Expense Category API", () => {
         const res = await expenseService.deleteExpense({
             expenseId
         })
-        console.log({ res: JSON.stringify(res, null, 2) })
         expect(res?.expenseId).toEqual(expenseId);
     })
     it("should not see expense with same id", async () => {
@@ -69,7 +66,16 @@ describe.sequential("Expense Category API", () => {
                 id: expenseId
             }
         })
-        console.log({ res: JSON.stringify(res, null, 2) })
         expect(res?.expense).toBeNull();
+    })
+
+    it("should delete expense by id", async () => {
+        if(!expenseId){
+            return;
+        }
+        const res = await expenseService.deleteExpense({
+            expenseId
+        })
+        expect(res?.expenseId).toEqual(expenseId);
     })
 })

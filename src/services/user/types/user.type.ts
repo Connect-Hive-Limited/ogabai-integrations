@@ -19,6 +19,16 @@ import { getAccountResponseNestedFields } from "./account.type"
 import { userAccountListIntegration } from "./user-account.type";
 import { getSubscriptionResponseNestedFields } from "../../subscription";
 
+// App test features 
+
+export interface GetAppTestFeaturesResponse {
+    testFeatures: string[]
+}
+export const getAppTestFeaturesResponse:(keyof GetAppTestFeaturesResponse)[] = [
+    "testFeatures"
+]
+
+
 // admin dashboard stats 
 
 export interface GetUserTypeCountsResponse {

@@ -17,7 +17,6 @@ describe.sequential("Expense Category API", () => {
             skip: 0,
             limit: 1
         })
-        console.log({ res: JSON.stringify(res, null, 2) })
         expect(res?.expenseCategories.length).greaterThan(0)
     })
 })

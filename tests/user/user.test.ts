@@ -40,4 +40,10 @@ describe.sequential("User API", () => {
         expect(res?.data?.getUsers?.users.length).greaterThan(0);
     })
 
+    it("get test features", async () => {
+        const res = await userService.getTestFeatures();
+        console.log({ res: JSON.stringify(res, null, 2) })
+        expect(res).not.toBeNull();
+    })
+
 })

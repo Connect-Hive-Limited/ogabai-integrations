@@ -44,7 +44,7 @@ export default async function globalSetup() {
   const userService = createUserService(privateClient);
   const me = await userService.me();
 
-  console.log({ me: JSON.stringify(me, null, 2) })
+  // console.log({ me: JSON.stringify(me, null, 2) })
 
   const userData = me?.data?.me;
   if (!userData) throw new Error("No user data");

@@ -1,12 +1,9 @@
 import { Store } from "./inventory";
-export interface FeatureUserWhitelist {
-  id: string;
-  userId: string;
-  appFeatures: string[];
-  createdAt: string;
+
+export enum AppNewFeatures {
+  ExpenseTracker = "expenseTracker",
+  ProductImport = "productImport",
 }
-
-
 /////////////////////////////////////////
 // CUSTOMER & CUSTOMER STORE BALANCE 
 /////////////////////////////////////////

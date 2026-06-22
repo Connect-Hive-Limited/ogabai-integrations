@@ -35,8 +35,7 @@ describe.sequential("Sales API", () => {
                 storeId
             }
         })
-        console.log({ storeId })
-        console.log({ res: JSON.stringify(res, null, 2) })
+        expect(res?.userNotifications).not.toBeUndefined();
     });
     
 });
