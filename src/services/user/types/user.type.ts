@@ -21,6 +21,12 @@ import { getSubscriptionResponseNestedFields } from "../../subscription";
 
 // App test features 
 
+export interface GetAppTestFeatureEnabledResponse {
+    testFeatureEnabled: string[]
+}
+export const getAppTestFeatureEnabledResponse:(keyof GetAppTestFeatureEnabledResponse)[] = [
+    "testFeatureEnabled"
+]
 export interface GetAppTestFeaturesResponse {
     testFeatures: string[]
 }
