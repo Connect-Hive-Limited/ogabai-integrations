@@ -31,7 +31,6 @@ describe.sequential("Sales API", () => {
         limit: 100,
         skip: 0
       })
-      console.log({ res: JSON.stringify({ res }, null, 2) })
       expect(res?.transactions[0].sales.length).toBeGreaterThan(0)
 
     })

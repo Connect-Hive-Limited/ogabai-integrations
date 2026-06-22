@@ -78,7 +78,6 @@ describe.sequential("Auth API", () => {
     const client = createClient(env?.backendUrl!, headers.Authorization || "")
     const userService = createUserService(client)
     const res = await userService?.me({}, {headers})
-    console.log("User info:", JSON.stringify(res?.data?.me));
     expect(res?.data?.me).not.toBeNull();
     expect(res?.data?.me.user.lastName).not.equal("")
     headers["ojami-store-id"] = res?.data?.me?.stores?.[0]?._id as string

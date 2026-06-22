@@ -41,14 +41,12 @@ describe.sequential("Product API", () => {
         const res = await productService.addProducts({
             products,
         })
-        console.log({ res : JSON.stringify(res, null, 2) })
         expect(res?.products.length).equal(5);
      });
     it("should get product counts by user ids", async () => {
         const res = await productService.getCustomerProductCountsByIds({
             userIds: [userId]
         })
-        console.log({ res : JSON.stringify(res, null, 2) })
         expect(res?.customersProductCounts.length).greaterThan(0);
     })
     it("should get product & should have stock in metric package", async () => {

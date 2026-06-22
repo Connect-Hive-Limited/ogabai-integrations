@@ -25,7 +25,6 @@ describe.only.sequential("File Upload API", () => {
     });
     it("get all products", async () => {
         const res = await productService.getProducts({ limit: 1, skip: 0, product: { storeId: env?.storeId || "" } });
-        console.log({ res: JSON.stringify(res, null, 2) })
         expect(res?.products).toBeDefined();
         expect(res?.products?.length).toBeGreaterThan(0);
 
