@@ -1,4 +1,4 @@
-import { Account, ApplicationFeature, Customer, CustomerStoreBalance, FeatureUserWhitelist, MonthlyUserStat, Notification, NotificationChannels, Privilege, ProductCounts, RestockCounts, SaleCounts, ServiceUpdate, TransactionCounts, User, UserAccount, UserNotification, UserNotificationSettings, UserRole, UserSetting, UserTypeCounts, Wallet } from "../../types";
+import { Account, ApplicationFeature, Customer, CustomerStoreBalance, MonthlyUserStat, Notification, NotificationChannels, Privilege, ProductCounts, RestockCounts, SaleCounts, ServiceUpdate, TransactionCounts, User, UserAccount, UserNotification, UserNotificationSettings, UserRole, UserSetting, UserTypeCounts, Wallet } from "../../types";
 
 export type AccountFields = (keyof Account)[];
 export type WalletFields = (keyof Wallet)[];
@@ -23,12 +23,6 @@ export type PrivilegeFields = (keyof Privilege)[]
 export type CustomerFields = (keyof Customer)[];
 export type CustomerStoreBalanceFields = (keyof CustomerStoreBalance)[];
 
-export type FeatureUserWhitelistFields = (keyof FeatureUserWhitelist)[]
-
-
-export const featureUserWhitelistQuery:FeatureUserWhitelistFields = [
-    "appFeatures", "createdAt", "id", "userId"
-]
 
 export const customerQuery:CustomerFields = [
     "createdAt", "email", "id", "name", "phone", "customerStoreBalance", "storeIds"
