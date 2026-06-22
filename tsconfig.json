@@ -1,15 +1,18 @@
 {
-"compilerOptions": {
-"target": "ES2020",
-"module": "ESNext",
-"moduleResolution": "Node",
-"declaration": true,
-"outDir": "dist",
-"strict": true,
-"esModuleInterop": true,
-"skipLibCheck": true,
-"resolveJsonModule": true,
-"lib": ["ES2020", "DOM"]
-},
-"include": ["_src", "src/types/request.ts", "src/middleware.ts"]
+  "compilerOptions": {
+    "target": "ES2018",
+    "module": "ESNext",
+    "jsx": "react-jsx",
+    "declaration": true,
+    "emitDeclarationOnly": false,
+    "outDir": "dist",
+    "moduleResolution": "Node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "allowJs": false,
+    "resolveJsonModule": true,
+    "isolatedModules": true
+  },
+  "include": ["src"]
 }

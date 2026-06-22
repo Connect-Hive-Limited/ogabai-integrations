@@ -1,7 +1,21 @@
 export const productSchema = {
+  getCustomerProductCountsByIds: (query: string) => `
+    query getCustomerProductCountsByIds($userIds: [String]!) {
+      getCustomerProductCountsByIds(userIds: $userIds) {
+        ${query}
+      }
+    }
+  `,
+  searchCategoriesAndTemplate: (query: string) => `
+    query searchCategoriesAndTemplate($search: String, $shouldGetFromAllStores: Boolean){
+      searchCategoriesAndTemplate(search: $search, shouldGetFromAllStores: $shouldGetFromAllStores) {
+        ${query}
+      }
+    }
+  `,
   getProduct: (query: string) => `
     query getProduct($product: ProductInput!, $template: Boolean) {
-      product(product: $product, template: $template) {
+      getProduct(product: $product, template: $template) {
         ${query}
       }
     }
@@ -9,21 +23,21 @@ export const productSchema = {
 
   getProducts: (query: string) => `
     query getProducts($product: ProductInput, $productIds: [String], $search: String, $limit: Int!, $skip: Int!, $template: Boolean, $shouldGetFromAllStores: Boolean) {
-      products(product: $product, productIds: $productIds, search: $search, limit: $limit, skip: $skip, template: $template, shouldGetFromAllStores: $shouldGetFromAllStores) {
+      getProducts(product: $product, productIds: $productIds, search: $search, limit: $limit, skip: $skip, template: $template, shouldGetFromAllStores: $shouldGetFromAllStores) {
         ${query}
       }
     }
   `,
   getProductByBarcode: (query: string) => `
     query getProductByBarcode($barcode: String!, $fetchFromGS1IfNotFound: Boolean, $template: Boolean) {
-      productByBarcode(barcode: $barcode, fetchFromGS1IfNotFound: $fetchFromGS1IfNotFound, template: $template) {
+      getProductByBarcode(barcode: $barcode, fetchFromGS1IfNotFound: $fetchFromGS1IfNotFound, template: $template) {
         ${query}
       }
     }
   `,
-  searchProductName: (query: string) => `
-    query searchProductName($search: String!, $limit: Int, $skip: Int, $template: Boolean) {
-      searchProductName(search: $search, limit: $limit, skip: $skip, template: $template) {
+  searchProductNames: (query: string) => `
+    query searchProductNames($search: String!, $product: ProductInput, $limit: Int, $skip: Int, $template: Boolean) {
+      searchProductNames(search: $search, product: $product, limit: $limit, skip: $skip, template: $template) {
         ${query}
       }
     }
@@ -32,6 +46,13 @@ export const productSchema = {
   addProduct: (mutation: string) => `
     mutation addProduct($product: ProductInput!, $imageTypes: [String], $template: Boolean) {
       addProduct(product: $product, imageTypes: $imageTypes, template: $template) {
+        ${mutation}
+      }
+    }
+  `,
+  addProducts: (mutation: string) => `
+    mutation addProducts($products: [ProductsInput]!, $template: Boolean) {
+      addProducts(products: $products, template: $template) {
         ${mutation}
       }
     }

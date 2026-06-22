@@ -1,9 +1,94 @@
 import { 
+    Account,
+    MonthlyUserStat,
+    ProductCounts,
+    RestockCounts,
+    SaleCounts,
+    Store,
+    Subscription,
+    TransactionCounts,
     User,
-    UserType 
+    UserAccount,
+    UserSetting,
+    UserType, 
+    UserTypeCounts
 } from "../../../types";
-import { UserFields, userQuery } from "../user.entity";
+import { AccountFields, MonthlyUserStatFields, monthlyUserStatQuery, ProductCountsFields, productCountsQuery, RestockCountsFields, restockCountsQuery, SaleCountsFields, saleCountsQuery, TransactionCountsFields, transactionCountsQuery, UserAccountFields, UserFields, userQuery, UserSettingFields, userSettingQuery, UserTypeCountsFields, userTypeCountsQuery } from "../user.entity";
+import { AddressFields, addressQuery, StoreFields, storeQuery } from "../../inventory/entities";
+import { getAccountResponseNestedFields } from "./account.type"
+import { userAccountListIntegration } from "./user-account.type";
+import { getSubscriptionResponseNestedFields } from "../../subscription";
 
+// App test features 
+
+export interface GetAppTestFeaturesResponse {
+    testFeatures: string[]
+}
+export const getAppTestFeaturesResponse:(keyof GetAppTestFeaturesResponse)[] = [
+    "testFeatures"
+]
+
+
+// admin dashboard stats 
+
+export interface GetUserTypeCountsResponse {
+    userTypeCounts: UserTypeCounts
+}
+export const getUserTypeCountsResponse:(keyof GetUserTypeCountsResponse)[] = [
+    "userTypeCounts"
+]
+export interface GetUserTypeCountsResponseNestedFields {
+    userTypeCounts: UserTypeCountsFields
+}
+export const getUserTypeCountsResponseNestedFields:GetUserTypeCountsResponseNestedFields = {
+    userTypeCounts: userTypeCountsQuery
+}
+
+
+export interface GetMonthlyUserStatsByYearRequest {
+    year: number;
+}
+export interface GetMonthlyUserStatsByYearResponse {
+    monthlyUserStat: MonthlyUserStat[];
+}
+export interface GetMonthlyUserStatsByYearResponseNestedFields {
+    monthlyUserStat: MonthlyUserStatFields;
+}
+export const getMonthlyUserStatsByYearResponse: (keyof GetMonthlyUserStatsByYearResponse)[] = [
+    "monthlyUserStat"
+]
+export const getMonthlyUserStatsByYearResponseNestedFields: GetMonthlyUserStatsByYearResponseNestedFields = {
+    monthlyUserStat: monthlyUserStatQuery
+}
+
+export interface GetUserDashStatsRequest {
+    storeId: string;
+}
+// user dashboard stats 
+export interface GetUserDashStatsResponse {
+  outOfStockCount: number;
+  productCounts: ProductCounts;
+  restockCounts: RestockCounts;
+  saleCounts: SaleCounts;
+  stockValue: number;
+  transactionCounts: TransactionCounts;
+}
+export const getUserDashStatsResponse:(keyof GetUserDashStatsResponse)[] = [
+    "outOfStockCount", "productCounts", "restockCounts", "saleCounts",
+    "stockValue", "transactionCounts"
+]
+export interface GetUserDashStatsResponseNestedFields {
+    productCounts: ProductCountsFields;
+    restockCounts: RestockCountsFields;
+    saleCounts: SaleCountsFields;
+    transactionCounts: TransactionCountsFields;
+}
+export const getUserDashStatsResponseNestedFields:GetUserDashStatsResponseNestedFields = {
+    productCounts: productCountsQuery,
+    restockCounts: restockCountsQuery,
+    saleCounts: saleCountsQuery,
+    transactionCounts: transactionCountsQuery
+}
 
 // get user 
 export interface GetUserRequest {
@@ -14,11 +99,14 @@ export interface GetUserResponse {
 }
 export interface GetUserResponseNestedFields {
     user: UserFields;
+    address: AddressFields;
 }
 export const getUserResponse: (keyof GetUserResponse)[] = [
     "user"
 ]
-export const _getUserResponseNestedFields: Omit<GetUserResponseNestedFields, "user"> = {}
+export const _getUserResponseNestedFields: Omit<GetUserResponseNestedFields, "user"> = {
+    address: addressQuery,
+}
 export const getUserResponseNestedFields: GetUserResponseNestedFields = {
     user: userQuery,
     ..._getUserResponseNestedFields,
@@ -27,8 +115,9 @@ export const getUserResponseNestedFields: GetUserResponseNestedFields = {
 
 // get users
 export interface GetUsersRequest {
+    // search?: string;
     userIds?: string[];
-    user?: User;
+    user?: Partial<User>;
     limit: number;
     skip: number;
 }
@@ -62,7 +151,7 @@ export const addUserResponseNestedFields = getUserResponseNestedFields;
 // update user 
 export interface UpdateUserRequest {
     userId: string;
-    user: User;
+    user: Partial<User>;
 }
 export interface UploadUserImageResponse {
     url: string;
@@ -72,14 +161,50 @@ export interface UpdateUserResponse {
     user: User;
     uploadImageResponse: UploadUserImageResponse
 }
-export interface UpdateUserResponseNestedFields extends GetUserResponseNestedFields {
+export interface UpdateUserResponseNestedFields {
     uploadImageResponse: (keyof UploadUserImageResponse)[]
+    user: UserFields
 }
-export const updateUserResponse = {
-    ...getUserResponse,
-    "uploadImageResponse": ["fileUrl", "url"]
-}
+export const updateUserResponse: (keyof UpdateUserResponse)[] = [
+    "uploadImageResponse", "user"
+]
+
 export const updateUserResponseNestedFields: UpdateUserResponseNestedFields = {
+    uploadImageResponse: ["fileUrl", "url"],
+    user: userQuery,
+}
+
+// me 
+export interface MeResponse {
+    user: User;
+    account?: Account;
+    stores?: Store[];
+    userSetting?: UserSetting;
+    userAccounts?: UserAccount[]
+    subscription?: Subscription;
+    newFeaturesAllowed?: string[];
+}
+export const meResponse: (keyof MeResponse)[] = [
+    "user",
+    "account",
+    "stores",
+    "userSetting",
+    "userAccounts",
+    "subscription",
+    "newFeaturesAllowed",
+]
+export interface MeResponseNestedFields extends GetUserResponseNestedFields {
+    user: UserFields;
+    account: AccountFields;
+    stores: StoreFields;
+    userSetting: UserSettingFields;
+    userAccounts: UserAccountFields;
+}
+export const meResponseNestedFields: MeResponseNestedFields = {
+    stores: storeQuery,
+    userSetting: userSettingQuery,
+    ...userAccountListIntegration.nestedFields,
+    ...getSubscriptionResponseNestedFields,
     ...getUserResponseNestedFields,
-    uploadImageResponse: ["fileUrl", "url"]
+    ...getAccountResponseNestedFields,
 }

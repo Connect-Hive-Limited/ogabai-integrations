@@ -8,14 +8,14 @@ export const packageSchema = {
   `,
   getPackages: (query: string) => `
     query getPackages($productPackage: ProductPackageInput, $packageIds: [String], $search: String, $template: Boolean, $shouldGetFromAllStores: Boolean, $limit: Int, $skip: Int) {
-      packages(productPackage: $productPackage, packageIds: $packageIds, search: $search, template: $template, shouldGetFromAllStores: $shouldGetFromAllStores, limit: $limit, skip: $skip) {
+      getPackages(productPackage: $productPackage, packageIds: $packageIds, search: $search, template: $template, shouldGetFromAllStores: $shouldGetFromAllStores, limit: $limit, skip: $skip) {
         ${query}
       }
     }
   `,
   addPackage: (query: string) => `
-    mutation addPackage($productPackage: ProductPackageInput!, $packageStocks: [StockInput], $template: Boolean) {
-      addPackage(productPackage: $productPackage, packageStocks: $packageStocks, template: $template) {
+    mutation addPackage($productPackage: ProductPackageInput!, $template: Boolean) {
+      addPackage(productPackage: $productPackage, template: $template) {
         ${query}
       }
     }

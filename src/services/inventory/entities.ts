@@ -1,5 +1,30 @@
-import { Price, Product, ProductAttribute, ProductCategory, ProductName, ProductPackage, Stock, Store } from "../../types";
+import { Address, CustomersProductCount, Price, Product, ProductAttribute, ProductCategory, ProductName, ProductPackage, Stock, Store, StoreCategory, StoreCategoryProduct } from "../../types";
 
+
+
+export type CustomersProductCountFields = (keyof CustomersProductCount)[]
+export const customersProductCountQuery: CustomersProductCountFields = [
+    "count",
+    "storeId",
+    "userId"
+]
+
+
+export type StoreCategoryProductFields = (keyof StoreCategoryProduct)[]
+export const storeCategoryProductQuery: StoreCategoryProductFields = [
+    "_id",
+    "createdAt",
+    "productId",
+    "storeCategoryId"
+]
+export type StoreCategoryFields = (keyof StoreCategory)[]
+export const storeCategoryQuery: StoreCategoryFields = [
+    "_id",
+    "name",
+    "description",
+    "tags",
+    "createdAt"
+]
 
 export type AttributeFields = (keyof ProductAttribute)[]
 export const attributeQuery: AttributeFields = [
@@ -12,11 +37,8 @@ export const priceQuery:PriceFields = [
     "packageId",
     "sellingPrice",
     "costPrice",
-    "newSellingPrice",
-    "newCostPrice",
     "deduction",
     "storeId",
-    "timestamp",
     "createdAt"
 ]
 export type StockFields = (keyof Stock)[]
@@ -27,9 +49,9 @@ export const stockQuery: StockFields = [
     "costPerPackage",
     "sellPerPackage",
     "deduction",
-    "timestamp",
     "storeId",
-    "createdAt"
+    "createdAt",
+    "expirationDate"
 ]
 export type StoreFields = (keyof Store)[]
 export const storeQuery: StoreFields = [
@@ -38,7 +60,12 @@ export const storeQuery: StoreFields = [
     "address",
     "shopType",
     "ownerId",
-    "createdAt"
+    "createdAt",
+    "storeLocation"
+]
+export type AddressFields = (keyof Address)[]
+export const addressQuery:AddressFields = [
+    "city", "country", "state", "zipcode"
 ]
 export type CategoryFields = (keyof ProductCategory)[]
 export const categoryQuery: CategoryFields = [
@@ -61,14 +88,15 @@ export const productQuery:ProductFields = [
     "createdAt",
     "description",
     "images",
-    "metricPackage",
-    "metricPackageId",
+    "smallestPackage",
+    "smallestPackageId",
     "name",
     "productAttributes",
     "productPackages",
     "storeId",
     "tag", 
-    "totalStockInMetricPackage",
+    "totalStockInSmallestPackage",
+    "preExpirationNoticeInWeeks"
 ]
 export type ProductNamesFields = (keyof ProductName)[]
 export const productNameQuery: ProductNamesFields = [
@@ -85,7 +113,7 @@ export const packageQuery: PackageFields = [
     "unit",
     "unitQuantity",
     "totalStock",
-    "parent",
+    "barcode",
     "priorityPrice",
     "stockLimit",
     "storeId",

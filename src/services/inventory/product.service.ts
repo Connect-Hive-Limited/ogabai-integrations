@@ -1,5 +1,6 @@
 import { GraphQLClient, RequestOption } from "../../client";
 import { gqlQueryStringBuilder } from "../../helpers/query";
+import { Product } from "../../types";
 import { productSchema } from "./schema/product.schema";
 import { 
   AddProductRequest, AddProductResponse, addProductResponseFields, addProductResponseNestedFields, 
@@ -15,10 +16,100 @@ import {
   updateProductResponseNestedFields,
   AddProductResponseNestedFields,
   GetProductResponseNestedFields,
-  GetProductsResponseNestedFields, 
+  GetProductsResponseNestedFields,
+  SearchProductNamesRequest,
+  SearchProductNamesResponse,
+  SearchProductNamesResponseNestedFields,
+  searchProductNamesResponse,
+  searchProductNamesResponseNestedFields,
+  SearchCategoriesAndTemplateResponse,
+  SearchCategoriesAndTemplateResponseNestedFields,
+  SearchCategoriesAndTemplateRequest,
+  searchCategoriesAndTemplateResponse,
+  searchCategoriesAndTemplateResponseNestedFields,
+  GetCustomerProductCountsByIdsRequest,
+  GetCustomerProductCountsByIdsResponse,
+  getCustomerProductCountsByIdsResponse,
+  GetCustomerProductCountsByIdsResponseNestedFields,
+  getCustomerProductCountsByIdsResponseNestedFields,
+  AddProductsRequest,
+  AddProductsResponse,
+  AddProductsResponseNestedFields,
+  addProductsResponseFields,
+  addProductsResponseNestedFields, 
 } from "./types/product.type";
+import { createFileService } from "../file/file.service";
 
 export const createProductService = (client: GraphQLClient) => ({
+  /**
+   * 
+   * @param form { storeId: string; productId: string; file: File;}
+   * @returns Transaction
+   */
+  async uploadProductImage(form: FormData) {
+    const fileClient = createFileService(client);
+    return ((await fileClient.uploadFileProductImage(form as any)).product);
+  },
+  async getCustomerProductCountsByIds(
+    input: GetCustomerProductCountsByIdsRequest, 
+    fetchFields?: {
+      root?: (keyof GetCustomerProductCountsByIdsResponse)[],
+      nestedFields?: GetCustomerProductCountsByIdsResponseNestedFields
+    },
+    option?: RequestOption
+  ): Promise<GetCustomerProductCountsByIdsResponse | null> {
+    const res = await client.request<{ getCustomerProductCountsByIds: GetCustomerProductCountsByIdsResponse }, GetCustomerProductCountsByIdsRequest>(
+      productSchema.getCustomerProductCountsByIds(
+        gqlQueryStringBuilder<GetCustomerProductCountsByIdsResponse, GetCustomerProductCountsByIdsResponseNestedFields>(
+          fetchFields?.root ?? getCustomerProductCountsByIdsResponse,
+          fetchFields?.nestedFields ?? getCustomerProductCountsByIdsResponseNestedFields
+        )
+      ), 
+      input, 
+      option
+    );
+    return res.data?.getCustomerProductCountsByIds ?? null;
+  },
+  async searchCategoriesAndTemplate(
+    input: SearchCategoriesAndTemplateRequest, 
+    fetchFields?: {
+      root?: (keyof SearchCategoriesAndTemplateResponse)[],
+      nestedFields?: SearchCategoriesAndTemplateResponseNestedFields
+    },
+    option?: RequestOption
+  ): Promise<SearchCategoriesAndTemplateResponse | null> {
+    const res = await client.request<{ searchCategoriesAndTemplate: SearchCategoriesAndTemplateResponse }, SearchCategoriesAndTemplateRequest>(
+      productSchema.searchCategoriesAndTemplate(
+        gqlQueryStringBuilder<SearchCategoriesAndTemplateResponse, SearchCategoriesAndTemplateResponseNestedFields>(
+          fetchFields?.root ?? searchCategoriesAndTemplateResponse,
+          fetchFields?.nestedFields ?? searchCategoriesAndTemplateResponseNestedFields,
+        )
+      ), 
+      input, 
+      option
+    );
+    return res.data?.searchCategoriesAndTemplate ?? null;
+  },
+  async searchProductNames(
+    input: SearchProductNamesRequest, 
+    fetchFields?: {
+      root?: (keyof SearchProductNamesResponse)[],
+      nestedFields?: SearchProductNamesResponseNestedFields
+    },
+    option?: RequestOption
+  ): Promise<SearchProductNamesResponse | null> {
+    const res = await client.request<{ searchProductNames: SearchProductNamesResponse }, SearchProductNamesRequest>(
+      productSchema.searchProductNames(
+        gqlQueryStringBuilder<SearchProductNamesResponse, SearchProductNamesResponseNestedFields>(
+          fetchFields?.root ?? searchProductNamesResponse,
+          fetchFields?.nestedFields ?? searchProductNamesResponseNestedFields,
+        )
+      ), 
+      input, 
+      option
+    );
+    return res.data?.searchProductNames ?? null;
+  },
   async updateProduct(
     input: UpdateProductRequest, 
     fetchFields?: {
@@ -77,6 +168,26 @@ export const createProductService = (client: GraphQLClient) => ({
     );
     return res.data?.addProduct ?? null;
   },
+  async addProducts(
+    input: AddProductsRequest, 
+    fetchFields?: {
+      root?: (keyof AddProductsResponse)[],
+      nestedFields?: AddProductsResponseNestedFields
+    },
+    option?: RequestOption
+  ): Promise<AddProductsResponse | null> {
+    const res = await client.request<{ addProducts: AddProductsResponse }, AddProductsRequest>(
+      productSchema.addProducts(
+        gqlQueryStringBuilder<AddProductsResponse, AddProductsResponseNestedFields>(
+          fetchFields?.root ?? addProductsResponseFields,
+          fetchFields?.nestedFields ?? addProductsResponseNestedFields
+        )
+      ), 
+      input, 
+      option
+    );
+    return res.data?.addProducts ?? null;
+  },
   async getProduct(
     input: GetProductRequest, 
     fetchFields?: {
@@ -118,3 +229,5 @@ export const createProductService = (client: GraphQLClient) => ({
     return res.data?.getProducts ?? null;
   },
 })
+
+export type ProductService = ReturnType<typeof createProductService>;

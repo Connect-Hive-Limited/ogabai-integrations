@@ -1,3 +1,17 @@
+export interface StoreCategory {
+  _id: string;
+  name: string;
+  description: string;
+  tags: string[];
+  createdAt: string;
+}
+export interface StoreCategoryProduct {
+  _id: string;
+  storeCategoryId: string;
+  productId: string;
+  createdAt: string;
+}
+
 export type CategoryStatus = "active" | "inactive";
 export interface ProductAttribute {
   name: string;
@@ -23,16 +37,17 @@ export interface Product extends ProductName {
   barcode: string;
   description: string;
   categoryId: string;
-  metricPackageId: string;
+  smallestPackageId: string;
   images: string[];
   productAttributes: ProductAttribute[];
   tag: string;
   storeId: string;
   createdAt: string;
-  totalStockInMetricPackage: number;
+  totalStockInSmallestPackage: number;
   productPackages: ProductPackage[];
   category: ProductCategory;
-  metricPackage: ProductPackage;
+  smallestPackage: ProductPackage;
+  preExpirationNoticeInWeeks: string;
 }
 
 export interface ProductLight {
@@ -49,14 +64,14 @@ export interface ProductPackage {
   unit: string;
   unitQuantity: number;
   totalStock: number;
-  parent: string;
+  barcode: string;
   priorityPrice: number;
   stockLimit: number;
   storeId: string;
   createdAt: string;
-  price: Price;             // comes from price list
+  price?: Price;             // comes from price list
   deduction: number;
-  stocks: Stock[];          // list of stock, paginated
+  stocks?: Stock[];          // list of stock, paginated
 }
 
 export interface Price {
@@ -64,11 +79,8 @@ export interface Price {
   packageId: string;
   sellingPrice: number;
   costPrice: number;
-  newSellingPrice: number;
-  newCostPrice: number;
   deduction: number;
   storeId: string;
-  timestamp: string;
   createdAt: string;
 }
 
@@ -78,6 +90,7 @@ export interface Store {
   address: Address;
   shopType: string;
   ownerId: string;
+  storeLocation: string;
   createdAt: string;
 }
 
@@ -96,9 +109,9 @@ export interface Stock {
   costPerPackage: number;
   sellPerPackage: number;
   deduction: number;
-  timestamp: string;
   storeId: string;
   createdAt: string;
+  expirationDate: string;
 }
 
 export interface StoreSetting {
@@ -119,16 +132,21 @@ export interface StoreSetting {
   shouldSendSalesAlert: string;
 }
 
+/**
+ * message CustomersProductCount {
+  string userId = 1;
+  string storeId = 2;
+  int64 count = 3;
+}
+ */
+export interface CustomersProductCount {
+  userId: string;
+  storeId: string;
+  count: number;
+}
 export interface UserProductCounts {
   totalProduct: number;
   totalProductThisYear: number;
   totalProductThisMonth: number;
   totalProductToday: number;
-}
-
-export interface RestockCounts {
-  totalRestock: number;
-  totalRestockThisYear: number;
-  totalRestockThisMonth: number;
-  totalRestockToday: number;
 }

@@ -1,3 +1,30 @@
+export interface ExpenseCategory {
+  id: string;
+  title: string;
+  description: string;
+  storeId: string;
+  createdAt: string;
+}
+export interface Expense {
+  id: string;
+  title: string;
+  description: string;
+  expenseCategoryId: string;
+  repeatedEvery: "day"|"week"|"month"|"year";
+  dispenseStaffIds: string[];
+  createdAt: string;
+  //none,operation,staffRequest
+  expenseType: "none" | "operation" | "staffRequest" | "staffRequestFulfilled" | "staffRequestDeclined";
+
+  // These fields are only relevant for expenses that have been dispensed
+  amount: number;
+  narration: string;
+  createdById: string;
+  storeId: string;
+  paymentType: Transaction["paymentType"];
+}
+
+
 // -------------------- DateFilter --------------------
 export type DateFilter = {
   startDate: string;
@@ -11,9 +38,9 @@ export type Sale = {
   packageId: string;
   quantity: number;              // int32
   amountTotal: number;           // float
-  quantityInMetricUnit: bigint;  // int64
   createdAt: string;
   storeId: string;
+  transactionId?: string;
 };
 
 // -------------------- Transaction --------------------
@@ -29,6 +56,9 @@ export type Platform = "pos" | "commerce" | "wallet";
 
 // "pending" | "processing" | "completed" | "failed"
 export type TxStatus = "pending" | "processing" | "completed" | "failed";
+
+// "sale" | "refund" | "deposit" | "withdrawal"
+export type TransactionType = "sale" | "refund" | "deposit" | "withdrawal"| "customerRefund" | "customerDeposit" | "expense";
 
 export type Transaction = {
   _id: string;
@@ -48,6 +78,13 @@ export type Transaction = {
   createdAt: string;
   sales: Sale[];
   storeId: string;
+  customerId: string;
+  transactionType: TransactionType;
+  createdById: string;
+
+  expenseId: string;
+  narration: string;
+  expenseReceiptUrl: string;
 };
 
 // -------------------- Order --------------------
@@ -58,6 +95,7 @@ export type Order = {
   userId: string;
   orderStatus: OrderStatus;
   transactionId: string;
+  storeId: string;
   createdAt: string;
 };
 

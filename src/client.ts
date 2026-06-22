@@ -19,6 +19,18 @@ export class GraphQLClient {
   private headersFactory: () => Promise<Record<string, string>>;
   private middlewares: Middleware[];
 
+  public async token(): Promise<string | null> {
+    return this.tokenProvider();
+  }
+
+  public async headers(): Promise<Record<string, string>> {
+    return this.headersFactory();
+  }
+
+  public getUrl(){
+    return this.url
+  }
+
   constructor(opts: ClientOptions) {
     this.url = opts.url;
     this.tokenProvider = toAsyncTokenProvider(opts.tokenProvider);
@@ -57,16 +69,14 @@ export class GraphQLClient {
 
     if (resCtx.error) throw resCtx.error;
     if (!resCtx.response) throw new Error("No response from GraphQL transport");
-    if(resCtx.response.errors){
-      console.log({errors: resCtx.response.errors})
+    if (resCtx.response.errors && resCtx.response.errors.length) {
+      console.log("Detailed error - log: ", JSON.stringify(resCtx.response.errors))
+      // normalize, throw first error (apps can inspect)
+      const e = resCtx.response.errors[0];
+      const err = new Error(e.message);
+      (err as any).extensions = e.extensions;
+      throw err;
     }
-    // if (resCtx.response.errors && resCtx.response.errors.length) {
-    //   // normalize, throw first error (apps can inspect)
-    //   const e = resCtx.response.errors[0];
-    //   const err = new Error(e.message);
-    //   (err as any).extensions = e.extensions;
-    //   // throw err;
-    // }
     return resCtx.response;
   }
 }

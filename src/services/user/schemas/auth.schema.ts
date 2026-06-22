@@ -1,4 +1,21 @@
+
+
 export const authSchema = {
+  authenticateWithStore: (query: string) => `
+    mutation authenticateWithStore($storeId: String!, $roleId: String!) {
+      authenticateWithStore(storeId: $storeId, roleId: $roleId) {
+        ${query}
+      }      
+    }
+  `,
+  // change pin 
+  changePin: (query: string) => `
+    mutation changePin($userId: String!, $oldPin: String!, $newPin: String!) {
+      changePin(userId: $userId, oldPin: $oldPin, newPin: $newPin) {
+        ${query}
+      }
+    }
+  `,
   checkRegistration: (query: string) => `
     query checkRegistration($phone: String!) {
       checkRegistration(phone: $phone) {
@@ -8,15 +25,15 @@ export const authSchema = {
   `,
 
   login: (query: string) => `
-    mutation login($phone: String!, $pin: String!, $userType: UserTypeInputEnum) {
-      login(phone: $phone, pin: $pin, userType: $userType) {
+    mutation login($phone: String!, $pin: String, $userType: UserTypeEnum, $password: String) {
+      login(phone: $phone, pin: $pin, userType: $userType, password: $password) {
         ${query}
       }
     }
   `,
 
   signUp: (query: string) => `
-    mutation signUp($firstName: String!, $lastName: String!, $phone: String!, $pin: String!, $storeName: String!, $storeLocation: String, $email: String, $userType: UserTypeInputEnum) {
+    mutation signUp($firstName: String!, $lastName: String!, $phone: String!, $pin: String!, $storeName: String!, $storeLocation: String, $email: String, $userType: UserTypeEnum) {
       signUp( firstName: $firstName, lastName: $lastName, phone: $phone, pin: $pin, storeName: $storeName, storeLocation: $storeLocation, email: $email, userType: $userType) {
         ${query}
       }

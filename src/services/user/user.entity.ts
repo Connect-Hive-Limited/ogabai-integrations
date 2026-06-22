@@ -1,14 +1,120 @@
-import { NotificationChannels, ServiceUpdate, User, UserNotificationSettings, UserSetting } from "../../types";
+import { Account, ApplicationFeature, Customer, CustomerStoreBalance, FeatureUserWhitelist, MonthlyUserStat, Notification, NotificationChannels, Privilege, ProductCounts, RestockCounts, SaleCounts, ServiceUpdate, TransactionCounts, User, UserAccount, UserNotification, UserNotificationSettings, UserRole, UserSetting, UserTypeCounts, Wallet } from "../../types";
 
+export type AccountFields = (keyof Account)[];
+export type WalletFields = (keyof Wallet)[];
 export type UserFields = (keyof User)[];
 export type UserNotificationSettingsFields = (keyof UserNotificationSettings)[];
 export type NotificationChannelsFields = (keyof NotificationChannels)[];
 export type ServiceUpdateFields = (keyof ServiceUpdate)[]
 export type UserSettingFields = (keyof UserSetting)[]
+export type ProductCountsFields = (keyof ProductCounts)[];
+export type RestockCountsFields = (keyof RestockCounts)[]
+export type SaleCountsFields = (keyof SaleCounts)[];
+export type TransactionCountsFields = (keyof TransactionCounts)[];
+export type UserNotificationFields = (keyof UserNotification)[];
+export type NotificationFields = (keyof Notification)[]
+export type MonthlyUserStatFields = (keyof MonthlyUserStat)[]
+export type UserTypeCountsFields = (keyof UserTypeCounts)[]
+export type UserRoleFields = (keyof UserRole)[]
+export type UserAccountFields = (keyof UserAccount)[]
+export type PrivilegeFields = (keyof Privilege)[]
 
+
+export type CustomerFields = (keyof Customer)[];
+export type CustomerStoreBalanceFields = (keyof CustomerStoreBalance)[];
+
+export type FeatureUserWhitelistFields = (keyof FeatureUserWhitelist)[]
+
+
+export const featureUserWhitelistQuery:FeatureUserWhitelistFields = [
+    "appFeatures", "createdAt", "id", "userId"
+]
+
+export const customerQuery:CustomerFields = [
+    "createdAt", "email", "id", "name", "phone", "customerStoreBalance", "storeIds"
+]
+export const customerStoreBalanceQuery:CustomerStoreBalanceFields = [
+    "balance", "createdAt", "customerId", "id", "owed", "storeId"
+]
+
+export const privilegeQuery:PrivilegeFields = [
+    "actions", "feature"
+]
+export const userAccountQuery:UserAccountFields = [
+    "createdAt",
+    "id",
+    "storeId",
+    "userId",
+    "userRoleId",
+    "store",
+    "userRole",
+    "user"
+]
+export const userRoleQuery:UserRoleFields = [
+    "createdAt", 
+    "description",
+    "id",
+    "isRootAdmin",
+    "name",
+    "privileges",
+    "shortname",
+    "storeId",
+    "userRoleStatus",
+]
+
+export const userTypeCountsQuery:UserTypeCountsFields = [
+    "customers", "distributors", "manufacturer", "total"
+]
+export const monthlyUserStatQuery:MonthlyUserStatFields = [
+    "month", "total"
+]
+export const notificationQuery: NotificationFields = [
+    "createdAt",
+    "description",
+    "id",
+    "notificationAction",
+    "notificationStatus",
+    "notificationType",
+    "title",
+    "updatedAt"
+]
+export const userNotificationQuery:UserNotificationFields = [
+    "createdAt",
+    "id",
+    "notificationStatus",
+    "updatedAt",
+    "userId",
+    "itemId",
+    "notificationId",
+    "notification",
+    "storeId"
+]
+export const transactionCountsQuery:TransactionCountsFields = [
+    "totalTx", "totalTxThisMonth", "totalTxThisYear", "totalTxToday"
+]
+export const saleCountsQuery:SaleCountsFields = [
+    "totalSales", "totalSalesThisMonth", "totalSalesThisYear", 
+    "totalSalesToday"
+]
+export const restockCountsQuery:RestockCountsFields = [
+    "totalRestock", "totalRestockThisMonth", "totalRestockThisYear", 
+    "totalRestockToday"
+]
+export const productCountsQuery:ProductCountsFields = [
+    "totalProduct", "totalProductThisMonth", "totalProductThisYear",
+    "totalProductToday"
+]
+
+
+export const accountQuery:AccountFields = [
+    "_id", "accountStatus", "bvn", "createdAt", "nin", "totalBalance", "userId", "wallets",
+]
+export const walletQuery: WalletFields = [
+    "_id", "accountId", "balance", "createdAt", "currency", "status", "storeId",
+]
 export const userQuery:UserFields = [
     "_id", "country", "createdAt", "dob", "email",
-    "firstName", "isAdmin", "lastName", "phone",
+    "firstName", "lastName", "phone",
     "phoneVerified", "phoneVerifiedAt", "profileImageUrl", 
     "updatedAt"
 ]

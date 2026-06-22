@@ -1,11 +1,40 @@
-import { Product } from "../../../types"
+import { CustomersProductCount, Product, ProductCategory } from "../../../types"
 import { 
+    AttributeFields,
+    attributeQuery,
+    CategoryFields,
+    categoryQuery,
+    CustomersProductCountFields,
+    customersProductCountQuery,
     PackageFields, packageQuery, 
+    PriceFields, 
+    priceQuery, 
     ProductFields, productNameQuery, ProductNamesFields, 
-    productQuery } from "../entities"
+    productQuery, 
+    StockFields,
+    stockQuery} from "../entities"
+
+
+
+export interface GetCustomerProductCountsByIdsRequest {
+    userIds: string[]
+}
+export interface GetCustomerProductCountsByIdsResponse {
+    customersProductCounts: CustomersProductCount[]
+}
+export const getCustomerProductCountsByIdsResponse: (keyof GetCustomerProductCountsByIdsResponse)[] = [
+    "customersProductCounts"
+]
+export interface GetCustomerProductCountsByIdsResponseNestedFields {
+    customersProductCounts: CustomersProductCountFields
+}
+export const getCustomerProductCountsByIdsResponseNestedFields: GetCustomerProductCountsByIdsResponseNestedFields = {
+    customersProductCounts: customersProductCountQuery
+}
 
 export interface GetProductRequest {
     product: Partial<Product>
+    template?: boolean;
 }
 export interface GetProductResponse {
     product: Product
@@ -13,14 +42,22 @@ export interface GetProductResponse {
 export interface GetProductResponseNestedFields {
     product: ProductFields;
     productPackages: PackageFields;
-    metricPackage: PackageFields
+    smallestPackage: PackageFields;
+    category: CategoryFields;
+    price: PriceFields;
+    stocks: StockFields;
+    productAttributes: AttributeFields;
 }
 export const getProductResponseFields: (keyof GetProductResponse)[] = [
     "product"
 ]
 export const _getProductResponseNestedFields: Omit<GetProductResponseNestedFields, "product"> = {
     productPackages: packageQuery,
-    metricPackage: packageQuery
+    smallestPackage: packageQuery,
+    category: categoryQuery,
+    price: priceQuery,
+    stocks: stockQuery,
+    productAttributes: attributeQuery,
 }
 export const getProductResponseNestedFields: GetProductResponseNestedFields = {
     product: productQuery,
@@ -78,6 +115,7 @@ export const getProductByBarcodeResponseNestedFields: GetProductByBarcodeRespons
 //search product names 
 export interface SearchProductNamesRequest {
     search: string
+    product?: Partial<Product>;
     limit?: number
     skip?: number
     template?: boolean
@@ -85,12 +123,15 @@ export interface SearchProductNamesRequest {
 export interface SearchProductNamesResponse {
     productNames: Product[]
 }
+export const searchProductNamesResponse: (keyof SearchProductNamesResponse)[] = [
+    "productNames"
+]
 export interface SearchProductNamesResponseNestedFields {
     productNames: ProductNamesFields;
 }
-export const searchProductNamesResponseFields: (keyof SearchProductNamesResponse)[] = [
-    "productNames"
-]
+export const searchProductNamesResponseNestedFields: SearchProductNamesResponseNestedFields = {
+    productNames: productNameQuery
+}
 
 // 
 
@@ -108,6 +149,26 @@ export interface AddProductResponse {
     product: Product;
     uploadImageResponse: UploadImageResponse
 }
+export interface AddProductsRequest {
+    products: Partial<Product>[]
+    template?: boolean
+}
+export interface AddProductsResponse {
+    products: Product[];
+}
+export const addProductsResponseFields: (keyof AddProductsResponse)[] = [
+    "products"
+]
+export interface AddProductsResponseNestedFields extends Omit<GetProductResponseNestedFields, "product"> {
+    products: ProductFields
+}
+export const addProductsResponseNestedFields: AddProductsResponseNestedFields = {
+    products: productQuery,
+    ..._getProductResponseNestedFields,
+}
+
+
+
 export interface AddProductResponseNestedFields extends Omit<GetProductResponseNestedFields, "product"> {
     product: ProductFields;
     uploadImageResponse: (keyof UploadImageResponse)[];
@@ -146,3 +207,21 @@ export interface RemoveProductResponse {
 export const removeProductResponseFields: (keyof RemoveProductResponse)[] = [
     "productId"
 ]
+
+// search categories and templates 
+export interface SearchCategoriesAndTemplateRequest {
+    search?: string
+    shouldGetFromAllStores?: boolean
+}
+export interface SearchCategoriesAndTemplateResponse {
+    productCategories: ProductCategory[];
+}
+export const searchCategoriesAndTemplateResponse: (keyof SearchCategoriesAndTemplateResponse)[] = [
+    "productCategories"
+]
+export interface SearchCategoriesAndTemplateResponseNestedFields {
+    productCategories: CategoryFields;
+}
+export const searchCategoriesAndTemplateResponseNestedFields: SearchCategoriesAndTemplateResponseNestedFields = {
+    productCategories: categoryQuery
+}

@@ -3,6 +3,15 @@ import { gqlQueryStringBuilder } from "../../helpers/query";
 import { GraphQLResponse } from "../../types";
 import {authSchema} from "./schemas/auth.schema";
 import { 
+  AuthenticateWithStoreRequest,
+  authenticateWithStoreResponse,
+  AuthenticateWithStoreResponse,
+  ChangePinRequest,
+  changePinResponse,
+  ChangePinResponse,
+  CheckRegistrationRequest,
+  checkRegistrationResponse,
+  CheckRegistrationResponse,
   LoginRequest, loginResponse, LoginResponse, 
   ResetPinRequest, resetPinResponse, ResetPinResponse, 
   SendOTPRequest, sendOTPResponse, SendOTPResponse, 
@@ -12,6 +21,57 @@ import {
 } from "./types/auth.type";
 
 export const createAuthService = (client: GraphQLClient) => ({
+  async authenticateWithStore(
+    input: AuthenticateWithStoreRequest,
+    fetchFields?: {
+      root?: (keyof AuthenticateWithStoreResponse)[],
+    },
+    option?: RequestOption
+  ): Promise<GraphQLResponse<{ authenticateWithStore: AuthenticateWithStoreResponse }>> {
+    return client.request<{ authenticateWithStore: AuthenticateWithStoreResponse }, AuthenticateWithStoreRequest>(
+      authSchema.authenticateWithStore(
+        gqlQueryStringBuilder<AuthenticateWithStoreResponse>(
+          fetchFields?.root ?? authenticateWithStoreResponse,
+        )
+      ), 
+      input, 
+      option
+    );
+  },
+  async checkRegistration(
+    input: CheckRegistrationRequest, 
+    fetchFields?: {
+      root?: (keyof CheckRegistrationResponse)[],
+    },
+    option?: RequestOption
+  ): Promise<GraphQLResponse<{ checkRegistration: CheckRegistrationResponse }>> {
+    return client.request<{ checkRegistration: CheckRegistrationResponse }, CheckRegistrationRequest>(
+      authSchema.checkRegistration(
+        gqlQueryStringBuilder<CheckRegistrationResponse>(
+          fetchFields?.root ?? checkRegistrationResponse,
+        )
+      ), 
+      input, 
+      option
+    );
+  },
+  async changePin(
+    input: ChangePinRequest, 
+    fetchFields?: {
+      root?: (keyof ChangePinResponse)[],
+    },
+    option?: RequestOption
+  ): Promise<GraphQLResponse<{ changePin: ChangePinResponse }>> {
+    return client.request<{ changePin: ChangePinResponse }, ChangePinRequest>(
+      authSchema.changePin(
+        gqlQueryStringBuilder<ChangePinResponse>(
+          fetchFields?.root ?? changePinResponse,
+        )
+      ), 
+      input,
+      option
+    );
+  },
   async updateTxPin(
     input: UpdateTxPinRequest, 
     fetchFields?: {
@@ -115,3 +175,5 @@ export const createAuthService = (client: GraphQLClient) => ({
     );
   },
 })
+
+export type AuthService = ReturnType<typeof createAuthService>

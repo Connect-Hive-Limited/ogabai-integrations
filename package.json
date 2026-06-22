@@ -1,6 +1,6 @@
 {
     "name": "@connect-plus-online/ogabai-integrations",
-    "version": "0.1.2",
+    "version": "0.0.100",
     "description": "Ogabai integrations for Connect Plus Online",
     "keywords": [
         "graphql",
@@ -16,6 +16,7 @@
     "license": "MIT",
     "main": "dist/index.cjs.js",
     "module": "dist/index.esm.js",
+    "react-native": "dist/index.esm.js",
     "types": "dist/index.d.ts",
     "files": [
         "dist"
@@ -23,20 +24,34 @@
     "publishConfig": {
         "access": "public"
     },
+    "exports": {
+        ".": {
+            "react-native": "./dist/index.esm.js",
+            "import": "./dist/index.esm.js",
+            "require": "./dist/index.cjs.js",
+            "types": "./dist/index.d.ts"
+        },
+        "./package.json": "./package.json"
+    },
     "scripts": {
         "build": "tsup src/index.ts --dts --format cjs,esm --out-dir dist",
         "prepublishOnly": "yarn build",
         "lint": "eslint src --ext .ts",
         "test": "vitest run",
+        "test:run": "vitest run --reporter=verbose",
+        "test:config": "vitest run",
         "test:watch": "vitest"
     },
     "dependencies": {},
     "devDependencies": {
-        "@types/node": "^24.5.2",
+        "@types/chance": "^1.1.7",
+        "@types/node": "^25.6.0",
         "@vitest/coverage-c8": "^0.33.0",
         "@vitest/ui": "^3.2.4",
+        "chance": "^1.1.13",
+        "dotenv": "^17.4.2",
         "ts-node": "^10.9.2",
-        "tsup": "^6.0.0",
+        "tsup": "^8.5.0",
         "typescript": "^5.9.2",
         "vitest": "^3.2.4"
     }

@@ -1,6 +1,174 @@
+import { Store } from "./inventory";
+
+export enum AppNewFeatures {
+  ExpenseTracker = "expenseTracker",
+  ProductImport = "productImport",
+}
+/////////////////////////////////////////
+// CUSTOMER & CUSTOMER STORE BALANCE 
+/////////////////////////////////////////
+export interface Customer {
+  id: string;
+  name: string;
+  phone: string;
+  email: string;
+  storeIds: string[];
+  createdAt: string;
+  customerStoreBalance: CustomerStoreBalance;
+}
+
+export interface CustomerStoreBalance {
+  id: string;
+  customerId: string;
+  storeId: string;
+  balance: number;
+  owed: number;
+  createdAt: string;
+}
+
+
+export const userRoleExample: UserRole = {
+  name: "Admin",
+  description: "Admin",
+  privileges: [
+    {
+      feature: "inventory_product",
+      actions: ["read", "write", "update", "delete"],
+    },
+  ],
+  id: "",
+  shortname: "admin",
+  isRootAdmin: "",
+  isSuperAdmin: "",
+  createdAt: "",
+  storeId: "",
+  userRoleStatus: "active"
+}
+
+
+
+
+export const APPLICATION_FEATURES: {
+  key: ApplicationFeature;
+  title: string;
+  description: string
+}[] = [
+  { key: "inventory_product", title: "Inventory Product", description: "Inventory Product" },
+  { key: "inventory_package", title: "Inventory Package", description: "Inventory Package" },
+  { key: "inventory_price", title: "Inventory Price", description: "Inventory Price" },
+  { key: "inventory_stock", title: "Inventory Stock", description: "Inventory Stock" },
+  { key: "sale_product", title: "Sale Product", description: "Sale Product" },
+  { key: "sale_order", title: "Sale Order", description: "Sale Order" },
+  { key: "sale_payment", title: "Sale Payment", description: "Sale Payment" },
+  { key: "user_userAccount", title: "User User Account", description: "User User Account" },
+]
+export type ApplicationFeature = 
+  | "inventory_product"
+  | "inventory_package"
+  | "inventory_price"
+  | "inventory_stock"
+  | "sale_product"
+  | "sale_order"
+  | "sale_payment" 
+  | "user_userAccount"
+
+export type PrivilegeAction = 
+  "none" 
+  | "read" 
+  | "write" 
+  | "update" 
+  | "delete";
+export interface Privilege {
+  feature: ApplicationFeature;
+  actions: PrivilegeAction[];
+}
+export interface UserRole {
+  id: string;
+  name: string;
+  shortname: string;
+  description: string;
+  privileges: Privilege[];
+  isRootAdmin: string;
+  isSuperAdmin: string;
+  createdAt: string;
+  storeId: string;
+  userRoleStatus: "active" | "inactive";
+}
+export interface UserAccount {
+  id: string;
+  userId: string;
+  createdAt: string;
+  storeId: string;
+  userRoleId: string;
+  userRole?: UserRole;
+  store?: Store;
+  user?: Partial<User>;
+}
+
+export interface UserTypeCounts {
+  total: number;
+  customers: number;
+  manufacturer: number;
+  distributors: number;
+}
+
+export interface Notification {
+  id: string;
+  notificationType: "product" | "sale" | "order" | "transaction" | "setting" |"stock"|"debt"|"debtor";
+  notificationAction: "new" | "update" | "delete";
+  notificationStatus: "active"|"inactive"
+  title: string;
+  description: string;
+  createdAt: string;
+  updatedAt: string;
+}
+export interface UserNotification {
+  id: string;
+  userId: string;
+  storeId: string;
+  notificationStatus: "read" | "unread";
+  createdAt: string;
+  updatedAt: string;
+  itemId?: string;
+  notificationId: string;
+  notification?: Notification
+}
+
+// --------------------Admin Dashboard Statistics --------------
+export interface MonthlyUserStat {
+  month: number;
+  total: number;
+}
+// -------------------- Dashboard Statistics --------------
+export interface ProductCounts {
+  totalProduct: number;
+  totalProductThisMonth: number;
+  totalProductThisYear: number;
+  totalProductToday: number;
+}
+export interface RestockCounts {
+  totalRestock: number;
+  totalRestockThisMonth: number;
+  totalRestockThisYear: number;
+  totalRestockToday: number;
+}
+export interface SaleCounts {
+  totalSales: number;
+  totalSalesThisMonth: number;
+  totalSalesThisYear: number;
+  totalSalesToday: number;
+}
+export interface TransactionCounts {
+  totalTx: number;
+  totalTxThisMonth: number;
+  totalTxThisYear: number;
+  totalTxToday: number;
+}
+
+
 // -------------------- Enums as Unions --------------------
 export type UserStatus = "active" | "suspended" | "inactive";
-export type UserType = "manufacturer" | "distributor" | "admin";
+export type UserType = "manufacturer" | "distributor" | "admin" | "retail";
 
 // -------------------- Core Entities --------------------
 export interface Manufacturer {
@@ -37,7 +205,6 @@ export interface User {
   country: string;
   profileImageUrl: string;
   dob: string;
-  isAdmin: string;         // could be boolean in practice
   createdAt: string;
   updatedAt: string;
 }
