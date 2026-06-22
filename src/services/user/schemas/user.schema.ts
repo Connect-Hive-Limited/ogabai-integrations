@@ -1,6 +1,13 @@
 export const userSchema = {
 
   // test features 
+  getTestFeatureEnabled: (query: string) => `
+    query getTestFeatureEnabled {
+      getTestFeatureEnabled {
+        ${query}
+      }
+    }
+  `,
   getTestFeatures: (query: string) => `
     query getTestFeatures {
       getTestFeatures {
