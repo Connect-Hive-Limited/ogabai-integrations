@@ -112,6 +112,7 @@ export interface Stock {
   storeId: string;
   createdAt: string;
   expirationDate: string;
+  stockType: "market" | "saleReturn";
 }
 
 export interface StoreSetting {

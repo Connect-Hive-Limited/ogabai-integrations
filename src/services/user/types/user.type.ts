@@ -20,9 +20,12 @@ import { userAccountListIntegration } from "./user-account.type";
 import { getSubscriptionResponseNestedFields } from "../../subscription";
 
 // App test features 
-
+export enum TEST_FEATURES {
+    EXPENSE_TRACKER = "expenseTracker",
+    PRODUCT_IMPORT = "productImport",
+}
 export interface GetAppTestFeatureEnabledResponse {
-    testFeatureEnabled: string[]
+    testFeatureEnabled: boolean;
 }
 export const getAppTestFeatureEnabledResponse:(keyof GetAppTestFeatureEnabledResponse)[] = [
     "testFeatureEnabled"

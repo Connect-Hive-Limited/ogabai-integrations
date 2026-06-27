@@ -1,10 +1,16 @@
 import type { GraphQLClient, RequestOption } from "../../client";
 import { gqlQueryStringBuilder } from "../../helpers/query";
 import userSchema from "./schemas/user.schema";
-import { GetAppTestFeatureEnabledResponse, getAppTestFeatureEnabledResponse, getAppTestFeaturesResponse, GetAppTestFeaturesResponse, GetMonthlyUserStatsByYearRequest, getMonthlyUserStatsByYearResponse, GetMonthlyUserStatsByYearResponse, getMonthlyUserStatsByYearResponseNestedFields, GetMonthlyUserStatsByYearResponseNestedFields, GetUserDashStatsRequest, getUserDashStatsResponse, GetUserDashStatsResponse, getUserDashStatsResponseNestedFields, GetUserDashStatsResponseNestedFields, GetUserRequest, getUserResponse, GetUserResponse, GetUserResponseNestedFields, getUserResponseNestedFields, GetUsersRequest, getUsersResponse, GetUsersResponse, getUsersResponseNestedFields, GetUsersResponseNestedFields, getUserTypeCountsResponse, GetUserTypeCountsResponse, getUserTypeCountsResponseNestedFields, GetUserTypeCountsResponseNestedFields, meResponse, MeResponse, meResponseNestedFields, MeResponseNestedFields, UpdateUserRequest, updateUserResponse, UpdateUserResponse, updateUserResponseNestedFields, UpdateUserResponseNestedFields } from "./types/user.type";
+import { GetAppTestFeatureEnabledResponse, getAppTestFeatureEnabledResponse, getAppTestFeaturesResponse, GetAppTestFeaturesResponse, GetMonthlyUserStatsByYearRequest, getMonthlyUserStatsByYearResponse, GetMonthlyUserStatsByYearResponse, getMonthlyUserStatsByYearResponseNestedFields, GetMonthlyUserStatsByYearResponseNestedFields, GetUserDashStatsRequest, getUserDashStatsResponse, GetUserDashStatsResponse, getUserDashStatsResponseNestedFields, GetUserDashStatsResponseNestedFields, GetUserRequest, getUserResponse, GetUserResponse, GetUserResponseNestedFields, getUserResponseNestedFields, GetUsersRequest, getUsersResponse, GetUsersResponse, getUsersResponseNestedFields, GetUsersResponseNestedFields, getUserTypeCountsResponse, GetUserTypeCountsResponse, getUserTypeCountsResponseNestedFields, GetUserTypeCountsResponseNestedFields, meResponse, MeResponse, meResponseNestedFields, MeResponseNestedFields, TEST_FEATURES, UpdateUserRequest, updateUserResponse, UpdateUserResponse, updateUserResponseNestedFields, UpdateUserResponseNestedFields } from "./types/user.type";
 import { GraphQLResponse } from "../../types";
 
 export const createUserService = (client: GraphQLClient) => ({ 
+  async featureTestPhase(
+    featureName: TEST_FEATURES,
+    testFeatures: string[]
+  ){
+    return testFeatures.includes(featureName);
+  },
   async getTestFeatureEnabled(
     fetchFields?: {
       root?: (keyof GetAppTestFeatureEnabledResponse)[],

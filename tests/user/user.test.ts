@@ -2,6 +2,7 @@ import { Chance } from "chance";
 import { beforeAll, describe, expect, it } from "vitest";
 import { createUserService, UserService } from "../../src/services/user/user.service";
 import { initTestEnv } from "../testEnv";
+import { TEST_FEATURES } from "../../src/services/user/types/user.type";
 
 const chance = new Chance();
 
@@ -44,6 +45,15 @@ describe.sequential("User API", () => {
         const res = await userService.getTestFeatures();
         console.log({ res: JSON.stringify(res, null, 2) })
         expect(res).not.toBeNull();
+
+        if(!res?.testFeatures){
+            return;
+        }
+
+        // check if expense tracker is in testing face
+        const isInTesting = userService.featureTestPhase(TEST_FEATURES.EXPENSE_TRACKER, res?.testFeatures);
+        console.log({ isInTesting })
     })
+
 
 })

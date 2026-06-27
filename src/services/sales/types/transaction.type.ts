@@ -1,4 +1,4 @@
-import { DateFilter, Product, Sale, Transaction, TransactionPin } from "../../../types";
+import { DateFilter, Product, Transaction } from "../../../types";
 import { _getProductResponseNestedFields, GetProductResponseNestedFields } from "../../inventory";
 import { ProductFields, productNameQuery } from "../../inventory/entities";
 import { SaleFields, saleQuery, TransactionFields, transactionQuery } from "../sale.entity";
