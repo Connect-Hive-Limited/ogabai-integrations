@@ -21,7 +21,7 @@ jobs:
       DB_URL: mongodb://localhost:27017
       DATABASE: getsella_test
       AUTH_SECRET: test_secret
-      ENVIRONMENT: test
+      ENVIRONMENT: local
       SERVICE_ENABLED: false
       SMTP_PORT: 465
       SMTP_HOST: mail.ogabai.com
