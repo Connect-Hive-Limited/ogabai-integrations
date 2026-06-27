@@ -58,7 +58,7 @@ export type Platform = "pos" | "commerce" | "wallet";
 export type TxStatus = "pending" | "processing" | "completed" | "failed";
 
 // "sale" | "refund" | "deposit" | "withdrawal"
-export type TransactionType = "sale" | "refund" | "deposit" | "withdrawal"| "customerRefund" | "customerDeposit" | "expense";
+export type TransactionType = "sale" | "saleReturn" | "deposit" | "withdrawal"| "customerRefund" | "customerDeposit" | "expense";
 
 export type Transaction = {
   _id: string;

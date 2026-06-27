@@ -1,4 +1,4 @@
-import { DefaultSchemaFields, SchemaConfig } from "../../../helpers/schema-builder";
+import { DefaultSchemaFields, SchemaConfig } from "@chijioke/graphql-client";
 
 
 export const expenseSchema:Record<DefaultSchemaFields, SchemaConfig> = {

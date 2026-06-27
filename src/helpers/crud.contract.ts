@@ -58,21 +58,6 @@ export type ListEntityResponseFields<K extends EntityKey> = [
   Pluralize<K>,
   "total"
 ];
-// export type ListEntityResponse<T, K extends EntityKey> = {
-//   [P in `${K}s`]: T[];
-// } & {
-//   total: number;
-// };
-
-// export type ListEntityResponseFields<K extends EntityKey> =
-//   [`${K}s`, "total"];
-
-export type ListEntityNestedFields<
-  K extends EntityKey,
-  F extends Record<string, any>
-> = {
-  [P in `${K}s`]: F;
-} & Record<string, any>;
 
 /** ---------- Delete ---------- */
 

@@ -1,5 +1,4 @@
-import { EntityCRUD } from "../../../helpers/crud.contract";
-import { createDeleteIntegration, createListIntegration, createStandardEntityIntegration } from "../../../helpers/entity.factory";
+import { createDeleteIntegration, createListIntegration, createStandardEntityIntegration, EntityCRUD } from "@chijioke/graphql-client";
 import { Expense } from "../../../types";
 import { expenseQuery } from "../sale.entity";
 
