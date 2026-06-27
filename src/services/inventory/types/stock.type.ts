@@ -1,5 +1,5 @@
 import { Stock } from "../../../types";
-import { stockQuery, type StockFields } from "../entities"
+import { stockQuery, type StockFields } from "../inventory.entities"
 
 export interface GetStockRequest {
     stock: Partial<Stock>;
