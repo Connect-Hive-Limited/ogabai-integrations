@@ -14,7 +14,7 @@ import {
     UserTypeCounts
 } from "../../../types";
 import { AccountFields, MonthlyUserStatFields, monthlyUserStatQuery, ProductCountsFields, productCountsQuery, RestockCountsFields, restockCountsQuery, SaleCountsFields, saleCountsQuery, TransactionCountsFields, transactionCountsQuery, UserAccountFields, UserFields, userQuery, UserSettingFields, userSettingQuery, UserTypeCountsFields, userTypeCountsQuery } from "../user.entity";
-import { AddressFields, addressQuery, StoreFields, storeQuery } from "../../inventory/entities";
+import { AddressFields, addressQuery, StoreFields, storeQuery } from "../../inventory/inventory.entities";
 import { getAccountResponseNestedFields } from "./account.type"
 import { userAccountListIntegration } from "./user-account.type";
 import { getSubscriptionResponseNestedFields } from "../../subscription";

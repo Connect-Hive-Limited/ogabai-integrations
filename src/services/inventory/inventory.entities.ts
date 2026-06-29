@@ -51,7 +51,8 @@ export const stockQuery: StockFields = [
     "deduction",
     "storeId",
     "createdAt",
-    "expirationDate"
+    "expirationDate",
+    "stockType"
 ]
 export type StoreFields = (keyof Store)[]
 export const storeQuery: StoreFields = [

@@ -1,6 +1,6 @@
 import { DateFilter, Product, Sale } from "../../../types";
 import { SaleFields, saleQuery } from "../sale.entity"
-import { ProductFields, productQuery } from "../../inventory/entities"
+import { ProductFields, productQuery } from "../../inventory/inventory.entities"
 import { _getProductResponseNestedFields, GetProductResponseNestedFields } from "../../inventory/types"
 export interface GetSalesRequest {
     sale: Promise<Sale>;

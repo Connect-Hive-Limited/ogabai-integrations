@@ -85,6 +85,10 @@ export type Transaction = {
   expenseId: string;
   narration: string;
   expenseReceiptUrl: string;
+
+  // sale returns 
+  parentTransactionId: string;
+  returnedStockIds: string[];
 };
 
 // -------------------- Order --------------------

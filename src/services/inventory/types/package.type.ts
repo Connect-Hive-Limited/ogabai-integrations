@@ -1,5 +1,5 @@
 import { Product, ProductPackage } from "../../../types/inventory";
-import { PackageFields, packageQuery, PriceFields, priceQuery, ProductFields, productQuery, StockFields, stockQuery } from "../entities";
+import { PackageFields, packageQuery, PriceFields, priceQuery, ProductFields, productQuery, StockFields, stockQuery } from "../inventory.entities";
 import { getProductResponseNestedFields, GetProductResponseNestedFields } from "./product.type";
 
 // get package

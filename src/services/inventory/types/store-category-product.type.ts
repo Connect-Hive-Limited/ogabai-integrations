@@ -1,5 +1,5 @@
 import { StoreCategoryProduct } from "../../../types";
-import { StoreCategoryProductFields, storeCategoryProductQuery } from "../entities";
+import { StoreCategoryProductFields, storeCategoryProductQuery } from "../inventory.entities";
 
 export interface GetStoreCategoryProductRequest {
     storeCategoryProduct: Partial<StoreCategoryProduct>;

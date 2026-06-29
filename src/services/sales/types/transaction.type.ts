@@ -1,6 +1,6 @@
 import { DateFilter, Product, Transaction } from "../../../types";
 import { _getProductResponseNestedFields, GetProductResponseNestedFields } from "../../inventory";
-import { ProductFields, productNameQuery } from "../../inventory/entities";
+import { ProductFields, productNameQuery } from "../../inventory/inventory.entities";
 import { SaleFields, saleQuery, TransactionFields, transactionQuery } from "../sale.entity";
 
 export interface GetTransactionRequest {

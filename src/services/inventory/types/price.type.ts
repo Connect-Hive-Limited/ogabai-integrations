@@ -1,5 +1,5 @@
 import { Price } from "../../../types/inventory";
-import { PriceFields, priceQuery } from "../entities";
+import { PriceFields, priceQuery } from "../inventory.entities";
 export interface GetPriceRequest {
     price: Partial<Price>
 }

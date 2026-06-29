@@ -1,5 +1,5 @@
 import { Store } from "../../../types";
-import { AddressFields, addressQuery, storeQuery, type StoreFields } from "../entities"
+import { AddressFields, addressQuery, storeQuery, type StoreFields } from "../inventory.entities"
 
 export type GetStoreCountRequest = GetStoreRequest;
 export interface GetStoreCountResponse {

@@ -52,7 +52,7 @@ export const createTransactionService = (client: GraphQLClient) => {
      */
     async returnSales(
       input: {
-        transaction: SelectFields<Transaction, "amountPaid" | "sales", "customerId" | "narration">
+        transaction: SelectFields<Transaction, "createdById" | "parentTransactionId" | "amountPaid" | "sales", "customerId" | "narration">
       },
       fetchFields?: {
         root?: (keyof UpdateTransactionResponse)[],
@@ -60,7 +60,13 @@ export const createTransactionService = (client: GraphQLClient) => {
       },
       option?: RequestOption
     ): Promise<UpdateTransactionResponse | null> {
-      return addTransaction(input, fetchFields, option);
+
+      return addTransaction({
+        transaction: {
+          ...input.transaction,
+          transactionType: "saleReturn",
+        }
+      }, fetchFields, option);
     },
     /**
      * Uploads a transaction receipt

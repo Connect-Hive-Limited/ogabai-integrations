@@ -1,7 +1,7 @@
 import { EntityCRUD } from "../../../helpers/crud.contract";
 import { createDeleteIntegration, createListIntegration, createStandardEntityIntegration } from "../../../helpers/entity.factory";
 import { UserAccount } from "../../../types";
-import { addressQuery, storeQuery } from "../../inventory/entities";
+import { addressQuery, storeQuery } from "../../inventory/inventory.entities";
 import { privilegeQuery, userAccountQuery, userQuery, userRoleQuery } from "../user.entity";
 
 const ENTITY = "userAccount" as const;

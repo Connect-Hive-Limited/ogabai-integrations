@@ -12,7 +12,7 @@ import {
     ProductFields, productNameQuery, ProductNamesFields, 
     productQuery, 
     StockFields,
-    stockQuery} from "../entities"
+    stockQuery} from "../inventory.entities"
 
 
 
