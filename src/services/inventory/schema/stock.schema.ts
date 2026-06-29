@@ -9,7 +9,7 @@ export const stockSchema = {
 
   getStocks: (query: string) => `
     query getStocks($stock: StockInput, $stockIds: [String], $limit: Int!, $skip: Int!) {
-      stocks(stock: $stock, stockIds: $stockIds, limit: $limit, skip: $skip) {
+      getStocks(stock: $stock, stockIds: $stockIds, limit: $limit, skip: $skip) {
         ${query}
       }
     }
