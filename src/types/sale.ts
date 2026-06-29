@@ -88,6 +88,7 @@ export type Transaction = {
 
   // sale returns 
   parentTransactionId: string;
+  returnedStockIds: string[];
 };
 
 // -------------------- Order --------------------
